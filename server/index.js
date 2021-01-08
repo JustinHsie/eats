@@ -1,11 +1,16 @@
 const express = require('express');
+const path = require('path');
 const app = express();
-const port = 5000;
+
+// Serve static files from React app
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.get('/', (res, req) => {
-  res.send('Hello World');
+  console.log('Server connected? I hope?')
+  res.sendfile(path.join(__dirname, '../client/build', 'index.html'))
 });
 
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
-  console.log(`Listening at http://localhost${port}`);
+  console.log(`Serving on port ${port}`);
 });
