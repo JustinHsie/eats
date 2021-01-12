@@ -1,6 +1,6 @@
-import { Menu as MenuBasic} from 'primereact/menu';
+import { Menu as MenuBasic } from 'primereact/menu';
 
-const Menu = () => {
+export const Menu = () => {
   const items = [
     { label: 'Home', icon: 'pi pi-home', url: '/' },
     { label: 'Search', icon: 'pi pi-search', url: '/search' },
@@ -10,5 +10,3 @@ const Menu = () => {
 
   return <MenuBasic model={items} />;
 };
-
-export default Menu;

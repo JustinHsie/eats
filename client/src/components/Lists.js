@@ -2,11 +2,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import fakeLists from '../fakeData/lists';
 
-const Lists = () => {
-  const onRowSelect = () => {
-    console.log('Clicked!');
-  };
-
+export const Lists = () => {
   return (
     <div>
       <div className="card">
@@ -24,5 +20,3 @@ const Lists = () => {
     </div>
   );
 };
-
-export default Lists;
