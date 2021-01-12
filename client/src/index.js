@@ -1,12 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import './index.css';
-import App from './components/App';
 import reportWebVitals from './reportWebVitals';
+import App from './components/App';
+import CreateList from './components/CreateList';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Route path="/" exact component={App} />
+      <Route path="/lists/new" exact component={CreateList} />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
