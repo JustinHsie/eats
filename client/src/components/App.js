@@ -24,6 +24,9 @@ const App = () => {
       <div>
         <Link to="/lists/edit">Edit List</Link>
       </div>
+      <div>
+        <Link to="/find">Find Near Me</Link>
+      </div>
     </div>
   );
 };
