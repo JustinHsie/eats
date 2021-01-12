@@ -4,14 +4,16 @@ import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import '../styles/App.css';
-import MyMenu from './MyMenu';
+import Menu from './Menu';
+import Lists from './Lists';
 
 const App = () => {
   //const response = axios.get('/');
 
   return (
     <div className="App">
-      <MyMenu />
+      <Menu />
+      <Lists />
     </div>
   );
 };
