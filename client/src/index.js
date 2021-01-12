@@ -7,6 +7,7 @@ import App from './components/App';
 import CreateList from './components/CreateList';
 import ViewList from './components/ViewList';
 import EditList from './components/EditList';
+import Find from './components/Find';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,6 +17,7 @@ ReactDOM.render(
         <Route path="/lists/new" exact component={CreateList} />
         <Route path="/lists/edit" exact component={EditList} />
         <Route path="/lists/:id" exact component={ViewList} />
+        <Route path="/find" exact component={Find} />
       </Switch>
     </BrowserRouter>
   </React.StrictMode>,
