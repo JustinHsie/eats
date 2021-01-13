@@ -1,6 +1,9 @@
 {
   "name": "projecteats",
   "version": "1.0.0",
+  "engines": {
+    "node": "14.x"
+  },
   "description": "Save your favorite locations and find the ones nearest to you",
   "main": "index.js",
   "scripts": {
