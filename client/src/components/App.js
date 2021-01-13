@@ -1,13 +1,19 @@
 import React from 'react';
 import axios from 'axios';
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+import '../styles/App.css';
+import Menu from './Menu';
+import Lists from './Lists';
 
 const App = () => {
-  const response = axios.get('/');
+  //const response = axios.get('/');
 
   return (
-    <div>
-      App
-      {console.log(response)}
+    <div className="App">
+      <Menu />
+      <Lists />
     </div>
   );
 };
