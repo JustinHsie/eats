@@ -5,10 +5,10 @@ import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import '../styles/App.css';
-import Menu from './Menu';
-import Lists from './Lists';
+import { Menu } from './Menu';
+import { Lists } from './Lists';
 
-const App = () => {
+export const App = () => {
   //const response = axios.get('/');
 
   return (
@@ -30,5 +30,3 @@ const App = () => {
     </div>
   );
 };
-
-export default App;

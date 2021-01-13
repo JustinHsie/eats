@@ -1,4 +1,4 @@
-const viewList = {
+export const viewList = {
   title: 'Restaurants',
   places: [
     { name: "Joe's Pizza" },
@@ -6,5 +6,3 @@ const viewList = {
     { name: 'BCD Tofu House' },
   ],
 };
-
-export default viewList;

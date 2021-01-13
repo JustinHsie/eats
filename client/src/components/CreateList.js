@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 
-const CreateList = () => {
+export const CreateList = () => {
   return (
     <div>
       <div>
@@ -22,5 +22,3 @@ const CreateList = () => {
     </div>
   );
 };
-
-export default CreateList;

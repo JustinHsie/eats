@@ -4,9 +4,9 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import fakePlaces from '../fakeData/places';
+import { places as fakePlaces } from '../fakeData/places';
 
-const EditList = () => {
+export const EditList = () => {
   const actionBodyTemplate = rowData => {
     return (
       <React.Fragment>
@@ -45,5 +45,3 @@ const EditList = () => {
     </div>
   );
 };
-
-export default EditList;

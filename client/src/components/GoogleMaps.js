@@ -5,7 +5,7 @@ import {
   Marker,
 } from 'react-google-maps';
 
-const GoogleMaps = withScriptjs(
+export const GoogleMaps = withScriptjs(
   withGoogleMap(props => {
     return (
       <GoogleMap defaultZoom={8} defaultCenter={{ lat: -34.397, lng: 150.644 }}>
@@ -16,5 +16,3 @@ const GoogleMaps = withScriptjs(
     );
   })
 );
-
-export default GoogleMaps;

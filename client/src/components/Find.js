@@ -4,11 +4,11 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
-import fakePlaces from '../fakeData/places';
-import fakeLists from '../fakeData/lists';
-import GoogleMaps from './GoogleMaps';
+import { places as fakePlaces } from '../fakeData/places';
+import { lists as fakeLists } from '../fakeData/lists';
+import { GoogleMaps } from './GoogleMaps';
 
-const Find = () => {
+export const Find = () => {
   return (
     <div className="card">
       <Link to="/">Home</Link>
@@ -40,5 +40,3 @@ const Find = () => {
     </div>
   );
 };
-
-export default Find;

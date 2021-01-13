@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import App from './components/App';
-import CreateList from './components/CreateList';
-import ViewList from './components/ViewList';
-import EditList from './components/EditList';
-import Find from './components/Find';
+import { App } from './components/App';
+import { CreateList } from './components/CreateList';
+import { ViewList } from './components/ViewList';
+import { EditList } from './components/EditList';
+import { Find } from './components/Find';
 
 ReactDOM.render(
   <React.StrictMode>

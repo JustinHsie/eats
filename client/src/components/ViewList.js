@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import fakeList from '../fakeData/viewList';
+import { viewList as fakeList } from '../fakeData/viewList';
 
-const ViewList = () => {
+export const ViewList = () => {
   return (
     <div>
       <div>
@@ -23,5 +23,3 @@ const ViewList = () => {
     </div>
   );
 };
-
-export default ViewList;
