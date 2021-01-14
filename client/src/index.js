@@ -1,12 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './index.css';
-import App from './components/App';
 import reportWebVitals from './reportWebVitals';
+import { App } from './components/App';
+import { CreateList } from './components/CreateList';
+import { ViewList } from './components/ViewList';
+import { EditList } from './components/EditList';
+import { Find } from './components/Find';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" exact component={App} />
+        <Route path="/lists/new" exact component={CreateList} />
+        <Route path="/lists/edit" exact component={EditList} />
+        <Route path="/lists/:id" exact component={ViewList} />
+        <Route path="/find" exact component={Find} />
+      </Switch>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
