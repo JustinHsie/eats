@@ -1,3 +1,4 @@
 Save your favorite locations and find the ones nearest to you
 
-https://immense-peak-26369.herokuapp.com/
+Production: https://eats-nearby.herokuapp.com/
+Dev: https://eats-nearby-dev.herokuapp.com/
