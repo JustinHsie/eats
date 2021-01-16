@@ -1,5 +1,5 @@
 export const lists = [
-  { code: 1, name: 'Restaurants', category: 'food' },
-  { code: 2, name: 'Cafes', category: 'food' },
-  { code: 3, name: 'Bookstores', category: 'store' },
+  { code: 1, name: 'Restaurants', description: 'Places good for large gatherings' },
+  { code: 2, name: 'Cafes', description: 'Aesthetics' },
+  { code: 3, name: 'Bookstores', description: 'Stores with a large selection' },
 ];

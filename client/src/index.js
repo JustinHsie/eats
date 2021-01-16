@@ -8,10 +8,12 @@ import { CreateList } from './components/CreateList';
 import { ViewList } from './components/ViewList';
 import { EditList } from './components/EditList';
 import { Find } from './components/Find';
+import { Menu } from './components/Menu';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+      <Menu />
       <Switch>
         <Route path="/" exact component={App} />
         <Route path="/lists/new" exact component={CreateList} />

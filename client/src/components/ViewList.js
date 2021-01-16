@@ -1,16 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import {useHistory} from 'react-router-dom';
 import { viewList as fakeList } from '../fakeData/viewList';
 
 export const ViewList = () => {
+  const history = useHistory();
+  const handleClick = () => {
+    history.push("/lists/edit");
+  }
   return (
     <div>
-      <div>
-        <Link to="/">Home</Link>
-      </div>
       <div className="p-float-label">{fakeList.title}</div>
       <div className="card">
         <DataTable value={fakeList.places}>
@@ -18,7 +19,7 @@ export const ViewList = () => {
         </DataTable>
       </div>
       <div className="p-inputgroup">
-        <Button label="Edit List" />
+        <Button label="Edit List" onClick={handleClick}/>
       </div>
     </div>
   );

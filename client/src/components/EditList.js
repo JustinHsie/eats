@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
@@ -23,9 +22,6 @@ export const EditList = () => {
   };
   return (
     <div>
-      <div>
-        <Link to="/">Home</Link>
-      </div>
       <div className="p-float-label">
         <InputText id="title" />
         <label htmlFor="title">Title</label>
