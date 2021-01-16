@@ -17,7 +17,7 @@ export const Menu = () => {
     {
       label: 'New Place',
       icon: 'pi pi-plus',
-      command: event => history.push('/places//new'),
+      command: event => history.push('/places/new'),
     },
     {
       label: 'New List',
