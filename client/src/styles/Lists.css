@@ -1,0 +1,7 @@
+.card__min_width {
+  min-width: 300px;
+}
+
+.card__background_color {
+  background: rgba(33, 150, 243, 0.6);
+}
