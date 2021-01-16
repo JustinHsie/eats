@@ -18,7 +18,7 @@ export const NewPlace = () => {
         <InputText id="title" className="p-mb-2" />
 
         <h3>Location</h3>
-        <div className="form__input_max_width">
+        <div className="form__input_text_max_width">
           <div className="p-inputgroup">
             <InputText id="title" placeholder="Search" />
             <Button
