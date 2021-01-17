@@ -22,6 +22,10 @@ export const CreateList = () => {
         />
         <div>
           <Button
+            className="p-my-5 p-button-rounded p-mr-6"
+            label="Add Place"
+          />
+          <Button
             className="p-my-5 p-button-success p-button-rounded"
             label="Create List"
           />

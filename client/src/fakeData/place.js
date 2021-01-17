@@ -3,5 +3,5 @@ export const place = {
   list: 'Restaurants',
   location: 'SoHo',
   rating: 5,
-  description: 'Best udon place ever'
-}
+  description: 'Best udon place ever',
+};
