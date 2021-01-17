@@ -14,7 +14,7 @@ export const Lists = () => {
       return (
         <div onClick={handleClick} key={list.code}>
           <Card
-            className="p-m-2 card__min_width p-link card__background_color"
+            className="p-m-2 card_min_width p-link card_background_color"
             title={list.name}
           >
             {list.description}
