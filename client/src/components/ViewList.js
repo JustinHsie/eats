@@ -12,6 +12,10 @@ export const ViewList = () => {
     history.push('/places/new');
   };
 
+  const handleClickEditPlace = () => {
+    history.push('/places/3');
+  };
+
   const actionBodyTemplate = rowData => {
     return (
       <React.Fragment>
@@ -20,6 +24,7 @@ export const ViewList = () => {
           className="p-button-rounded p-button-warning p-ml-2 button_float_right"
         />
         <Button
+          onClick={handleClickEditPlace}
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success button_float_right"
         />

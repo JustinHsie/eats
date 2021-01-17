@@ -5,11 +5,12 @@ import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { Rating } from 'primereact/rating';
 import { lists as fakeLists } from '../fakeData/lists';
+import { place as fakePlace } from '../fakeData/place';
 import '../styles/NewPlace.css';
 
-export const NewPlace = () => {
-  const [list, setList] = useState(null);
-  const [rating, setRating] = useState(null);
+export const EditPlace = () => {
+  const [list, setList] = useState('');
+  const [rating, setRating] = useState(fakePlace.rating);
   const onListChange = e => {
     setList(e.value);
   };
@@ -17,14 +18,22 @@ export const NewPlace = () => {
     <div className="p-m-6 p-d-flex p-jc-center">
       <div className="card p-d-flex p-flex-column p-flex-md-row">
         <div className="p-mr-3 p-mr-lg-6">
-          <h2>Add Place</h2>
+          <h2>Edit {fakePlace.name}</h2>
           <h3>Name</h3>
-          <InputText id="title" className="p-mb-2" />
+          <InputText
+            id="title"
+            className="p-mb-2"
+            placeholder={fakePlace.name}
+          />
 
           <h3>Location</h3>
           <div className="form__input_text_max_width">
             <div className="p-inputgroup">
-              <InputText className="p-mb-2" id="title" />
+              <InputText
+                className="p-mb-2"
+                id="title"
+                placeholder={fakePlace.location}
+              />
               <Button
                 className="p-mx-2 p-button-raised p-button-text p-button-rounded"
                 icon="pi pi-search"
@@ -39,7 +48,7 @@ export const NewPlace = () => {
               options={fakeLists}
               onChange={onListChange}
               optionLabel="name"
-              placeholder="Select a List"
+              placeholder={fakePlace.list}
             />
           </div>
         </div>
@@ -50,12 +59,17 @@ export const NewPlace = () => {
           </div>
           <div className="p-mt-3">
             <h3>Description</h3>
-            <InputTextarea rows={5} cols={30} autoResize />
+            <InputTextarea
+              rows={5}
+              cols={30}
+              value={fakePlace.description}
+              autoResize
+            />
           </div>
           <div>
             <Button
               className="p-my-5 p-button-success p-button-rounded"
-              label="Add Place"
+              label="Save Changes"
             />
           </div>
         </div>

@@ -8,6 +8,7 @@ import { CreateList } from './components/CreateList';
 import { ViewList } from './components/ViewList';
 import { Find } from './components/Find';
 import { NewPlace } from './components/NewPlace';
+import { EditPlace } from './components/EditPlace';
 import { Menu } from './components/Menu';
 
 ReactDOM.render(
@@ -20,6 +21,7 @@ ReactDOM.render(
         <Route path="/lists/:id" exact component={ViewList} />
         <Route path="/find" exact component={Find} />
         <Route path="/places/new" exact component={NewPlace} />
+        <Route path="/places/:id" exact component={EditPlace} />
       </Switch>
     </BrowserRouter>
   </React.StrictMode>,
