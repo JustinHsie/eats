@@ -6,7 +6,7 @@ import { Button } from 'primereact/button';
 export const CreateList = () => {
   const [description, setDescription] = useState('');
   return (
-    <div className="p-m-6">
+    <div className="p-m-6 p-d-flex p-jc-center">
       <div className="card">
         <h2>Create New List</h2>
         <h3>Title</h3>
