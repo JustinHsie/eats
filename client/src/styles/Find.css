@@ -1,0 +1,15 @@
+.form__input_text_max_width {
+  max-width: 400px;
+}
+
+.map_max_width {
+  max-width: 700px;
+}
+
+.map_float_right {
+  float: right;
+}
+
+.datatable_max_width {
+  max-width: 400px;
+}

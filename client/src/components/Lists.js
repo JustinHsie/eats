@@ -1,17 +1,33 @@
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
+import { Card } from 'primereact/card';
+import { useHistory } from 'react-router-dom';
 import { lists as fakeLists } from '../fakeData/lists';
+import '../styles/Lists.css';
 
 export const Lists = () => {
+  const history = useHistory();
+  const handleClick = () => {
+    history.push('/lists/3');
+  };
+
+  const makeCards = lists => {
+    const cards = lists.map(list => {
+      return (
+        <div onClick={handleClick} key={list.code}>
+          <Card
+            className="p-m-2 card_min_width p-link card_background_color"
+            title={list.name}
+          >
+            {list.description}
+          </Card>
+        </div>
+      );
+    });
+    return cards;
+  };
+
   return (
-    <div>
-      <div className="card">
-        <DataTable value={fakeLists} selectionMode="single" dataKey="id">
-          <Column field="code" header="Code"></Column>
-          <Column field="name" header="Name"></Column>
-          <Column field="category" header="Category"></Column>
-        </DataTable>
-      </div>
+    <div className="p-d-flex p-jc-center p-flex-wrap">
+      {makeCards(fakeLists)}
     </div>
   );
 };
