@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {useHistory} from 'react-router-dom';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
@@ -9,11 +10,16 @@ import { place as fakePlace } from '../fakeData/place';
 import '../styles/NewPlace.css';
 
 export const EditPlace = () => {
+  const history = useHistory();
   const [list, setList] = useState('');
   const [rating, setRating] = useState(fakePlace.rating);
+
   const onListChange = e => {
     setList(e.value);
   };
+  const handleClickCancel = () => {
+    history.push('/lists/0');
+  }
   return (
     <div className="p-m-6 p-d-flex p-jc-center">
       <div className="card p-d-flex p-flex-column p-flex-md-row">
@@ -68,8 +74,13 @@ export const EditPlace = () => {
           </div>
           <div>
             <Button
-              className="p-my-5 p-button-success p-button-rounded"
+              className="p-my-5 p-mr-6 p-button-success p-button-rounded"
               label="Save Changes"
+            />
+            <Button
+              onClick={handleClickCancel}
+              className="p-my-5 p-button-secondary p-button-rounded"
+              label="Cancel"
             />
           </div>
         </div>
