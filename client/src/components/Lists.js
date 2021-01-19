@@ -1,7 +1,7 @@
 import { Card } from 'primereact/card';
 import { useHistory } from 'react-router-dom';
-import { lists as fakeLists } from '../fakeData/lists';
 import '../styles/Lists.css';
+import { database } from '../fakeData/database';
 
 export const Lists = () => {
   const history = useHistory();
@@ -10,12 +10,12 @@ export const Lists = () => {
   };
 
   const makeCards = lists => {
-    const cards = lists.map(list => {
+    const cards = lists.map((list, index) => {
       return (
-        <div onClick={handleClick} key={list.code}>
+        <div onClick={handleClick} key={index}>
           <Card
             className="p-m-2 card_min_width p-link card_background_color"
-            title={list.name}
+            title={list.title}
           >
             {list.description}
           </Card>
@@ -27,7 +27,7 @@ export const Lists = () => {
 
   return (
     <div className="p-d-flex p-jc-center p-flex-wrap">
-      {makeCards(fakeLists)}
+      {makeCards(database)}
     </div>
   );
 };
