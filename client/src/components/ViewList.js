@@ -21,7 +21,10 @@ export const ViewList = () => {
     history.push('/places/3');
   };
 
-  const handleClickDeleteList = () => {};
+  const handleClickDeleteList = () => {
+    history.push('/');
+    database.lists.deleteItem(id);
+  };
 
   const actionBodyTemplate = rowData => {
     return (
