@@ -4,7 +4,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { Rating } from 'primereact/rating';
-import { lists as fakeLists } from '../fakeData/lists';
+import { database } from '../fakeData/database';
 import '../styles/NewPlace.css';
 
 export const NewPlace = () => {
@@ -19,7 +19,7 @@ export const NewPlace = () => {
         <div className="p-mr-3 p-mr-lg-6">
           <h2>Add Place</h2>
           <h3>Name</h3>
-          <InputText id="title" className="p-mb-2" />
+          <InputText id="placeName" className="p-mb-2" />
 
           <h3>Location</h3>
           <div className="form__input_text_max_width">
@@ -36,9 +36,9 @@ export const NewPlace = () => {
           <div className="card">
             <Dropdown
               value={list}
-              options={fakeLists}
+              options={database}
               onChange={onListChange}
-              optionLabel="name"
+              optionLabel="title"
               placeholder="Select a List"
             />
           </div>

@@ -5,7 +5,7 @@ import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { places as fakePlaces } from '../fakeData/places';
-import { lists as fakeLists } from '../fakeData/lists';
+import { database } from '../fakeData/database';
 import { GoogleMaps } from './GoogleMaps';
 import '../styles/Find.css';
 
@@ -34,9 +34,9 @@ export const Find = () => {
           <div className="card p-mb-6">
             <Dropdown
               value={list}
-              options={fakeLists}
+              options={database}
               onChange={onListChange}
-              optionLabel="name"
+              optionLabel="title"
               placeholder="Select a List"
             />
           </div>
