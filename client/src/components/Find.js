@@ -34,7 +34,7 @@ export const Find = () => {
           <div className="card p-mb-6">
             <Dropdown
               value={list}
-              options={database.db}
+              options={database.lists.db}
               onChange={onListChange}
               optionLabel="title"
               placeholder="Select a List"

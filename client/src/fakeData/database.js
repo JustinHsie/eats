@@ -47,4 +47,10 @@ class Database {
   }
 }
 
-export const database = new Database();
+const listDatabase = new Database();
+const placeDatabase = new Database();
+
+export const database = {
+  lists: listDatabase,
+  places: placeDatabase
+};

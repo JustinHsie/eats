@@ -36,7 +36,7 @@ export const NewPlace = () => {
           <div className="card">
             <Dropdown
               value={list}
-              options={database.db}
+              options={database.lists.db}
               onChange={onListChange}
               optionLabel="title"
               placeholder="Select a List"

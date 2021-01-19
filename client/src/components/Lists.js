@@ -27,7 +27,7 @@ export const Lists = () => {
 
   return (
     <div className="p-d-flex p-jc-center p-flex-wrap">
-      {makeCards(database.db)}
+      {makeCards(database.lists.db)}
     </div>
   );
 };

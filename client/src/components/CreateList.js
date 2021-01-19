@@ -14,7 +14,7 @@ export const CreateList = () => {
   const handleSubmit = event => {
     event.preventDefault();
     const list = { title: title, description: description };
-    database.addItem(list);
+    database.lists.addItem(list);
     history.push('/');
   };
 
