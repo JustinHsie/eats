@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { viewList as fakeList } from '../fakeData/viewList';
+import { database } from '../fakeData/database';
 import '../styles/ViewList.css';
 
 export const ViewList = () => {
+  const { id } = useParams();
+  const list = database.lists.getItem(id);
   const history = useHistory();
+  const [place, setPlace] = useState();
+
   const handleClickAddPlace = () => {
     history.push('/places/new');
   };
@@ -15,6 +20,8 @@ export const ViewList = () => {
   const handleClickEditPlace = () => {
     history.push('/places/3');
   };
+
+  const handleClickDeleteList = () => {};
 
   const actionBodyTemplate = rowData => {
     return (
@@ -35,13 +42,16 @@ export const ViewList = () => {
   return (
     <div className="p-m-6 p-d-flex p-jc-center">
       <div>
-        <h2>{fakeList.title}</h2>
-        <p>{fakeList.description}</p>
+        <h2>{list.title}</h2>
+        <p>{list.description}</p>
         <div className="card">
           <DataTable
             className="datatable_max_width"
-            editMode="row"
             value={fakeList.places}
+            selection={place}
+            onSelectionChange={e => setPlace(e.value)}
+            selectionMode="single"
+            onRowSelect={handleClickEditPlace}
           >
             <Column field="name" header="Name"></Column>
             <Column body={actionBodyTemplate}></Column>
@@ -54,6 +64,7 @@ export const ViewList = () => {
             onClick={handleClickAddPlace}
           />
           <Button
+            onClick={handleClickDeleteList}
             className="p-button-danger p-button-rounded button_float_right"
             label="Delete List"
           />
