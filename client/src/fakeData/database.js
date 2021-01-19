@@ -47,5 +47,4 @@ class Database {
   }
 }
 
-let databaseInstance = new Database();
-export const database = databaseInstance.db;
+export const database = new Database();

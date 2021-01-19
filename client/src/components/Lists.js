@@ -5,14 +5,14 @@ import { database } from '../fakeData/database';
 
 export const Lists = () => {
   const history = useHistory();
-  const handleClick = () => {
-    history.push('/lists/3');
+  const handleClick = index => {
+    history.push(`/lists/${index}`);
   };
 
   const makeCards = lists => {
     const cards = lists.map((list, index) => {
       return (
-        <div onClick={handleClick} key={index}>
+        <div onClick={() => handleClick(index)} key={index}>
           <Card
             className="p-m-2 card_min_width p-link card_background_color"
             title={list.title}
@@ -27,7 +27,7 @@ export const Lists = () => {
 
   return (
     <div className="p-d-flex p-jc-center p-flex-wrap">
-      {makeCards(database)}
+      {makeCards(database.db)}
     </div>
   );
 };

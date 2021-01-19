@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
@@ -14,8 +14,8 @@ export const CreateList = () => {
   const handleSubmit = event => {
     event.preventDefault();
     const list = { title: title, description: description };
-    database.push(list);
-    history.push('/')
+    database.addItem(list);
+    history.push('/');
   };
 
   return (
