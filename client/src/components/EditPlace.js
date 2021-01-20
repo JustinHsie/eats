@@ -15,7 +15,7 @@ export class EditPlace extends React.Component {
   }
 
   handleClickCancel = () => {
-    this.props.history.push('/lists/0');
+    this.props.history.push('/');
   };
 
   render() {
@@ -40,6 +40,7 @@ export class EditPlace extends React.Component {
                   placeholder={fakePlace.location}
                 />
                 <Button
+                  type="button"
                   className="p-mx-2 p-button-raised p-button-text p-button-rounded"
                   icon="pi pi-search"
                 />
@@ -51,7 +52,7 @@ export class EditPlace extends React.Component {
               <Dropdown
                 value={this.state.list}
                 options={database.lists.db}
-                onChange={e => this.setState({ list: e.value })}
+                onChange={e => this.setState({ list: e.target.value })}
                 optionLabel="title"
                 placeholder={fakePlace.list}
               />
@@ -62,7 +63,7 @@ export class EditPlace extends React.Component {
               <h3>Rating</h3>
               <Rating
                 value={this.state.rating}
-                onChange={e => this.setState({ rating: e.value })}
+                onChange={e => this.setState({ rating: e.target.value })}
               />
             </div>
             <div className="p-mt-3">
@@ -76,10 +77,12 @@ export class EditPlace extends React.Component {
             </div>
             <div>
               <Button
+                type="submit"
                 className="p-my-5 p-mr-6 p-button-success p-button-rounded"
                 label="Save Changes"
               />
               <Button
+                type="button"
                 onClick={this.handleClickCancel}
                 className="p-my-5 p-button-secondary p-button-rounded"
                 label="Cancel"

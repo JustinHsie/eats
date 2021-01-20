@@ -3,6 +3,7 @@ import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { database } from '../fakeData/database';
+import { Database } from '../classes/database';
 
 export class CreateList extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ export class CreateList extends React.Component {
     const list = {
       title: this.state.title,
       description: this.state.description,
+      places: new Database(),
     };
     database.lists.addItem(list);
     this.props.history.push('/');
@@ -22,11 +24,10 @@ export class CreateList extends React.Component {
 
   render() {
     return (
-      <div className="p-m-6 p-d-flex p-jc-center">
-        <div className="card">
-          <h2>Create New List</h2>
-
-          <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit}>
+        <div className="p-m-6 p-d-flex p-jc-center">
+          <div className="card">
+            <h2>Create New List</h2>
             <label>
               <h3>Title</h3>
               <InputText
@@ -50,17 +51,19 @@ export class CreateList extends React.Component {
 
             <div>
               <Button
+                type="button"
                 className="p-my-5 p-button-rounded p-mr-6"
                 label="Add Place"
               />
               <Button
+                type="submit"
                 className="p-my-5 p-button-success p-button-rounded"
                 label="Create List"
               />
             </div>
-          </form>
+          </div>
         </div>
-      </div>
+      </form>
     );
   }
 }

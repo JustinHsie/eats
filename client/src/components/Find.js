@@ -37,7 +37,7 @@ export class Find extends React.Component {
               <Dropdown
                 value={this.state.list}
                 options={database.lists.db}
-                onChange={e => this.setState({ list: e.value })}
+                onChange={e => this.setState({ list: e.target.value })}
                 optionLabel="title"
                 placeholder="Select a List"
               />
