@@ -2,7 +2,6 @@ import React from 'react';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { viewList as fakeList } from '../fakeData/viewList';
 import { database } from '../fakeData/database';
 import '../styles/ViewList.css';
 
@@ -51,7 +50,7 @@ export class ViewList extends React.Component {
           <div className="card">
             <DataTable
               className="datatable_max_width"
-              value={fakeList.places}
+              value={this.state.list.places.db}
               selection={this.state.place}
               onSelectionChange={e => this.setState({ place: e.value })}
               selectionMode="single"

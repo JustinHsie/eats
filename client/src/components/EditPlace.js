@@ -15,7 +15,7 @@ export class EditPlace extends React.Component {
   }
 
   handleClickCancel = () => {
-    this.props.history.push('/lists/0');
+    this.props.history.goBack();
   };
 
   render() {
@@ -51,7 +51,7 @@ export class EditPlace extends React.Component {
               <Dropdown
                 value={this.state.list}
                 options={database.lists.db}
-                onChange={e => this.setState({ list: e.value })}
+                onChange={e => this.setState({ list: e.target.value })}
                 optionLabel="title"
                 placeholder={fakePlace.list}
               />
@@ -62,7 +62,7 @@ export class EditPlace extends React.Component {
               <h3>Rating</h3>
               <Rating
                 value={this.state.rating}
-                onChange={e => this.setState({ rating: e.value })}
+                onChange={e => this.setState({ rating: e.target.value })}
               />
             </div>
             <div className="p-mt-3">
