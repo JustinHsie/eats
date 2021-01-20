@@ -15,7 +15,7 @@ export class EditPlace extends React.Component {
   }
 
   handleClickCancel = () => {
-    this.props.history.goBack();
+    this.props.history.push('/');
   };
 
   render() {
@@ -40,6 +40,7 @@ export class EditPlace extends React.Component {
                   placeholder={fakePlace.location}
                 />
                 <Button
+                  type="button"
                   className="p-mx-2 p-button-raised p-button-text p-button-rounded"
                   icon="pi pi-search"
                 />
@@ -76,10 +77,12 @@ export class EditPlace extends React.Component {
             </div>
             <div>
               <Button
+                type="submit"
                 className="p-my-5 p-mr-6 p-button-success p-button-rounded"
                 label="Save Changes"
               />
               <Button
+                type="button"
                 onClick={this.handleClickCancel}
                 className="p-my-5 p-button-secondary p-button-rounded"
                 label="Cancel"

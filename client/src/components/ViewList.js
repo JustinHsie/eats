@@ -9,7 +9,8 @@ export class ViewList extends React.Component {
   constructor(props) {
     super(props);
     this.id = this.props.match.params.id;
-    this.state = { list: database.lists.getItem(this.id), place: null };
+    this.thisList = database.lists.getItem(this.id);
+    this.state = { place: null };
   }
 
   handleClickAddPlace = () => {
@@ -25,14 +26,27 @@ export class ViewList extends React.Component {
     database.lists.deleteItem(this.id);
   };
 
-  actionBodyTemplate = () => {
+  handleClickDeletePlace = (e, placeObject) => {
+    const indexPlace = this.thisList.places.db.findIndex(
+      place => place === placeObject
+    );
+    this.thisList.places.deleteItem(indexPlace);
+    database.lists.editItem(this.id, this.thisList);
+    this.props.history.push(`/lists/${this.id}`);
+    e.stopPropagation();
+  };
+
+  actionBodyTemplate = placeObject => {
     return (
       <React.Fragment>
         <Button
+          type="button"
+          onClick={e => this.handleClickDeletePlace(e, placeObject)}
           icon="pi pi-trash"
           className="p-button-rounded p-button-warning p-ml-2 button_float_right"
         />
         <Button
+          type="button"
           onClick={this.handleClickEditPlace}
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success button_float_right"
@@ -45,28 +59,32 @@ export class ViewList extends React.Component {
     return (
       <div className="p-m-6 p-d-flex p-jc-center">
         <div>
-          <h2>{this.state.list.title}</h2>
-          <p>{this.state.list.description}</p>
+          <h2>{this.thisList.title}</h2>
+          <p>{this.thisList.description}</p>
           <div className="card">
             <DataTable
               className="datatable_max_width"
-              value={this.state.list.places.db}
+              value={this.thisList.places.db}
               selection={this.state.place}
               onSelectionChange={e => this.setState({ place: e.value })}
               selectionMode="single"
               onRowSelect={this.handleClickEditPlace}
             >
               <Column field="name" header="Name"></Column>
-              <Column body={this.actionBodyTemplate}></Column>
+              <Column
+                body={placeObject => this.actionBodyTemplate(placeObject)}
+              ></Column>
             </DataTable>
           </div>
           <div className="datatable_max_width p-my-6">
             <Button
+              type="button"
               className="p-button-rounded"
               label="Add New Place"
               onClick={this.handleClickAddPlace}
             />
             <Button
+              type="button"
               onClick={this.handleClickDeleteList}
               className="p-button-danger p-button-rounded button_float_right"
               label="Delete List"
