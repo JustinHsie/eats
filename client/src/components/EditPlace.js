@@ -4,31 +4,79 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { Rating } from 'primereact/rating';
-import { place as fakePlace } from '../fakeData/place';
 import { db } from '../fakeData/db';
 import '../styles/NewPlace.css';
 
 export class EditPlace extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { listId: null, rating: fakePlace.rating };
+    this.placeId = this.props.match.params.id;
+    this.state = {
+      name: '',
+      location: '',
+      rating: null,
+      description: '',
+      selectedList: null,
+      lists: [],
+      currentPlace: null,
+    };
   }
 
-  handleClickCancel = () => {
-    this.props.history.push('/');
+  componentDidMount() {
+    this.getCurrentPlace();
+    this.getLists();
+  }
+
+  getCurrentPlace = async () => {
+    const currentPlace = await db.getPlace(this.placeId);
+    this.setState({
+      currentPlace,
+      name: currentPlace.name,
+      location: currentPlace.location,
+      rating: currentPlace.rating,
+      description: currentPlace.description,
+      selectedList: currentPlace.list,
+    });
   };
 
-  render() {
-    return (
-      <div className="p-m-6 p-d-flex p-jc-center">
+  getLists = async () => {
+    const lists = await db.getLists();
+    this.setState({ lists });
+  };
+
+  handleClickCancel = () => {
+    this.props.history.push(`/lists/${this.state.currentPlace.list.id}`);
+  };
+
+  handleSubmit = async e => {
+    e.preventDefault();
+
+    await db.updatePlace(
+      this.placeId,
+      this.state.name,
+      this.state.rating,
+      this.state.description,
+      this.state.location,
+      this.state.selectedList
+    );
+    await db.addPlaceToList(this.state.selectedList.id, this.placeId);
+    await db.removePlaceFromList(this.state.currentPlace.list.id, this.placeId);
+
+    this.props.history.push(`/lists/${this.state.currentPlace.list.id}`);
+  };
+
+  displayForm = () => {
+    if (this.state.currentPlace) {
+      return (
         <div className="card p-d-flex p-flex-column p-flex-md-row">
           <div className="p-mr-3 p-mr-lg-6">
-            <h2>Edit {fakePlace.name}</h2>
+            <h2>Edit {this.state.currentPlace.name}</h2>
             <h3>Name</h3>
             <InputText
               id="title"
               className="p-mb-2"
-              placeholder={fakePlace.name}
+              value={this.state.name}
+              onChange={e => this.setState({ name: e.target.value })}
             />
 
             <h3>Location</h3>
@@ -36,8 +84,9 @@ export class EditPlace extends React.Component {
               <div className="p-inputgroup">
                 <InputText
                   className="p-mb-2"
-                  id="title"
-                  placeholder={fakePlace.location}
+                  id="location"
+                  value={this.state.location}
+                  onChange={e => this.setState({ location: e.target.value })}
                 />
                 <Button
                   type="button"
@@ -50,12 +99,11 @@ export class EditPlace extends React.Component {
             <h3>Select List</h3>
             <div className="card">
               <Dropdown
-                value={this.state.listId}
-                options={db.getLists()}
-                onChange={e => this.setState({ listId: e.target.value })}
-                optionValue="id"
-                optionLabel="title"
-                placeholder={fakePlace.list}
+                value={this.state.selectedList}
+                options={this.state.lists}
+                onChange={e => this.setState({ selectedList: e.target.value })}
+                optionLabel="name"
+                placeholder={this.state.selectedList.name}
               />
             </div>
           </div>
@@ -72,7 +120,8 @@ export class EditPlace extends React.Component {
               <InputTextarea
                 rows={5}
                 cols={30}
-                value={fakePlace.description}
+                value={this.state.description}
+                onChange={e => this.setState({ description: e.target.value })}
                 autoResize
               />
             </div>
@@ -91,7 +140,19 @@ export class EditPlace extends React.Component {
             </div>
           </div>
         </div>
+      );
+    }
+    return (
+      <div>
+        <h5>Loading...</h5>
       </div>
+    );
+  };
+  render() {
+    return (
+      <form onSubmit={e => this.handleSubmit(e)}>
+        <div className="p-m-6 p-d-flex p-jc-center">{this.displayForm()}</div>
+      </form>
     );
   }
 }

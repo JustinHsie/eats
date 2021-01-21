@@ -8,7 +8,7 @@ import '../styles/ViewList.css';
 export class ViewList extends React.Component {
   constructor(props) {
     super(props);
-    this.id = this.props.match.params.id;
+    this.listId = this.props.match.params.id;
     this.state = { place: null, currentList: null };
   }
 
@@ -17,27 +17,27 @@ export class ViewList extends React.Component {
   }
 
   getCurrentList = async () => {
-    const currentList = await db.getList(this.id);
-    this.setState({ currentList: currentList });
+    const currentList = await db.getList(this.listId);
+    this.setState({ currentList });
   };
 
   handleClickAddPlace = () => {
     this.props.history.push('/places/new');
   };
 
-  handleClickEditPlace = () => {
-    this.props.history.push('/places/3');
+  handleClickEditPlace = placeId => {
+    this.props.history.push(`/places/${placeId}`);
   };
 
   handleClickDeleteList = async () => {
-    await db.deleteList(this.id);
+    await db.deleteList(this.listId);
     this.props.history.push('/');
   };
 
   handleClickDeletePlace = async (e, placeObject) => {
-    await db.removePlaceFromList(this.state.currentList.id, placeObject.id);
+    await db.removePlaceFromList(this.listId, placeObject.id);
     await db.deletePlace(placeObject.id);
-    this.props.history.push(`/lists/${this.id}`);
+    this.props.history.push(`/lists/${this.listId}`);
     e.stopPropagation();
   };
 
@@ -52,7 +52,7 @@ export class ViewList extends React.Component {
         />
         <Button
           type="button"
-          onClick={this.handleClickEditPlace}
+          onClick={() => this.handleClickEditPlace(placeObject.id)}
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success button_float_right"
         />
@@ -73,7 +73,7 @@ export class ViewList extends React.Component {
               selection={this.state.place}
               onSelectionChange={e => this.setState({ place: e.value })}
               selectionMode="single"
-              onRowSelect={this.handleClickEditPlace}
+              onRowSelect={e => this.handleClickEditPlace(e.data.id)}
             >
               <Column field="name" header="Name"></Column>
               <Column
@@ -98,7 +98,7 @@ export class ViewList extends React.Component {
         </div>
       );
     }
-    return <div>Loading...</div>;
+    return <div><h5>Loading...</h5></div>;
   };
 
   render() {

@@ -75,7 +75,7 @@ class PlaceDb {
     this.places = {};
   }
 
-  createPlace(name, rating, description, location) {
+  createPlace(name, rating, description, location, list) {
     const id = v4();
     this.places[id] = {
       id,
@@ -83,6 +83,7 @@ class PlaceDb {
       rating,
       description,
       location,
+      list
     };
 
     return id;
@@ -96,11 +97,12 @@ class PlaceDb {
     return deepCopy(this.places[id]);
   }
 
-  updatePlace(id, name, rating, description, location) {
+  updatePlace(id, name, rating, description, location, list) {
     this.places[id].name = name;
     this.places[id].rating = rating;
     this.places[id].description = description;
     this.places[id].location = location;
+    this.places[id].list = list;
   }
 
   deletePlace(id) {
@@ -168,9 +170,9 @@ class Db {
     });
   }
 
-  async createPlace(name, rating, description, location) {
+  async createPlace(name, rating, description, location, list) {
     return makeAsync(() => {
-      return this.placeDb.createPlace(name, rating, description, location);
+      return this.placeDb.createPlace(name, rating, description, location, list);
     });
   }
 
@@ -186,9 +188,9 @@ class Db {
     });
   }
 
-  async updatePlace(id, name, rating, description, location) {
+  async updatePlace(id, name, rating, description, location, list) {
     return makeAsync(() => {
-      return this.placeDb.updatePlace(id, name, rating, description, location);
+      return this.placeDb.updatePlace(id, name, rating, description, location, list);
     });
   }
 

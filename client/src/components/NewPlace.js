@@ -15,7 +15,7 @@ export class NewPlace extends React.Component {
       location: '',
       rating: null,
       description: '',
-      listId: null,
+      selectedList: null,
       lists: [],
     };
   }
@@ -36,9 +36,10 @@ export class NewPlace extends React.Component {
       this.state.name,
       this.state.rating,
       this.state.description,
-      this.state.location
+      this.state.location,
+      this.state.selectedList
     );
-    await db.addPlaceToList(this.state.listId, placeId);
+    await db.addPlaceToList(this.state.selectedList.id, placeId);
 
     this.props.history.push('/');
   };
@@ -78,10 +79,9 @@ export class NewPlace extends React.Component {
               <h3>Select List</h3>
               <div className="card">
                 <Dropdown
-                  value={this.state.listId}
+                  value={this.state.selectedList}
                   options={this.state.lists}
-                  onChange={e => this.setState({ listId: e.target.value })}
-                  optionValue="id"
+                  onChange={e => this.setState({ selectedList: e.target.value })}
                   optionLabel="name"
                   placeholder="Select a List"
                 />

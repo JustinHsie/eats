@@ -12,7 +12,7 @@ import '../styles/Find.css';
 export class Find extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { listId: [] };
+    this.state = { lists: [], selectedList: null };
   }
 
   componentDidMount() {
@@ -44,10 +44,9 @@ export class Find extends React.Component {
             <h3>Select List</h3>
             <div className="card p-mb-6">
               <Dropdown
-                value={this.state.listId}
+                value={this.state.selectedList}
                 options={this.state.lists}
-                onChange={e => this.setState({ listId: e.target.value })}
-                optionValue="id"
+                onChange={e => this.setState({ selectedList: e.target.value })}
                 optionLabel="name"
                 placeholder="Select a List"
               />
