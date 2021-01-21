@@ -29,6 +29,10 @@ export class NewPlace extends React.Component {
     this.setState({ lists: lists });
   };
 
+  handleClickCancel = () => {
+    this.props.history.push('/');
+  };
+
   handleSubmit = async event => {
     event.preventDefault();
 
@@ -108,8 +112,14 @@ export class NewPlace extends React.Component {
               <div>
                 <Button
                   type="submit"
-                  className="p-my-5 p-button-success p-button-rounded"
+                  className="p-my-5 p-mr-6 p-button-success p-button-rounded"
                   label="Add Place"
+                />
+                <Button
+                  type="button"
+                  onClick={this.handleClickCancel}
+                  className="p-my-5 p-button-secondary p-button-rounded"
+                  label="Cancel"
                 />
               </div>
             </div>
