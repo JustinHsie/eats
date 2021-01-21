@@ -6,12 +6,15 @@ import 'primeicons/primeicons.css';
 import { Lists } from './Lists';
 import '../styles/App.css';
 
-export const App = () => {
-  return (
-    <div className="p-m-4">
-      <div className="p-m-6">
-        <Lists />
+export class App extends React.Component {
+  render() {
+    const props = this.props;
+    return (
+      <div className="p-m-4">
+        <div className="p-m-6">
+          <Lists {...props} />
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}

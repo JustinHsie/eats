@@ -5,15 +5,24 @@ import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { places as fakePlaces } from '../fakeData/places';
-import { database } from '../fakeData/database';
+import { db } from '../fakeData/db';
 import { GoogleMaps } from './GoogleMaps';
 import '../styles/Find.css';
 
 export class Find extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { list: null };
+    this.state = { listId: [] };
   }
+
+  componentDidMount() {
+    this.getLists();
+  }
+
+  getLists = async () => {
+    const lists = await db.getLists();
+    this.setState({ lists: lists });
+  };
 
   render() {
     return (
@@ -35,10 +44,11 @@ export class Find extends React.Component {
             <h3>Select List</h3>
             <div className="card p-mb-6">
               <Dropdown
-                value={this.state.list}
-                options={database.lists.db}
-                onChange={e => this.setState({ list: e.target.value })}
-                optionLabel="title"
+                value={this.state.listId}
+                options={this.state.lists}
+                onChange={e => this.setState({ listId: e.target.value })}
+                optionValue="id"
+                optionLabel="name"
                 placeholder="Select a List"
               />
             </div>

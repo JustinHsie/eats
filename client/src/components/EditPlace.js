@@ -5,13 +5,13 @@ import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { Rating } from 'primereact/rating';
 import { place as fakePlace } from '../fakeData/place';
-import { database } from '../fakeData/database';
+import { db } from '../fakeData/db';
 import '../styles/NewPlace.css';
 
 export class EditPlace extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { list: null, rating: fakePlace.rating };
+    this.state = { listId: null, rating: fakePlace.rating };
   }
 
   handleClickCancel = () => {
@@ -50,9 +50,10 @@ export class EditPlace extends React.Component {
             <h3>Select List</h3>
             <div className="card">
               <Dropdown
-                value={this.state.list}
-                options={database.lists.db}
-                onChange={e => this.setState({ list: e.target.value })}
+                value={this.state.listId}
+                options={db.getLists()}
+                onChange={e => this.setState({ listId: e.target.value })}
+                optionValue="id"
                 optionLabel="title"
                 placeholder={fakePlace.list}
               />

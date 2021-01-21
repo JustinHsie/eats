@@ -2,16 +2,24 @@ import React from 'react';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { database } from '../fakeData/database';
+import { db } from '../fakeData/db';
 import '../styles/ViewList.css';
 
 export class ViewList extends React.Component {
   constructor(props) {
     super(props);
     this.id = this.props.match.params.id;
-    this.thisList = database.lists.getItem(this.id);
-    this.state = { place: null };
+    this.state = { place: null, currentList: null };
   }
+
+  componentDidMount() {
+    this.getCurrentList();
+  }
+
+  getCurrentList = async () => {
+    const currentList = await db.getList(this.id);
+    this.setState({ currentList: currentList });
+  };
 
   handleClickAddPlace = () => {
     this.props.history.push('/places/new');
@@ -21,17 +29,14 @@ export class ViewList extends React.Component {
     this.props.history.push('/places/3');
   };
 
-  handleClickDeleteList = () => {
+  handleClickDeleteList = async () => {
+    await db.deleteList(this.id);
     this.props.history.push('/');
-    database.lists.deleteItem(this.id);
   };
 
-  handleClickDeletePlace = (e, placeObject) => {
-    const indexPlace = this.thisList.places.db.findIndex(
-      place => place === placeObject
-    );
-    this.thisList.places.deleteItem(indexPlace);
-    database.lists.editItem(this.id, this.thisList);
+  handleClickDeletePlace = async (e, placeObject) => {
+    await db.removePlaceFromList(this.state.currentList.id, placeObject.id);
+    await db.deletePlace(placeObject.id);
     this.props.history.push(`/lists/${this.id}`);
     e.stopPropagation();
   };
@@ -55,16 +60,16 @@ export class ViewList extends React.Component {
     );
   };
 
-  render() {
-    return (
-      <div className="p-m-6 p-d-flex p-jc-center">
+  displayTable = () => {
+    if (this.state.currentList) {
+      return (
         <div>
-          <h2>{this.thisList.title}</h2>
-          <p>{this.thisList.description}</p>
+          <h2>{this.state.currentList.name}</h2>
+          <p>{this.state.currentList.description}</p>
           <div className="card">
             <DataTable
               className="datatable_max_width"
-              value={this.thisList.places.db}
+              value={this.state.currentList.places}
               selection={this.state.place}
               onSelectionChange={e => this.setState({ place: e.value })}
               selectionMode="single"
@@ -91,7 +96,14 @@ export class ViewList extends React.Component {
             />
           </div>
         </div>
-      </div>
+      );
+    }
+    return <div>Loading...</div>;
+  };
+
+  render() {
+    return (
+      <div className="p-m-6 p-d-flex p-jc-center">{this.displayTable()}</div>
     );
   }
 }

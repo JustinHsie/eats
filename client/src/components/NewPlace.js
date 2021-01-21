@@ -4,7 +4,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { Rating } from 'primereact/rating';
-import { database } from '../fakeData/database';
+import { db } from '../fakeData/db';
 import '../styles/NewPlace.css';
 
 export class NewPlace extends React.Component {
@@ -13,27 +13,33 @@ export class NewPlace extends React.Component {
     this.state = {
       name: '',
       location: '',
-      list: null,
       rating: null,
       description: '',
+      listId: null,
+      lists: [],
     };
   }
 
-  handleSubmit = event => {
+  componentDidMount() {
+    this.getLists();
+  }
+
+  getLists = async () => {
+    const lists = await db.getLists();
+    this.setState({ lists: lists });
+  };
+
+  handleSubmit = async event => {
     event.preventDefault();
-    const place = {
-      name: this.state.name,
-      location: this.state.location,
-      list: this.state.list,
-      rating: this.state.rating,
-      description: this.state.description,
-    };
-    const selectedList = place.list;
-    const indexSelectedList = database.lists.db.findIndex(
-      list => list === selectedList
+
+    const placeId = await db.createPlace(
+      this.state.name,
+      this.state.rating,
+      this.state.description,
+      this.state.location
     );
-    selectedList.places.addItem(place);
-    database.lists.editItem(indexSelectedList, selectedList);
+    await db.addPlaceToList(this.state.listId, placeId);
+
     this.props.history.push('/');
   };
 
@@ -72,10 +78,11 @@ export class NewPlace extends React.Component {
               <h3>Select List</h3>
               <div className="card">
                 <Dropdown
-                  value={this.state.list}
-                  options={database.lists.db}
-                  onChange={e => this.setState({ list: e.target.value })}
-                  optionLabel="title"
+                  value={this.state.listId}
+                  options={this.state.lists}
+                  onChange={e => this.setState({ listId: e.target.value })}
+                  optionValue="id"
+                  optionLabel="name"
                   placeholder="Select a List"
                 />
               </div>

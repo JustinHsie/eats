@@ -2,23 +2,17 @@ import React from 'react';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
-import { database } from '../fakeData/database';
-import { Database } from '../classes/database';
+import { db } from '../fakeData/db';
 
 export class CreateList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { title: '', description: '' };
+    this.state = { name: '', description: '' };
   }
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
-    const list = {
-      title: this.state.title,
-      description: this.state.description,
-      places: new Database(),
-    };
-    database.lists.addItem(list);
+    await db.createList(this.state.name, this.state.description);
     this.props.history.push('/');
   };
 
@@ -29,11 +23,11 @@ export class CreateList extends React.Component {
           <div className="card">
             <h2>Create New List</h2>
             <label>
-              <h3>Title</h3>
+              <h3>Name</h3>
               <InputText
-                value={this.state.title}
-                onChange={e => this.setState({ title: e.target.value })}
-                id="listTitle"
+                value={this.state.name}
+                onChange={e => this.setState({ name: e.target.value })}
+                id="listName"
                 className="p-mb-2"
               />
             </label>
