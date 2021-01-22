@@ -1,4 +1,4 @@
-const { Db } = require('../services/mockDb');
+import { Db } from '../services/mockDb';
 
 let dbInstance = new Db();
 export const db = dbInstance;

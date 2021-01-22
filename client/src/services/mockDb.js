@@ -1,4 +1,4 @@
-const { v4 } = require('uuid');
+import { v4 } from 'uuid';
 
 /**
  * Utility to make an operation async
@@ -83,7 +83,7 @@ class PlaceDb {
       rating,
       description,
       location,
-      list
+      list,
     };
 
     return id;
@@ -115,7 +115,7 @@ class PlaceDb {
  * Operations are always async to simulate
  * real network call to an external/backend database
  */
-class Db {
+export class Db {
   constructor() {
     this.listDb = new ListDb();
     this.placeDb = new PlaceDb();
@@ -172,7 +172,13 @@ class Db {
 
   async createPlace(name, rating, description, location, list) {
     return makeAsync(() => {
-      return this.placeDb.createPlace(name, rating, description, location, list);
+      return this.placeDb.createPlace(
+        name,
+        rating,
+        description,
+        location,
+        list
+      );
     });
   }
 
@@ -190,7 +196,14 @@ class Db {
 
   async updatePlace(id, name, rating, description, location, list) {
     return makeAsync(() => {
-      return this.placeDb.updatePlace(id, name, rating, description, location, list);
+      return this.placeDb.updatePlace(
+        id,
+        name,
+        rating,
+        description,
+        location,
+        list
+      );
     });
   }
 
@@ -236,7 +249,3 @@ async function usageExample() {
 
 usageExample();
 */
-
-module.exports = {
-  Db,
-};
