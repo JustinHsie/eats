@@ -37,8 +37,8 @@ export class ViewList extends React.Component {
   handleClickDeletePlace = async (e, placeObject) => {
     e.stopPropagation();
     await db.removePlaceFromList(this.listId, placeObject.id);
-    await db.deletePlace(placeObject.id);
     this.getCurrentList();
+    db.deletePlace(placeObject.id);
   };
 
   actionBodyTemplate = placeObject => {
