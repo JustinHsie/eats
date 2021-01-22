@@ -35,10 +35,10 @@ export class ViewList extends React.Component {
   };
 
   handleClickDeletePlace = async (e, placeObject) => {
+    e.stopPropagation();
     await db.removePlaceFromList(this.listId, placeObject.id);
     await db.deletePlace(placeObject.id);
-    this.props.history.push(`/lists/${this.listId}`);
-    e.stopPropagation();
+    this.getCurrentList();
   };
 
   actionBodyTemplate = placeObject => {
@@ -98,7 +98,11 @@ export class ViewList extends React.Component {
         </div>
       );
     }
-    return <div><h5>Loading...</h5></div>;
+    return (
+      <div>
+        <h5>Loading...</h5>
+      </div>
+    );
   };
 
   render() {
