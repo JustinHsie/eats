@@ -25,9 +25,15 @@ export class ViewList extends React.Component {
     this.props.history.push('/places/new');
   };
 
-  handleClickEditPlace = placeId => {
+  handleClickEditPlace = placeObject => {
+    const placeId = placeObject.id;
     this.props.history.push(`/places/${placeId}`);
-  };
+  }
+
+  handleRowClick = e => {
+    const placeId = e.data.id;
+    this.props.history.push(`/places/${placeId}`);
+  }
 
   handleClickDeleteList = async () => {
     await db.deleteList(this.listId);
@@ -52,7 +58,7 @@ export class ViewList extends React.Component {
         />
         <Button
           type="button"
-          onClick={() => this.handleClickEditPlace(placeObject.id)}
+          onClick={this.handleClickEditPlace}
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success button_float_right"
         />
@@ -60,7 +66,7 @@ export class ViewList extends React.Component {
     );
   };
 
-  displayTable = () => {
+  displayTable() {
     if (this.state.currentList) {
       return (
         <div>
@@ -73,12 +79,10 @@ export class ViewList extends React.Component {
               selection={this.state.place}
               onSelectionChange={e => this.setState({ place: e.value })}
               selectionMode="single"
-              onRowSelect={e => this.handleClickEditPlace(e.data.id)}
+              onRowSelect={this.handleRowClick}
             >
               <Column field="name" header="Name"></Column>
-              <Column
-                body={placeObject => this.actionBodyTemplate(placeObject)}
-              ></Column>
+              <Column body={this.actionBodyTemplate}></Column>
             </DataTable>
           </div>
           <div className="datatable_max_width p-my-6">
@@ -103,7 +107,7 @@ export class ViewList extends React.Component {
         <h5>Loading...</h5>
       </div>
     );
-  };
+  }
 
   render() {
     return (

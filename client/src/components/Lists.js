@@ -18,7 +18,7 @@ export class Lists extends React.Component {
     this.setState({ lists: lists });
   };
 
-  handleClickCard = id => {
+  handleClickCard = id => () => {
     this.props.history.push(`/lists/${id}`);
   };
 
@@ -26,10 +26,10 @@ export class Lists extends React.Component {
     this.props.history.push('/lists/new');
   };
 
-  makeCards = () => {
+  makeCards() {
     const cards = this.state.lists.map(list => {
       return (
-        <div onClick={() => this.handleClickCard(list.id)} key={list.id}>
+        <div onClick={this.handleClickCard(list.id)} key={list.id}>
           <Card
             className="p-m-2 card_min_width p-link card_background_light p-d-flex p-jc-center"
             title={list.name}
@@ -42,7 +42,7 @@ export class Lists extends React.Component {
     return cards;
   };
 
-  displayLists = () => {
+  displayLists() {
     if (this.state.lists.length !== 0) {
       return (
         <div className="p-d-flex p-jc-center p-flex-wrap">
@@ -57,7 +57,7 @@ export class Lists extends React.Component {
       <div>
         {this.displayLists()}
         <div
-          onClick={() => this.handleClickCreateList()}
+          onClick={this.handleClickCreateList}
           className="p-d-flex p-jc-center"
         >
           <Card

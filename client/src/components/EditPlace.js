@@ -65,7 +65,7 @@ export class EditPlace extends React.Component {
     this.props.history.push(`/lists/${this.state.currentPlace.list.id}`);
   };
 
-  displayForm = () => {
+  displayForm() {
     if (this.state.currentPlace) {
       return (
         <div className="card p-d-flex p-flex-column p-flex-md-row">
@@ -147,10 +147,10 @@ export class EditPlace extends React.Component {
         <h5>Loading...</h5>
       </div>
     );
-  };
+  }
   render() {
     return (
-      <form onSubmit={e => this.handleSubmit(e)}>
+      <form onSubmit={this.handleSubmit}>
         <div className="p-m-6 p-d-flex p-jc-center">{this.displayForm()}</div>
       </form>
     );
