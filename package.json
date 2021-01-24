@@ -22,6 +22,5 @@
   },
   "homepage": "https://github.com/JustinHsie/eats#readme",
   "dependencies": {
-    "uuidv4": "^6.2.6"
   }
 }
