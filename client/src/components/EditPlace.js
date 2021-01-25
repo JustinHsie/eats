@@ -1,10 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import {
+  getPlace,
+  getLists,
+  updatePlace,
+  addPlaceToList,
+  removePlaceFromList,
+} from '../redux/actions';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { Rating } from 'primereact/rating';
-import { db } from '../fakeData/db';
 import '../styles/NewPlace.css';
 
 export class EditPlace extends React.Component {
@@ -17,56 +24,51 @@ export class EditPlace extends React.Component {
       rating: null,
       description: '',
       selectedList: null,
-      lists: [],
       currentPlace: null,
     };
   }
 
   componentDidMount() {
-    this.getCurrentPlace();
-    this.getLists();
+    this.props.getPlace(this.placeId);
+    this.props.getLists();
   }
 
-  getCurrentPlace = async () => {
-    const currentPlace = await db.getPlace(this.placeId);
-    this.setState({
-      currentPlace,
-      name: currentPlace.name,
-      location: currentPlace.location,
-      rating: currentPlace.rating,
-      description: currentPlace.description,
-      selectedList: currentPlace.list,
-    });
-  };
+  componentDidUpdate(prevProps) {
+    if (this.props.place !== prevProps.place) this.setCurrentPlace();
+  }
 
-  getLists = async () => {
-    const lists = await db.getLists();
-    this.setState({ lists });
+  setCurrentPlace = () => {
+    const currentPlace = this.props.place;
+    if (currentPlace) {
+      this.setState({
+        currentPlace,
+        name: currentPlace.name,
+        location: currentPlace.location,
+        rating: currentPlace.rating,
+        description: currentPlace.description,
+        selectedList: currentPlace.list,
+      });
+    }
   };
 
   handleClickCancel = () => {
     this.props.history.push(`/lists/${this.state.currentPlace.list.id}`);
   };
 
-  handleSubmit = async e => {
+  handleSubmit = e => {
     e.preventDefault();
-
-    await db.updatePlace(
-      this.placeId,
-      this.state.name,
-      this.state.rating,
-      this.state.description,
-      this.state.location,
-      this.state.selectedList
+    this.props.updatePlace();
+    this.props.addPlaceToList(this.state.selectedList.id, this.placeId);
+    this.props.removePlaceFromList(
+      this.state.currentPlace.list.id,
+      this.placeId
     );
-    await db.addPlaceToList(this.state.selectedList.id, this.placeId);
-    await db.removePlaceFromList(this.state.currentPlace.list.id, this.placeId);
 
     this.props.history.push(`/lists/${this.state.currentPlace.list.id}`);
   };
 
   displayForm() {
-    if (this.state.currentPlace) {
+    if (this.state.currentPlace && this.props.lists) {
       return (
         <div className="card p-d-flex p-flex-column p-flex-md-row">
           <div className="p-mr-3 p-mr-lg-6">
@@ -100,7 +102,7 @@ export class EditPlace extends React.Component {
             <div className="card">
               <Dropdown
                 value={this.state.selectedList}
-                options={this.state.lists}
+                options={this.props.lists}
                 onChange={e => this.setState({ selectedList: e.target.value })}
                 optionLabel="name"
                 placeholder={this.state.selectedList.name}
@@ -156,3 +158,18 @@ export class EditPlace extends React.Component {
     );
   }
 }
+
+function mapState(state) {
+  const { places, lists } = state;
+  return { place: places.place, lists: lists.allLists };
+}
+
+const mapDispatch = {
+  getPlace,
+  getLists,
+  updatePlace,
+  addPlaceToList,
+  removePlaceFromList,
+};
+
+export const connectEditPlace = connect(mapState, mapDispatch)(EditPlace);

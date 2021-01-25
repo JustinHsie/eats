@@ -1,8 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { createList } from '../redux/actions';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
-import { db } from '../fakeData/db';
 
 export class CreateList extends React.Component {
   constructor(props) {
@@ -10,9 +11,9 @@ export class CreateList extends React.Component {
     this.state = { name: '', description: '' };
   }
 
-  handleSubmit = async event => {
+  handleSubmit = event => {
     event.preventDefault();
-    await db.createList(this.state.name, this.state.description);
+    this.props.createList(this.state.name, this.state.description);
     this.props.history.push('/');
   };
 
@@ -45,14 +46,14 @@ export class CreateList extends React.Component {
 
             <div>
               <Button
-                type="button"
-                className="p-my-5 p-button-rounded p-mr-6"
-                label="Add Place"
+                type="submit"
+                className="p-my-5 p-button-success p-button-rounded p-mr-6"
+                label="Create List"
               />
               <Button
-                type="submit"
-                className="p-my-5 p-button-success p-button-rounded"
-                label="Create List"
+                type="button"
+                className="p-my-5 p-button-rounded "
+                label="Add Place"
               />
             </div>
           </div>
@@ -61,3 +62,9 @@ export class CreateList extends React.Component {
     );
   }
 }
+
+const mapDispatch = {
+  createList,
+};
+
+export const connectCreateList = connect(null, mapDispatch)(CreateList);

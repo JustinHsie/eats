@@ -1,29 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { App } from './components/App';
-import { CreateList } from './components/CreateList';
-import { ViewList } from './components/ViewList';
-import { Find } from './components/Find';
-import { NewPlace } from './components/NewPlace';
-import { EditPlace } from './components/EditPlace';
+import { connectApp } from './components/App';
+import { connectCreateList } from './components/CreateList';
+import { connectEditPlace } from './components/EditPlace';
+import { connectViewList } from './components/ViewList';
+import { connectFind } from './components/Find';
+import { connectNewPlace } from './components/NewPlace';
 import { Menu } from './components/Menu';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Menu />
-      <Switch>
-        <Route path="/" exact component={App} />
-        <Route path="/lists/new" exact component={CreateList} />
-        <Route path="/lists/:id" exact component={ViewList} />
-        <Route path="/find" exact component={Find} />
-        <Route path="/places/new" exact component={NewPlace} />
-        <Route path="/places/:id" exact component={EditPlace} />
-      </Switch>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Menu />
+        <Switch>
+          <Route path="/" exact component={connectApp} />
+          <Route path="/lists/new" exact component={connectCreateList} />
+          <Route path="/lists/:id" exact component={connectViewList} />
+          <Route path="/find" exact component={connectFind} />
+          <Route path="/places/new" exact component={connectNewPlace} />
+          <Route path="/places/:id" exact component={connectEditPlace} />
+        </Switch>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

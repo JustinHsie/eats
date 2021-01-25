@@ -58,12 +58,14 @@ class ListDb {
 
   addPlaceToList(id, placeId) {
     this.lists[id].placeIds.push(placeId);
+    return this.getList(id);
   }
 
   removePlaceFromList(id, placeId) {
     const idx = this.lists[id].placeIds.findIndex(el => el === placeId);
 
     this.lists[id].placeIds.splice(idx, 1);
+    return this.getList(id);
   }
 }
 

@@ -1,10 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getLists, createPlace, addPlaceToList } from '../redux/actions';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { Rating } from 'primereact/rating';
-import { db } from '../fakeData/db';
 import '../styles/NewPlace.css';
 
 export class NewPlace extends React.Component {
@@ -21,29 +22,28 @@ export class NewPlace extends React.Component {
   }
 
   componentDidMount() {
-    this.getLists();
+    this.props.getLists();
   }
 
-  getLists = async () => {
-    const lists = await db.getLists();
-    this.setState({ lists: lists });
-  };
+  componentDidUpdate(prevProps) {
+    if (this.props.placeId !== prevProps.placeId) {
+      this.props.addPlaceToList(this.state.selectedList.id, this.props.placeId);
+    }
+  }
 
   handleClickCancel = () => {
     this.props.history.push('/');
   };
 
-  handleSubmit = async event => {
+  handleSubmit = event => {
     event.preventDefault();
-
-    const placeId = await db.createPlace(
+    this.props.createPlace(
       this.state.name,
       this.state.rating,
       this.state.description,
       this.state.location,
       this.state.selectedList
     );
-    await db.addPlaceToList(this.state.selectedList.id, placeId);
 
     this.props.history.push('/');
   };
@@ -84,8 +84,10 @@ export class NewPlace extends React.Component {
               <div className="card">
                 <Dropdown
                   value={this.state.selectedList}
-                  options={this.state.lists}
-                  onChange={e => this.setState({ selectedList: e.target.value })}
+                  options={this.props.lists}
+                  onChange={e =>
+                    this.setState({ selectedList: e.target.value })
+                  }
                   optionLabel="name"
                   placeholder="Select a List"
                 />
@@ -129,3 +131,16 @@ export class NewPlace extends React.Component {
     );
   }
 }
+
+function mapState(state) {
+  const { lists, places } = state;
+  return { lists: lists.allLists, placeId: places.createdPlaceId };
+}
+
+const mapDispatch = {
+  getLists,
+  createPlace,
+  addPlaceToList,
+};
+
+export const connectNewPlace = connect(mapState, mapDispatch)(NewPlace);

@@ -1,28 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getLists } from '../redux/actions';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { places as fakePlaces } from '../fakeData/places';
-import { db } from '../fakeData/db';
 import { GoogleMaps } from './GoogleMaps';
 import '../styles/Find.css';
 
 export class Find extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { lists: [], selectedList: null };
+    this.state = { selectedList: null };
   }
 
   componentDidMount() {
-    this.getLists();
+    this.props.getLists();
   }
-
-  getLists = async () => {
-    const lists = await db.getLists();
-    this.setState({ lists: lists });
-  };
 
   render() {
     return (
@@ -45,7 +41,7 @@ export class Find extends React.Component {
             <div className="card p-mb-6">
               <Dropdown
                 value={this.state.selectedList}
-                options={this.state.lists}
+                options={this.props.lists}
                 onChange={e => this.setState({ selectedList: e.target.value })}
                 optionLabel="name"
                 placeholder="Select a List"
@@ -74,3 +70,14 @@ export class Find extends React.Component {
     );
   }
 }
+
+function mapState(state) {
+  const { lists } = state;
+  return { lists: lists.allLists };
+}
+
+const mapDispatch = {
+  getLists,
+};
+
+export const connectFind = connect(mapState, mapDispatch)(Find);

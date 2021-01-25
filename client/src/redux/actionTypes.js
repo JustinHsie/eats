@@ -1,0 +1,10 @@
+export const CREATE_LIST = 'CREATE_LIST';
+export const GET_LIST = 'GET_LIST';
+export const GET_LISTS = 'GET_LISTS';
+export const DELETE_LIST = 'DELETE_LIST';
+export const CREATE_PLACE = 'CREATE_PLACE';
+export const GET_PLACE = 'GET_PLACE';
+export const UPDATE_PLACE = 'UPDATE_PLACE';
+export const ADD_PLACE_TO_LIST = 'ADD_PLACE_TO_LIST';
+export const REMOVE_PLACE_FROM_LIST = 'REMOVE_PLACE_FROM_LIST';
+export const DELETE_PLACE = 'DELETE_PLACE';

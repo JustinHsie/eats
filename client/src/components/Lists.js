@@ -1,22 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getLists } from '../redux/actions';
 import { Card } from 'primereact/card';
 import '../styles/Lists.css';
-import { db } from '../fakeData/db';
 
 export class Lists extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { lists: [] };
-  }
-
   componentDidMount() {
-    this.getLists();
+    this.props.getLists();
   }
-
-  getLists = async () => {
-    const lists = await db.getLists();
-    this.setState({ lists: lists });
-  };
 
   handleClickCard = id => () => {
     this.props.history.push(`/lists/${id}`);
@@ -27,7 +18,7 @@ export class Lists extends React.Component {
   };
 
   makeCards() {
-    const cards = this.state.lists.map(list => {
+    const cards = this.props.lists.map(list => {
       return (
         <div onClick={this.handleClickCard(list.id)} key={list.id}>
           <Card
@@ -40,17 +31,17 @@ export class Lists extends React.Component {
       );
     });
     return cards;
-  };
+  }
 
   displayLists() {
-    if (this.state.lists.length !== 0) {
+    if (this.props.lists) {
       return (
         <div className="p-d-flex p-jc-center p-flex-wrap">
           {this.makeCards()}
         </div>
       );
     }
-  };
+  }
 
   render() {
     return (
@@ -71,3 +62,14 @@ export class Lists extends React.Component {
     );
   }
 }
+
+function mapState(state) {
+  const { lists } = state;
+  return { lists: lists.allLists };
+}
+
+const mapDispatch = {
+  getLists,
+};
+
+export default connect(mapState, mapDispatch)(Lists);

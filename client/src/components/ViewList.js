@@ -1,25 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getList, deleteList, deletePlace } from '../redux/actions';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { db } from '../fakeData/db';
 import '../styles/ViewList.css';
 
 export class ViewList extends React.Component {
   constructor(props) {
     super(props);
     this.listId = this.props.match.params.id;
-    this.state = { place: null, currentList: null };
+    this.state = { place: null };
   }
 
   componentDidMount() {
-    this.getCurrentList();
+    this.props.getList(this.listId);
   }
-
-  getCurrentList = async () => {
-    const currentList = await db.getList(this.listId);
-    this.setState({ currentList });
-  };
 
   handleClickAddPlace = () => {
     this.props.history.push('/places/new');
@@ -28,23 +24,21 @@ export class ViewList extends React.Component {
   handleClickEditPlace = placeObject => {
     const placeId = placeObject.id;
     this.props.history.push(`/places/${placeId}`);
-  }
+  };
 
   handleRowClick = e => {
     const placeId = e.data.id;
     this.props.history.push(`/places/${placeId}`);
-  }
+  };
 
-  handleClickDeleteList = async () => {
-    await db.deleteList(this.listId);
+  handleClickDeleteList = () => {
+    this.props.deleteList(this.listId);
     this.props.history.push('/');
   };
 
   handleClickDeletePlace = async (e, placeObject) => {
     e.stopPropagation();
-    await db.removePlaceFromList(this.listId, placeObject.id);
-    this.getCurrentList();
-    db.deletePlace(placeObject.id);
+    this.props.deletePlace(placeObject.id);
   };
 
   actionBodyTemplate = placeObject => {
@@ -67,15 +61,15 @@ export class ViewList extends React.Component {
   };
 
   displayTable() {
-    if (this.state.currentList) {
+    if (this.props.currentList) {
       return (
         <div>
-          <h2>{this.state.currentList.name}</h2>
-          <p>{this.state.currentList.description}</p>
+          <h2>{this.props.currentList.name}</h2>
+          <p>{this.props.currentList.description}</p>
           <div className="card">
             <DataTable
               className="datatable_max_width"
-              value={this.state.currentList.places}
+              value={this.props.currentList.places}
               selection={this.state.place}
               onSelectionChange={e => this.setState({ place: e.value })}
               selectionMode="single"
@@ -115,3 +109,16 @@ export class ViewList extends React.Component {
     );
   }
 }
+
+function mapState(state) {
+  const { lists } = state;
+  return { currentList: lists.list };
+}
+
+const mapDispatch = {
+  getList,
+  deleteList,
+  deletePlace,
+};
+
+export const connectViewList = connect(mapState, mapDispatch)(ViewList);

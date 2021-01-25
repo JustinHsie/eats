@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
-import { Lists } from './Lists';
+import Lists from './Lists';
 import '../styles/App.css';
 
 export class App extends React.Component {
@@ -18,3 +19,9 @@ export class App extends React.Component {
     );
   }
 }
+
+function mapState(state) {
+  return { ...state };
+}
+
+export const connectApp = connect(mapState)(App);
