@@ -10,6 +10,7 @@ import {
   REMOVE_PLACE_FROM_LIST,
   DELETE_PLACE,
 } from './actionTypes';
+import { history } from '../history';
 import { db } from '../fakeData/db';
 
 export function createList(name, description) {
@@ -19,6 +20,7 @@ export function createList(name, description) {
       type: CREATE_LIST,
       payload: { listId },
     });
+    history.push('/');
   };
 }
 
@@ -65,6 +67,7 @@ export function addPlaceToList(listId, placeId) {
       type: ADD_PLACE_TO_LIST,
       payload: { list },
     });
+    history.push(`/lists/${listId}`);
   };
 }
 
@@ -75,6 +78,7 @@ export function removePlaceFromList(listId, placeId) {
       type: REMOVE_PLACE_FROM_LIST,
       payload: { list },
     });
+    history.push(`/lists/${listId}`);
   };
 }
 
@@ -87,11 +91,12 @@ export function createPlace(name, rating, description, location, list) {
       location,
       list
     );
+    db.addPlaceToList(list.id, placeId);
     dispatch({
       type: CREATE_PLACE,
       payload: { placeId },
     });
-    db.addPlaceToList(list.id, placeId);
+    history.push(`/lists/${list.id}`);
   };
 }
 
@@ -111,21 +116,15 @@ export function deleteList(listId) {
     dispatch({
       type: DELETE_LIST,
     });
+    history.push('/');
   };
 }
 
 export function deletePlace(placeId) {
   return async function (dispatch) {
-    const place = await db.getPlace(placeId);
     await db.deletePlace(placeId);
     dispatch({
       type: DELETE_PLACE,
-    });
-
-    const list = await db.removePlaceFromList(place.list.id, placeId);
-    dispatch({
-      type: REMOVE_PLACE_FROM_LIST,
-      payload: { list },
     });
   };
 }

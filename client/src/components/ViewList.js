@@ -1,6 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getList, deleteList, deletePlace } from '../redux/actions';
+import { history } from '../history';
+import {
+  getList,
+  deleteList,
+  deletePlace,
+  removePlaceFromList,
+} from '../redux/actions';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -17,28 +23,14 @@ export class ViewList extends React.Component {
     this.props.getList(this.listId);
   }
 
-  handleClickAddPlace = () => {
-    this.props.history.push('/places/new');
-  };
-
-  handleClickEditPlace = placeObject => {
-    const placeId = placeObject.id;
-    this.props.history.push(`/places/${placeId}`);
-  };
-
-  handleRowClick = e => {
-    const placeId = e.data.id;
-    this.props.history.push(`/places/${placeId}`);
-  };
-
-  handleClickDeleteList = () => {
+  handleDeleteList = () => {
     this.props.deleteList(this.listId);
-    this.props.history.push('/');
   };
 
-  handleClickDeletePlace = async (e, placeObject) => {
+  handleDeletePlace = (e, placeObject) => {
     e.stopPropagation();
     this.props.deletePlace(placeObject.id);
+    this.props.removePlaceFromList(placeObject.list.id, placeObject.id);
   };
 
   actionBodyTemplate = placeObject => {
@@ -46,13 +38,13 @@ export class ViewList extends React.Component {
       <React.Fragment>
         <Button
           type="button"
-          onClick={e => this.handleClickDeletePlace(e, placeObject)}
+          onClick={e => this.handleDeletePlace(e, placeObject)}
           icon="pi pi-trash"
           className="p-button-rounded p-button-warning p-ml-2 button_float_right"
         />
         <Button
           type="button"
-          onClick={this.handleClickEditPlace}
+          onClick={e => history.push(`/places/${e.id}`)}
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success button_float_right"
         />
@@ -73,7 +65,7 @@ export class ViewList extends React.Component {
               selection={this.state.place}
               onSelectionChange={e => this.setState({ place: e.value })}
               selectionMode="single"
-              onRowSelect={this.handleRowClick}
+              onRowSelect={e => history.push(`/places/${e.data.id}`)}
             >
               <Column field="name" header="Name"></Column>
               <Column body={this.actionBodyTemplate}></Column>
@@ -84,11 +76,11 @@ export class ViewList extends React.Component {
               type="button"
               className="p-button-rounded"
               label="Add New Place"
-              onClick={this.handleClickAddPlace}
+              onClick={() => history.push('/places/new')}
             />
             <Button
               type="button"
-              onClick={this.handleClickDeleteList}
+              onClick={this.handleDeleteList}
               className="p-button-danger p-button-rounded button_float_right"
               label="Delete List"
             />
@@ -119,6 +111,7 @@ const mapDispatch = {
   getList,
   deleteList,
   deletePlace,
+  removePlaceFromList,
 };
 
 export const connectViewList = connect(mapState, mapDispatch)(ViewList);

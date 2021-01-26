@@ -14,7 +14,6 @@ export class CreateList extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     this.props.createList(this.state.name, this.state.description);
-    this.props.history.push('/');
   };
 
   render() {

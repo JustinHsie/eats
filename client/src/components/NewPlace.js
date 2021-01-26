@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { history } from '../history';
 import { getLists, createPlace, addPlaceToList } from '../redux/actions';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
@@ -25,16 +26,6 @@ export class NewPlace extends React.Component {
     this.props.getLists();
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.placeId !== prevProps.placeId) {
-      this.props.addPlaceToList(this.state.selectedList.id, this.props.placeId);
-    }
-  }
-
-  handleClickCancel = () => {
-    this.props.history.push('/');
-  };
-
   handleSubmit = event => {
     event.preventDefault();
     this.props.createPlace(
@@ -44,8 +35,6 @@ export class NewPlace extends React.Component {
       this.state.location,
       this.state.selectedList
     );
-
-    this.props.history.push('/');
   };
 
   render() {
@@ -119,7 +108,7 @@ export class NewPlace extends React.Component {
                 />
                 <Button
                   type="button"
-                  onClick={this.handleClickCancel}
+                  onClick={() => history.push('/')}
                   className="p-my-5 p-button-secondary p-button-rounded"
                   label="Cancel"
                 />
@@ -133,8 +122,8 @@ export class NewPlace extends React.Component {
 }
 
 function mapState(state) {
-  const { lists, places } = state;
-  return { lists: lists.allLists, placeId: places.createdPlaceId };
+  const { lists } = state;
+  return { lists: lists.allLists };
 }
 
 const mapDispatch = {

@@ -58,14 +58,12 @@ class ListDb {
 
   addPlaceToList(id, placeId) {
     this.lists[id].placeIds.push(placeId);
-    return this.getList(id);
   }
 
   removePlaceFromList(id, placeId) {
     const idx = this.lists[id].placeIds.findIndex(el => el === placeId);
 
     this.lists[id].placeIds.splice(idx, 1);
-    return this.getList(id);
   }
 }
 
@@ -162,13 +160,15 @@ export class Db {
 
   async addPlaceToList(id, placeId) {
     return makeAsync(() => {
-      return this.listDb.addPlaceToList(id, placeId);
+      this.listDb.addPlaceToList(id, placeId);
+      return this.getList(id);
     });
   }
 
   async removePlaceFromList(id, placeId) {
     return makeAsync(() => {
-      return this.listDb.removePlaceFromList(id, placeId);
+      this.listDb.removePlaceFromList(id, placeId);
+      return this.getList(id);
     });
   }
 

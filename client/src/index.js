@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
+import { history } from './history';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 
@@ -17,7 +18,7 @@ import { Menu } from './components/Menu';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <Router history={history}>
         <Menu />
         <Switch>
           <Route path="/" exact component={connectApp} />
@@ -27,7 +28,7 @@ ReactDOM.render(
           <Route path="/places/new" exact component={connectNewPlace} />
           <Route path="/places/:id" exact component={connectEditPlace} />
         </Switch>
-      </BrowserRouter>
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

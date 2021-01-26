@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { history } from '../history';
 import {
   getPlace,
   getLists,
@@ -19,12 +20,12 @@ export class EditPlace extends React.Component {
     super(props);
     this.placeId = this.props.match.params.id;
     this.state = {
+      fetchedPlace: null,
       name: '',
-      location: '',
       rating: null,
       description: '',
+      location: '',
       selectedList: null,
-      currentPlace: null,
     };
   }
 
@@ -34,45 +35,49 @@ export class EditPlace extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.place !== prevProps.place) this.setCurrentPlace();
+    if (this.props.place !== prevProps.place) this.setFetchedPlace();
   }
 
-  setCurrentPlace = () => {
-    const currentPlace = this.props.place;
-    if (currentPlace) {
+  setFetchedPlace = () => {
+    const fetchedPlace = this.props.place;
+    if (fetchedPlace) {
       this.setState({
-        currentPlace,
-        name: currentPlace.name,
-        location: currentPlace.location,
-        rating: currentPlace.rating,
-        description: currentPlace.description,
-        selectedList: currentPlace.list,
+        fetchedPlace,
+        name: fetchedPlace.name,
+        rating: fetchedPlace.rating,
+        description: fetchedPlace.description,
+        location: fetchedPlace.location,
+        selectedList: fetchedPlace.list,
       });
     }
   };
 
-  handleClickCancel = () => {
-    this.props.history.push(`/lists/${this.state.currentPlace.list.id}`);
-  };
-
   handleSubmit = e => {
     e.preventDefault();
-    this.props.updatePlace();
-    this.props.addPlaceToList(this.state.selectedList.id, this.placeId);
-    this.props.removePlaceFromList(
-      this.state.currentPlace.list.id,
-      this.placeId
+    this.props.updatePlace(
+      this.state.fetchedPlace.id,
+      this.state.name,
+      this.state.rating,
+      this.state.description,
+      this.state.location,
+      this.state.selectedList
     );
-
-    this.props.history.push(`/lists/${this.state.currentPlace.list.id}`);
+    this.props.addPlaceToList(
+      this.state.selectedList.id,
+      this.state.fetchedPlace.id
+    );
+    this.props.removePlaceFromList(
+      this.state.fetchedPlace.list.id,
+      this.state.fetchedPlace.id
+    );
   };
 
   displayForm() {
-    if (this.state.currentPlace && this.props.lists) {
+    if (this.state.fetchedPlace && this.props.lists) {
       return (
         <div className="card p-d-flex p-flex-column p-flex-md-row">
           <div className="p-mr-3 p-mr-lg-6">
-            <h2>Edit {this.state.currentPlace.name}</h2>
+            <h2>Edit {this.state.fetchedPlace.name}</h2>
             <h3>Name</h3>
             <InputText
               id="title"
@@ -135,7 +140,9 @@ export class EditPlace extends React.Component {
               />
               <Button
                 type="button"
-                onClick={this.handleClickCancel}
+                onClick={() =>
+                  history.push(`/lists/${this.state.fetchedPlace.list.id}`)
+                }
                 className="p-my-5 p-button-secondary p-button-rounded"
                 label="Cancel"
               />

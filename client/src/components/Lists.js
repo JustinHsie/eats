@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { history } from '../history';
 import { getLists } from '../redux/actions';
 import { Card } from 'primereact/card';
 import '../styles/Lists.css';
@@ -9,18 +10,10 @@ export class Lists extends React.Component {
     this.props.getLists();
   }
 
-  handleClickCard = id => () => {
-    this.props.history.push(`/lists/${id}`);
-  };
-
-  handleClickCreateList = () => {
-    this.props.history.push('/lists/new');
-  };
-
   makeCards() {
     const cards = this.props.lists.map(list => {
       return (
-        <div onClick={this.handleClickCard(list.id)} key={list.id}>
+        <div onClick={() => history.push(`/lists/${list.id}`)} key={list.id}>
           <Card
             className="p-m-2 card_min_width p-link card_background_light p-d-flex p-jc-center"
             title={list.name}
@@ -48,7 +41,7 @@ export class Lists extends React.Component {
       <div>
         {this.displayLists()}
         <div
-          onClick={this.handleClickCreateList}
+          onClick={() => history.push('/lists/new')}
           className="p-d-flex p-jc-center"
         >
           <Card

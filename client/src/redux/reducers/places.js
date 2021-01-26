@@ -1,8 +1,12 @@
-import { CREATE_PLACE, DELETE_PLACE, GET_PLACE, UPDATE_PLACE } from '../actionTypes';
+import {
+  CREATE_PLACE,
+  DELETE_PLACE,
+  GET_PLACE,
+  UPDATE_PLACE,
+} from '../actionTypes';
 
 const initialState = {
   place: null,
-  createdPlaceId: null
 };
 
 export function placeReducer(state = initialState, action) {
@@ -18,8 +22,7 @@ export function placeReducer(state = initialState, action) {
       return state;
     }
     case CREATE_PLACE: {
-      const {placeId} = action.payload;
-      return {...state, createdPlaceId: placeId}
+      return state;
     }
     case DELETE_PLACE: {
       return state;
