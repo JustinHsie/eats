@@ -23,14 +23,30 @@ export class ViewList extends React.Component {
     this.props.getList(this.listId);
   }
 
-  handleDeleteList = () => {
+  handleClickDeleteList = () => {
     this.props.deleteList(this.listId);
   };
 
-  handleDeletePlace = (e, placeObject) => {
+  handleClickDeletePlace = placeObject => e => {
     e.stopPropagation();
     this.props.deletePlace(placeObject.id);
     this.props.removePlaceFromList(placeObject.list.id, placeObject.id);
+  };
+
+  handleClickEdit = e => {
+    history.push(`/places/${e.id}`);
+  };
+
+  handleClickNewPlace = () => {
+    history.push('/places/new');
+  };
+
+  handleRowSelect = e => {
+    history.push(`/places/${e.data.id}`);
+  };
+
+  handleSetState = key => e => {
+    this.setState({ [key]: e.value });
   };
 
   actionBodyTemplate = placeObject => {
@@ -38,13 +54,13 @@ export class ViewList extends React.Component {
       <React.Fragment>
         <Button
           type="button"
-          onClick={e => this.handleDeletePlace(e, placeObject)}
+          onClick={this.handleClickDeletePlace(placeObject)}
           icon="pi pi-trash"
           className="p-button-rounded p-button-warning p-ml-2 button_float_right"
         />
         <Button
           type="button"
-          onClick={e => history.push(`/places/${e.id}`)}
+          onClick={this.handleClickEdit}
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success button_float_right"
         />
@@ -63,9 +79,9 @@ export class ViewList extends React.Component {
               className="datatable_max_width"
               value={this.props.currentList.places}
               selection={this.state.place}
-              onSelectionChange={e => this.setState({ place: e.value })}
+              onSelectionChange={this.handleSetState('place')}
               selectionMode="single"
-              onRowSelect={e => history.push(`/places/${e.data.id}`)}
+              onRowSelect={this.handleRowSelect}
             >
               <Column field="name" header="Name"></Column>
               <Column body={this.actionBodyTemplate}></Column>
@@ -76,11 +92,11 @@ export class ViewList extends React.Component {
               type="button"
               className="p-button-rounded"
               label="Add New Place"
-              onClick={() => history.push('/places/new')}
+              onClick={this.handleClickNewPlace}
             />
             <Button
               type="button"
-              onClick={this.handleDeleteList}
+              onClick={this.handleClickDeleteList}
               className="p-button-danger p-button-rounded button_float_right"
               label="Delete List"
             />
@@ -114,4 +130,4 @@ const mapDispatch = {
   removePlaceFromList,
 };
 
-export const connectViewList = connect(mapState, mapDispatch)(ViewList);
+export const ConnectViewList = connect(mapState, mapDispatch)(ViewList);

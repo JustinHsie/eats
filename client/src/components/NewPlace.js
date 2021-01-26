@@ -37,6 +37,14 @@ export class NewPlace extends React.Component {
     );
   };
 
+  handleClickCancel = () => {
+    history.push('/');
+  };
+
+  handleSetState = key => e => {
+    this.setState({ [key]: e.target.value });
+  };
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
@@ -47,7 +55,7 @@ export class NewPlace extends React.Component {
               <h3>Name</h3>
               <InputText
                 value={this.state.name}
-                onChange={e => this.setState({ name: e.target.value })}
+                onChange={this.handleSetState('name')}
                 id="placeName"
                 className="p-mb-2"
               />
@@ -57,7 +65,7 @@ export class NewPlace extends React.Component {
                 <div className="p-inputgroup">
                   <InputText
                     value={this.state.location}
-                    onChange={e => this.setState({ location: e.target.value })}
+                    onChange={this.handleSetState('location')}
                     className="p-mb-2"
                     id="location"
                   />
@@ -74,9 +82,7 @@ export class NewPlace extends React.Component {
                 <Dropdown
                   value={this.state.selectedList}
                   options={this.props.lists}
-                  onChange={e =>
-                    this.setState({ selectedList: e.target.value })
-                  }
+                  onChange={this.handleSetState('selectedList')}
                   optionLabel="name"
                   placeholder="Select a List"
                 />
@@ -87,14 +93,14 @@ export class NewPlace extends React.Component {
                 <h3>Rating</h3>
                 <Rating
                   value={this.state.rating}
-                  onChange={e => this.setState({ rating: e.target.value })}
+                  onChange={this.handleSetState('rating')}
                 />
               </div>
               <div className="p-mt-3">
                 <h3>Description</h3>
                 <InputTextarea
                   value={this.state.description}
-                  onChange={e => this.setState({ description: e.target.value })}
+                  onChange={this.handleSetState('description')}
                   rows={5}
                   cols={30}
                   autoResize
@@ -108,7 +114,7 @@ export class NewPlace extends React.Component {
                 />
                 <Button
                   type="button"
-                  onClick={() => history.push('/')}
+                  onClick={this.handleClickCancel}
                   className="p-my-5 p-button-secondary p-button-rounded"
                   label="Cancel"
                 />
@@ -132,4 +138,4 @@ const mapDispatch = {
   addPlaceToList,
 };
 
-export const connectNewPlace = connect(mapState, mapDispatch)(NewPlace);
+export const ConnectNewPlace = connect(mapState, mapDispatch)(NewPlace);

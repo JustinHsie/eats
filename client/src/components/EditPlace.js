@@ -35,7 +35,9 @@ export class EditPlace extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.place !== prevProps.place) this.setFetchedPlace();
+    if (this.props.place !== prevProps.place) {
+      this.setFetchedPlace();
+    }
   }
 
   setFetchedPlace = () => {
@@ -72,6 +74,14 @@ export class EditPlace extends React.Component {
     );
   };
 
+  handleSetState = key => e => {
+    this.setState({ [key]: e.target.value });
+  };
+
+  handleClickCancel = () => {
+    history.push(`/lists/${this.state.fetchedPlace.list.id}`);
+  };
+
   displayForm() {
     if (this.state.fetchedPlace && this.props.lists) {
       return (
@@ -83,7 +93,7 @@ export class EditPlace extends React.Component {
               id="title"
               className="p-mb-2"
               value={this.state.name}
-              onChange={e => this.setState({ name: e.target.value })}
+              onChange={this.handleSetState('name')}
             />
 
             <h3>Location</h3>
@@ -93,7 +103,7 @@ export class EditPlace extends React.Component {
                   className="p-mb-2"
                   id="location"
                   value={this.state.location}
-                  onChange={e => this.setState({ location: e.target.value })}
+                  onChange={this.handleSetState('location')}
                 />
                 <Button
                   type="button"
@@ -108,7 +118,7 @@ export class EditPlace extends React.Component {
               <Dropdown
                 value={this.state.selectedList}
                 options={this.props.lists}
-                onChange={e => this.setState({ selectedList: e.target.value })}
+                onChange={this.handleSetState('selectedList')}
                 optionLabel="name"
                 placeholder={this.state.selectedList.name}
               />
@@ -119,7 +129,7 @@ export class EditPlace extends React.Component {
               <h3>Rating</h3>
               <Rating
                 value={this.state.rating}
-                onChange={e => this.setState({ rating: e.target.value })}
+                onChange={this.handleSetState('rating')}
               />
             </div>
             <div className="p-mt-3">
@@ -128,7 +138,7 @@ export class EditPlace extends React.Component {
                 rows={5}
                 cols={30}
                 value={this.state.description}
-                onChange={e => this.setState({ description: e.target.value })}
+                onChange={this.handleSetState('description')}
                 autoResize
               />
             </div>
@@ -140,9 +150,7 @@ export class EditPlace extends React.Component {
               />
               <Button
                 type="button"
-                onClick={() =>
-                  history.push(`/lists/${this.state.fetchedPlace.list.id}`)
-                }
+                onClick={this.handleClickCancel}
                 className="p-my-5 p-button-secondary p-button-rounded"
                 label="Cancel"
               />
@@ -179,4 +187,4 @@ const mapDispatch = {
   removePlaceFromList,
 };
 
-export const connectEditPlace = connect(mapState, mapDispatch)(EditPlace);
+export const ConnectEditPlace = connect(mapState, mapDispatch)(EditPlace);

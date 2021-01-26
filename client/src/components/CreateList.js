@@ -11,9 +11,13 @@ export class CreateList extends React.Component {
     this.state = { name: '', description: '' };
   }
 
-  handleSubmit = event => {
-    event.preventDefault();
+  handleSubmit = e => {
+    e.preventDefault();
     this.props.createList(this.state.name, this.state.description);
+  };
+
+  handleSetState = key => e => {
+    this.setState({ [key]: e.target.value });
   };
 
   render() {
@@ -26,7 +30,7 @@ export class CreateList extends React.Component {
               <h3>Name</h3>
               <InputText
                 value={this.state.name}
-                onChange={e => this.setState({ name: e.target.value })}
+                onChange={this.handleSetState('name')}
                 id="listName"
                 className="p-mb-2"
               />
@@ -38,7 +42,7 @@ export class CreateList extends React.Component {
                 rows={5}
                 cols={30}
                 value={this.state.description}
-                onChange={e => this.setState({ description: e.target.value })}
+                onChange={this.handleSetState('description')}
                 autoResize
               />
             </label>
@@ -66,4 +70,4 @@ const mapDispatch = {
   createList,
 };
 
-export const connectCreateList = connect(null, mapDispatch)(CreateList);
+export const ConnectCreateList = connect(null, mapDispatch)(CreateList);

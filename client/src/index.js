@@ -7,12 +7,12 @@ import { store } from './redux/store';
 
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { connectApp } from './components/App';
-import { connectCreateList } from './components/CreateList';
-import { connectEditPlace } from './components/EditPlace';
-import { connectViewList } from './components/ViewList';
-import { connectFind } from './components/Find';
-import { connectNewPlace } from './components/NewPlace';
+import { ConnectApp } from './components/App';
+import { ConnectCreateList } from './components/CreateList';
+import { ConnectEditPlace } from './components/EditPlace';
+import { ConnectViewList } from './components/ViewList';
+import { ConnectFind } from './components/Find';
+import { ConnectNewPlace } from './components/NewPlace';
 import { Menu } from './components/Menu';
 
 ReactDOM.render(
@@ -21,12 +21,12 @@ ReactDOM.render(
       <Router history={history}>
         <Menu />
         <Switch>
-          <Route path="/" exact component={connectApp} />
-          <Route path="/lists/new" exact component={connectCreateList} />
-          <Route path="/lists/:id" exact component={connectViewList} />
-          <Route path="/find" exact component={connectFind} />
-          <Route path="/places/new" exact component={connectNewPlace} />
-          <Route path="/places/:id" exact component={connectEditPlace} />
+          <Route path="/" exact component={ConnectApp} />
+          <Route path="/lists/new" exact component={ConnectCreateList} />
+          <Route path="/lists/:id" exact component={ConnectViewList} />
+          <Route path="/find" exact component={ConnectFind} />
+          <Route path="/places/new" exact component={ConnectNewPlace} />
+          <Route path="/places/:id" exact component={ConnectEditPlace} />
         </Switch>
       </Router>
     </Provider>

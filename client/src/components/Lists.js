@@ -10,10 +10,18 @@ export class Lists extends React.Component {
     this.props.getLists();
   }
 
+  handleClickList = listId => () => {
+    history.push(`/lists/${listId}`);
+  };
+
+  handleClickNew = () => {
+    history.push('/lists/new');
+  };
+
   makeCards() {
     const cards = this.props.lists.map(list => {
       return (
-        <div onClick={() => history.push(`/lists/${list.id}`)} key={list.id}>
+        <div onClick={this.handleClickList(list.id)} key={list.id}>
           <Card
             className="p-m-2 card_min_width p-link card_background_light p-d-flex p-jc-center"
             title={list.name}
@@ -40,10 +48,7 @@ export class Lists extends React.Component {
     return (
       <div>
         {this.displayLists()}
-        <div
-          onClick={() => history.push('/lists/new')}
-          className="p-d-flex p-jc-center"
-        >
+        <div onClick={this.handleClickNew} className="p-d-flex p-jc-center">
           <Card
             className="p-m-2 card_min_width p-link card_background_dark p-d-flex p-jc-center"
             title="Create List"
@@ -65,4 +70,4 @@ const mapDispatch = {
   getLists,
 };
 
-export default connect(mapState, mapDispatch)(Lists);
+export const ConnectLists = connect(mapState, mapDispatch)(Lists);

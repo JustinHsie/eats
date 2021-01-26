@@ -20,6 +20,10 @@ export class Find extends React.Component {
     this.props.getLists();
   }
 
+  handleSetState = key => e => {
+    this.setState({ [key]: e.target.value });
+  };
+
   render() {
     return (
       <div className="p-m-3 p-m-lg-6">
@@ -42,7 +46,7 @@ export class Find extends React.Component {
               <Dropdown
                 value={this.state.selectedList}
                 options={this.props.lists}
-                onChange={e => this.setState({ selectedList: e.target.value })}
+                onChange={this.handleSetState('selectedList')}
                 optionLabel="name"
                 placeholder="Select a List"
               />
@@ -80,4 +84,4 @@ const mapDispatch = {
   getLists,
 };
 
-export const connectFind = connect(mapState, mapDispatch)(Find);
+export const ConnectFind = connect(mapState, mapDispatch)(Find);
