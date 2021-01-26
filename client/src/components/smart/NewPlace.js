@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { history } from '../history';
-import { getLists, createPlace, addPlaceToList } from '../redux/actions';
+import { history } from '../../history';
+import { getLists, createPlace, addPlaceToList } from '../../redux/actions';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';

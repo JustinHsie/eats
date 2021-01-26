@@ -7,13 +7,13 @@ import { store } from './redux/store';
 
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { ConnectApp } from './components/App';
-import { ConnectCreateList } from './components/CreateList';
-import { ConnectEditPlace } from './components/EditPlace';
-import { ConnectViewList } from './components/ViewList';
-import { ConnectFind } from './components/Find';
-import { ConnectNewPlace } from './components/NewPlace';
-import { Menu } from './components/Menu';
+import { ConnectApp } from './components/smart/App';
+import { ConnectCreateList } from './components/smart/CreateList';
+import { ConnectEditPlace } from './components/smart/EditPlace';
+import { ConnectViewList } from './components/smart/ViewList';
+import { ConnectFind } from './components/smart/Find';
+import { ConnectNewPlace } from './components/smart/NewPlace';
+import { Menu } from './components/dumb/Menu';
 
 ReactDOM.render(
   <React.StrictMode>

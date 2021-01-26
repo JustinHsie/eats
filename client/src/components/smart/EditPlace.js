@@ -1,19 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { history } from '../history';
+import { history } from '../../history';
 import {
   getPlace,
   getLists,
   updatePlace,
   addPlaceToList,
   removePlaceFromList,
-} from '../redux/actions';
+} from '../../redux/actions';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { Rating } from 'primereact/rating';
-import '../styles/NewPlace.css';
+import '../styles/EditPlace.css';
 
 export class EditPlace extends React.Component {
   constructor(props) {

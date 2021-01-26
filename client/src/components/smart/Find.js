@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLists } from '../redux/actions';
+import { getLists } from '../../redux/actions';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
-import { places as fakePlaces } from '../fakeData/places';
-import { GoogleMaps } from './GoogleMaps';
+import { places as fakePlaces } from '../../fakeData/places';
+import { GoogleMaps } from '../dumb/GoogleMaps';
 import '../styles/Find.css';
 
 export class Find extends React.Component {

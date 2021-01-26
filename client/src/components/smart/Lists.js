@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { history } from '../history';
-import { getLists } from '../redux/actions';
+import { history } from '../../history';
+import { getLists } from '../../redux/actions';
 import { Card } from 'primereact/card';
 import '../styles/Lists.css';
 

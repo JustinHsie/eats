@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { history } from '../history';
+import { history } from '../../history';
 import {
   getList,
   deleteList,
   deletePlace,
   removePlaceFromList,
-} from '../redux/actions';
+} from '../../redux/actions';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
