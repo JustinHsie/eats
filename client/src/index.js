@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { history } from './history';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
@@ -14,6 +14,7 @@ import { ConnectViewList } from './components/smart/ViewList';
 import { ConnectFind } from './components/smart/Find';
 import { ConnectNewPlace } from './components/smart/NewPlace';
 import { Menu } from './components/dumb/Menu';
+import { NotFound } from './components/dumb/NotFound';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -27,6 +28,8 @@ ReactDOM.render(
           <Route path="/find" exact component={ConnectFind} />
           <Route path="/places/new" exact component={ConnectNewPlace} />
           <Route path="/places/:id" exact component={ConnectEditPlace} />
+          <Route path="/404" component={NotFound} />
+          <Redirect to="/404" />
         </Switch>
       </Router>
     </Provider>
