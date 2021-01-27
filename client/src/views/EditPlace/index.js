@@ -13,9 +13,9 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { Rating } from 'primereact/rating';
-import '../styles/EditPlace.css';
+import './index.css';
 
-export class EditPlace extends React.Component {
+class EditPlaceClass extends React.Component {
   constructor(props) {
     super(props);
     this.placeId = this.props.match.params.id;
@@ -187,4 +187,4 @@ const mapDispatch = {
   removePlaceFromList,
 };
 
-export const ConnectEditPlace = connect(mapState, mapDispatch)(EditPlace);
+export const EditPlace = connect(mapState, mapDispatch)(EditPlaceClass);

@@ -10,9 +10,9 @@ import {
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import '../styles/ViewList.css';
+import './index.css';
 
-export class ViewList extends React.Component {
+class ViewListClass extends React.Component {
   constructor(props) {
     super(props);
     this.listId = this.props.match.params.id;
@@ -130,4 +130,4 @@ const mapDispatch = {
   removePlaceFromList,
 };
 
-export const ConnectViewList = connect(mapState, mapDispatch)(ViewList);
+export const ViewList = connect(mapState, mapDispatch)(ViewListClass);

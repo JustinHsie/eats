@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { history } from '../../history';
 import { getLists } from '../../redux/actions';
 import { Card } from 'primereact/card';
-import '../styles/Lists.css';
+import './index.css';
 
-export class Lists extends React.Component {
+class ListsClass extends React.Component {
   componentDidMount() {
     this.props.getLists();
   }
@@ -70,4 +70,4 @@ const mapDispatch = {
   getLists,
 };
 
-export const ConnectLists = connect(mapState, mapDispatch)(Lists);
+export const Lists = connect(mapState, mapDispatch)(ListsClass);

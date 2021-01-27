@@ -4,8 +4,9 @@ import { createList } from '../../redux/actions';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
+import './index.css';
 
-export class CreateList extends React.Component {
+class CreateListClass extends React.Component {
   constructor(props) {
     super(props);
     this.state = { name: '', description: '' };
@@ -70,4 +71,4 @@ const mapDispatch = {
   createList,
 };
 
-export const ConnectCreateList = connect(null, mapDispatch)(CreateList);
+export const CreateList = connect(null, mapDispatch)(CreateListClass);

@@ -7,9 +7,9 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { Rating } from 'primereact/rating';
-import '../styles/NewPlace.css';
+import './index.css';
 
-export class NewPlace extends React.Component {
+class NewPlaceClass extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -138,4 +138,4 @@ const mapDispatch = {
   addPlaceToList,
 };
 
-export const ConnectNewPlace = connect(mapState, mapDispatch)(NewPlace);
+export const NewPlace = connect(mapState, mapDispatch)(NewPlaceClass);

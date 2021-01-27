@@ -7,10 +7,10 @@ import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { places as fakePlaces } from '../../fakeData/places';
-import { GoogleMaps } from '../dumb/GoogleMaps';
-import '../styles/Find.css';
+import { GoogleMaps } from '../../components/GoogleMaps';
+import './index.css';
 
-export class Find extends React.Component {
+class FindClass extends React.Component {
   constructor(props) {
     super(props);
     this.state = { selectedList: null };
@@ -84,4 +84,4 @@ const mapDispatch = {
   getLists,
 };
 
-export const ConnectFind = connect(mapState, mapDispatch)(Find);
+export const Find = connect(mapState, mapDispatch)(FindClass);
