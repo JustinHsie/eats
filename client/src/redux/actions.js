@@ -9,6 +9,7 @@ import {
   ADD_PLACE_TO_LIST,
   REMOVE_PLACE_FROM_LIST,
   DELETE_PLACE,
+  SET_MENU_TAB,
 } from './actionTypes';
 import { history } from '../history';
 import { db } from '../fakeData/db';
@@ -126,5 +127,12 @@ export function deletePlace(placeId) {
     dispatch({
       type: DELETE_PLACE,
     });
+  };
+}
+
+export function setMenuTab(menuLabel) {
+  return {
+    type: SET_MENU_TAB,
+    payload: { menuLabel },
   };
 }

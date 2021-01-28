@@ -1,7 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { history } from '../../history';
-import { getLists, createPlace, addPlaceToList } from '../../redux/actions';
+import {
+  getLists,
+  createPlace,
+  addPlaceToList,
+  setMenuTab,
+} from '../../redux/actions';
 import { PlaceForm } from '../../components/PlaceForm';
 import './index.css';
 
@@ -15,6 +20,7 @@ class NewPlaceClass extends React.Component {
       description: '',
       selectedList: null,
     };
+    this.props.setMenuTab('New Place');
   }
 
   componentDidMount() {
@@ -64,6 +70,7 @@ const mapDispatch = {
   getLists,
   createPlace,
   addPlaceToList,
+  setMenuTab,
 };
 
 export const NewPlace = connect(mapState, mapDispatch)(NewPlaceClass);

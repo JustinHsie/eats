@@ -8,3 +8,4 @@ export const UPDATE_PLACE = 'UPDATE_PLACE';
 export const ADD_PLACE_TO_LIST = 'ADD_PLACE_TO_LIST';
 export const REMOVE_PLACE_FROM_LIST = 'REMOVE_PLACE_FROM_LIST';
 export const DELETE_PLACE = 'DELETE_PLACE';
+export const SET_MENU_TAB = 'SET_MENU_TAB';

@@ -6,6 +6,7 @@ import {
   deleteList,
   deletePlace,
   removePlaceFromList,
+  setMenuTab,
 } from '../../redux/actions';
 import { ListsTable } from '../../components/ListsTable';
 import { Loading } from '../../components/Loading';
@@ -16,6 +17,7 @@ class ViewListClass extends React.Component {
     super(props);
     this.listId = this.props.match.params.id;
     this.state = { place: null };
+    this.props.setMenuTab('Home');
   }
 
   componentDidMount() {
@@ -77,6 +79,7 @@ const mapDispatch = {
   deleteList,
   deletePlace,
   removePlaceFromList,
+  setMenuTab,
 };
 
 export const ViewList = connect(mapState, mapDispatch)(ViewListClass);

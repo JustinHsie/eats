@@ -4,7 +4,7 @@ import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { history } from './history';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
-import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/themes/md-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
@@ -17,7 +17,7 @@ import { EditPlace } from './views/EditPlace';
 import { ViewList } from './views/ViewList';
 import { Find } from './views/Find';
 import { NewPlace } from './views/NewPlace';
-import { Menu } from './components/Menu';
+import { Menu } from './views/Menu';
 import { NotFound } from './views/NotFound';
 
 ReactDOM.render(

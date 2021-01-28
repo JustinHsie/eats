@@ -1,15 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { setMenuTab } from '../../redux/actions';
 import { Lists } from '../Lists';
 import './index.css';
 
 class HomeClass extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props.setMenuTab('Home');
+  }
   render() {
-    const props = this.props;
     return (
       <div className="p-m-4">
         <div className="p-m-6">
-          <Lists {...props} />
+          <Lists {...this.props} />
         </div>
       </div>
     );
@@ -20,4 +24,8 @@ function mapState(state) {
   return { ...state };
 }
 
-export const Home = connect(mapState)(HomeClass);
+const mapDispatch = {
+  setMenuTab,
+};
+
+export const Home = connect(mapState, mapDispatch)(HomeClass);

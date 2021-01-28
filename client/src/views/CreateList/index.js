@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {history} from '../../history';
-import { createList } from '../../redux/actions';
+import { history } from '../../history';
+import { createList, setMenuTab } from '../../redux/actions';
 import { CreateListForm } from '../../components/CreateListForm';
 import './index.css';
 
@@ -9,6 +9,7 @@ class CreateListClass extends React.Component {
   constructor(props) {
     super(props);
     this.state = { name: '', description: '' };
+    this.props.setMenuTab('New List');
   }
 
   handleSubmit = e => {
@@ -38,6 +39,7 @@ class CreateListClass extends React.Component {
 
 const mapDispatch = {
   createList,
+  setMenuTab,
 };
 
 export const CreateList = connect(null, mapDispatch)(CreateListClass);
