@@ -8,11 +8,8 @@ import {
   addPlaceToList,
   removePlaceFromList,
 } from '../../redux/actions';
-import { InputText } from 'primereact/inputtext';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { Button } from 'primereact/button';
-import { Dropdown } from 'primereact/dropdown';
-import { Rating } from 'primereact/rating';
+import { PlaceForm } from '../../components/PlaceForm';
+import { Loading } from '../../components/Loading';
 import './index.css';
 
 class EditPlaceClass extends React.Component {
@@ -82,95 +79,22 @@ class EditPlaceClass extends React.Component {
     history.push(`/lists/${this.state.fetchedPlace.list.id}`);
   };
 
-  displayForm() {
+  render() {
     if (this.state.fetchedPlace && this.props.lists) {
       return (
-        <div className="card p-d-flex p-flex-column p-flex-md-row">
-          <div className="p-mr-3 p-mr-lg-6">
-            <h2>Edit {this.state.fetchedPlace.name}</h2>
-            <h3>Name</h3>
-            <InputText
-              id="title"
-              className="p-mb-2"
-              value={this.state.name}
-              onChange={this.handleSetState('name')}
-            />
-
-            <h3>Location</h3>
-            <div className="form__input_text_max_width">
-              <div className="p-inputgroup">
-                <InputText
-                  className="p-mb-2"
-                  id="location"
-                  value={this.state.location}
-                  onChange={this.handleSetState('location')}
-                />
-                <Button
-                  type="button"
-                  className="p-mx-2 p-button-raised p-button-text p-button-rounded"
-                  icon="pi pi-search"
-                />
-              </div>
-            </div>
-
-            <h3>Select List</h3>
-            <div className="card">
-              <Dropdown
-                value={this.state.selectedList}
-                options={this.props.lists}
-                onChange={this.handleSetState('selectedList')}
-                optionLabel="name"
-                placeholder={this.state.selectedList.name}
-              />
-            </div>
-          </div>
-          <div>
-            <div className="p-my-4">
-              <h3>Rating</h3>
-              <Rating
-                value={this.state.rating}
-                onChange={this.handleSetState('rating')}
-              />
-            </div>
-            <div className="p-mt-3">
-              <h3>Description</h3>
-              <InputTextarea
-                rows={5}
-                cols={30}
-                value={this.state.description}
-                onChange={this.handleSetState('description')}
-                autoResize
-              />
-            </div>
-            <div>
-              <Button
-                type="submit"
-                className="p-my-5 p-mr-6 p-button-success p-button-rounded"
-                label="Save Changes"
-              />
-              <Button
-                type="button"
-                onClick={this.handleClickCancel}
-                className="p-my-5 p-button-secondary p-button-rounded"
-                label="Cancel"
-              />
-            </div>
-          </div>
-        </div>
+        <PlaceForm
+          state={this.state}
+          handleSetState={this.handleSetState}
+          handleSubmit={this.handleSubmit}
+          handleClickCancel={this.handleClickCancel}
+          lists={this.props.lists}
+          formTitle={`Edit ${this.state.fetchedPlace.name}`}
+          buttonSubmitLabel="Save Changes"
+          listPlaceholder={this.state.selectedList.name}
+        />
       );
     }
-    return (
-      <div>
-        <h5>Loading...</h5>
-      </div>
-    );
-  }
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <div className="p-m-6 p-d-flex p-jc-center">{this.displayForm()}</div>
-      </form>
-    );
+    return <Loading />;
   }
 }
 

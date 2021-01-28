@@ -7,9 +7,8 @@ import {
   deletePlace,
   removePlaceFromList,
 } from '../../redux/actions';
-import { Button } from 'primereact/button';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
+import { ListsTable } from '../../components/ListsTable';
+import { Loading } from '../../components/Loading';
 import './index.css';
 
 class ViewListClass extends React.Component {
@@ -49,72 +48,22 @@ class ViewListClass extends React.Component {
     this.setState({ [key]: e.value });
   };
 
-  actionBodyTemplate = placeObject => {
-    return (
-      <React.Fragment>
-        <Button
-          type="button"
-          onClick={this.handleClickDeletePlace(placeObject)}
-          icon="pi pi-trash"
-          className="p-button-rounded p-button-warning p-ml-2 button_float_right"
-        />
-        <Button
-          type="button"
-          onClick={this.handleClickEdit}
-          icon="pi pi-pencil"
-          className="p-button-rounded p-button-success button_float_right"
-        />
-      </React.Fragment>
-    );
-  };
-
-  displayTable() {
+  render() {
     if (this.props.currentList) {
       return (
-        <div>
-          <h2>{this.props.currentList.name}</h2>
-          <p>{this.props.currentList.description}</p>
-          <div className="card">
-            <DataTable
-              className="datatable_max_width"
-              value={this.props.currentList.places}
-              selection={this.state.place}
-              onSelectionChange={this.handleSetState('place')}
-              selectionMode="single"
-              onRowSelect={this.handleRowSelect}
-            >
-              <Column field="name" header="Name"></Column>
-              <Column body={this.actionBodyTemplate}></Column>
-            </DataTable>
-          </div>
-          <div className="datatable_max_width p-my-6">
-            <Button
-              type="button"
-              className="p-button-rounded"
-              label="Add New Place"
-              onClick={this.handleClickNewPlace}
-            />
-            <Button
-              type="button"
-              onClick={this.handleClickDeleteList}
-              className="p-button-danger p-button-rounded button_float_right"
-              label="Delete List"
-            />
-          </div>
-        </div>
+        <ListsTable
+          state={this.state}
+          handleSetState={this.handleSetState}
+          handleRowSelect={this.handleRowSelect}
+          handleClickNewPlace={this.handleClickNewPlace}
+          handleClickDeleteList={this.handleClickDeleteList}
+          handleClickEdit={this.handleClickEdit}
+          handleClickDeletePlace={this.handleClickDeletePlace}
+          currentList={this.props.currentList}
+        />
       );
     }
-    return (
-      <div>
-        <h5>Loading...</h5>
-      </div>
-    );
-  }
-
-  render() {
-    return (
-      <div className="p-m-6 p-d-flex p-jc-center">{this.displayTable()}</div>
-    );
+    return <Loading />;
   }
 }
 

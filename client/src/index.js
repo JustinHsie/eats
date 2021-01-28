@@ -4,6 +4,10 @@ import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { history } from './history';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeflex/primeflex.css';
+import 'primeicons/primeicons.css';
 
 import './index.css';
 import reportWebVitals from './reportWebVitals';
