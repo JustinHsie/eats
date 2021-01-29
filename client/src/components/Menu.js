@@ -7,7 +7,7 @@ export function Menu(props) {
       className="p-d-flex p-flex-wrap p-jc-center p-m-2"
       model={props.model}
       activeItem={props.activeItem}
-      onTabChange={props.handleOnTabChange}
+      onTabChange={props.onTabChange}
     />
   );
 }

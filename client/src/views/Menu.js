@@ -58,7 +58,7 @@ export class MenuClass extends React.Component {
       <MenuComponent
         model={this.items}
         activeItem={this.state.activeItem}
-        handleOnTabChange={this.handleOnTabChange}
+        onTabChange={this.handleOnTabChange}
       />
     );
   }

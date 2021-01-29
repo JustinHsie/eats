@@ -34,7 +34,7 @@ class ViewListClass extends React.Component {
     this.props.removePlaceFromList(placeObject.list.id, placeObject.id);
   };
 
-  handleClickEdit = e => {
+  handleClickEditPlace = e => {
     history.push(`/places/${e.id}`);
   };
 
@@ -54,14 +54,16 @@ class ViewListClass extends React.Component {
     if (this.props.currentList) {
       return (
         <ListsTable
-          state={this.state}
-          handleSetState={this.handleSetState}
-          handleRowSelect={this.handleRowSelect}
-          handleClickNewPlace={this.handleClickNewPlace}
-          handleClickDeleteList={this.handleClickDeleteList}
-          handleClickEdit={this.handleClickEdit}
-          handleClickDeletePlace={this.handleClickDeletePlace}
-          currentList={this.props.currentList}
+          currentListName={this.props.currentList.name}
+          currentListDescription={this.props.currentList.description}
+          currentListPlaces={this.props.currentList.places}
+          selectedPlace={this.state.place}
+          onSelectionChange={this.handleSetState}
+          onRowSelect={this.handleRowSelect}
+          onDeletePlaceClick={this.handleClickDeletePlace}
+          onEditPlaceClick={this.handleClickEditPlace}
+          onNewPlaceClick={this.handleClickNewPlace}
+          onDeleteListClick={this.handleClickDeleteList}
         />
       );
     }

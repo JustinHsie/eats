@@ -4,8 +4,8 @@ import { Rating as RatingPrime } from 'primereact/rating';
 export function Rating(props) {
   return (
     <RatingPrime
-      value={props.state.rating}
-      onChange={props.handleSetState('rating')}
+      value={props.rating}
+      onChange={props.onRatingChange('rating')}
       className="p-mb-2"
     />
   );

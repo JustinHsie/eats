@@ -4,8 +4,8 @@ import { InputTextarea } from 'primereact/inputtextarea';
 export function InputDescription(props) {
   return (
     <InputTextarea
-      value={props.state.description}
-      onChange={props.handleSetState('description')}
+      value={props.value}
+      onChange={props.onValueChange('description')}
       rows={5}
       cols={30}
       autoResize

@@ -9,7 +9,7 @@ export function ListCards(props) {
       .reverse()
       .map(list => {
         return (
-          <div onClick={props.handleClickList(list.id)} key={list.id}>
+          <div onClick={props.onListItemClick(list.id)} key={list.id}>
             <Card
               className="p-m-2 card_min_width p-link card_background_light p-d-flex p-jc-center"
               title={list.name}
@@ -22,9 +22,9 @@ export function ListCards(props) {
     return (
       <div className="p-d-flex p-jc-center p-flex-wrap">
         {cards}
-        <CreateListCard handleClickNew={props.handleClickNew} />
+        <CreateListCard onClickNew={props.onClickNew} />
       </div>
     );
   }
-  return <CreateListCard handleClickNew={props.handleClickNew} />;
+  return <CreateListCard onClickNew={props.onClickNew} />;
 }

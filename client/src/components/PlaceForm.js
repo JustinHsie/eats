@@ -9,7 +9,7 @@ import { ButtonCancel } from './ButtonCancel';
 
 export function PlaceForm(props) {
   return (
-    <form onSubmit={props.handleSubmit}>
+    <form onSubmit={props.onSubmit}>
       <div className="p-m-6 p-d-flex p-jc-center">
         <div className="card p-d-flex p-flex-column p-flex-md-row">
           <div className="p-mr-3 p-mr-lg-6">
@@ -17,8 +17,8 @@ export function PlaceForm(props) {
             <label>
               <h3>Name</h3>
               <InputName
-                state={props.state}
-                handleSetState={props.handleSetState}
+                value={props.name}
+                onValueChange={props.onNameChange}
               />
             </label>
 
@@ -26,8 +26,8 @@ export function PlaceForm(props) {
               <h3>Location</h3>
               <div className="form__input_text_max_width">
                 <InputLocation
-                  state={props.state}
-                  handleSetState={props.handleSetState}
+                  location={props.location}
+                  onLocationChange={props.onLocationChange}
                 />
               </div>
             </label>
@@ -35,22 +35,25 @@ export function PlaceForm(props) {
             <h3>Select List</h3>
             <div className="card">
               <SelectListDropdown
-                state={props.state}
-                handleSetState={props.handleSetState}
+                selected={props.selectedList}
                 lists={props.lists}
+                onSelectChange={props.onSelectedListChange}
                 placeholder={props.listPlaceholder}
               />
             </div>
           </div>
           <div>
             <h3>Rating</h3>
-            <Rating state={props.state} handleSetState={props.handleSetState} />
+            <Rating
+              rating={props.rating}
+              onRatingChange={props.onRatingChange}
+            />
 
             <label>
               <h3>Description</h3>
               <InputDescription
-                state={props.state}
-                handleSetState={props.handleSetState}
+                value={props.description}
+                onValueChange={props.onDescriptionChange}
               />
             </label>
 
@@ -58,7 +61,7 @@ export function PlaceForm(props) {
               <span className="p-mr-6">
                 <ButtonSubmit label={props.buttonSubmitLabel} />
               </span>
-              <ButtonCancel handleClickCancel={props.handleClickCancel} />
+              <ButtonCancel onClick={props.onButtonCancelClick} />
             </div>
           </div>
         </div>

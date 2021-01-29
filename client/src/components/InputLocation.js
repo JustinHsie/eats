@@ -6,8 +6,8 @@ export function InputLocation(props) {
   return (
     <div className="p-inputgroup">
       <InputText
-        value={props.state.location}
-        onChange={props.handleSetState('location')}
+        value={props.location}
+        onChange={props.onLocationChange('location')}
         className="p-mb-2"
         id="location"
       />

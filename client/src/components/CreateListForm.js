@@ -6,23 +6,20 @@ import { ButtonCancel } from './ButtonCancel';
 
 export function CreateListForm(props) {
   return (
-    <form onSubmit={props.handleSubmit}>
+    <form onSubmit={props.onSubmit}>
       <div className="p-m-6 p-d-flex p-jc-center">
         <div className="card">
           <h2>Create New List</h2>
           <label>
             <h3>Name</h3>
-            <InputName
-              state={props.state}
-              handleSetState={props.handleSetState}
-            />
+            <InputName value={props.name} onValueChange={props.onNameChange} />
           </label>
 
           <label>
             <h3>Description</h3>
             <InputDescription
-              state={props.state}
-              handleSetState={props.handleSetState}
+              value={props.description}
+              onValueChange={props.onDescriptionChange}
             />
           </label>
 
@@ -30,7 +27,7 @@ export function CreateListForm(props) {
             <span className="p-mr-6">
               <ButtonSubmit label="Create List" />
             </span>
-            <ButtonCancel handleClickCancel={props.handleClickCancel} />
+            <ButtonCancel onClick={props.onButtonCancelClick} />
           </div>
         </div>
       </div>

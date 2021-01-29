@@ -27,9 +27,9 @@ export function Find(props) {
           <h3>Select List</h3>
           <div className="card p-mb-6">
             <SelectListDropdown
-              state={props.state}
-              handleSetState={props.handleSetState}
+              selected={props.selectedList}
               lists={props.lists}
+              onSelectChange={props.onSelectedListChange}
             />
           </div>
         </div>

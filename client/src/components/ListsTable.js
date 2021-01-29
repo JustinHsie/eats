@@ -9,13 +9,13 @@ export function ListsTable(props) {
       <React.Fragment>
         <Button
           type="button"
-          onClick={props.handleClickDeletePlace(placeObject)}
+          onClick={props.onDeletePlaceClick(placeObject)}
           icon="pi pi-trash"
           className="p-button-rounded p-button-warning p-ml-2 button_float_right"
         />
         <Button
           type="button"
-          onClick={props.handleClickEdit}
+          onClick={props.onEditPlaceClick}
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success button_float_right"
         />
@@ -26,16 +26,16 @@ export function ListsTable(props) {
   return (
     <div className="p-m-6 p-d-flex p-jc-center">
       <div>
-        <h2>{props.currentList.name}</h2>
-        <p>{props.currentList.description}</p>
+        <h2>{props.currentListName}</h2>
+        <p>{props.currentListDescription}</p>
         <div className="card">
           <DataTable
             className="datatable_max_width"
-            value={props.currentList.places}
-            selection={props.state.place}
-            onSelectionChange={props.handleSetState('place')}
+            value={props.currentListPlaces}
+            selection={props.selectedPlace}
+            onSelectionChange={props.onSelectionChange('place')}
             selectionMode="single"
-            onRowSelect={props.handleRowSelect}
+            onRowSelect={props.onRowSelect}
           >
             <Column field="name" header="Name"></Column>
             <Column body={actionBodyTemplate}></Column>
@@ -46,11 +46,11 @@ export function ListsTable(props) {
             type="button"
             className="p-button-rounded"
             label="Add New Place"
-            onClick={props.handleClickNewPlace}
+            onClick={props.onNewPlaceClick}
           />
           <Button
             type="button"
-            onClick={props.handleClickDeleteList}
+            onClick={props.onDeleteListClick}
             className="p-button-danger p-button-rounded button_float_right"
             label="Delete List"
           />

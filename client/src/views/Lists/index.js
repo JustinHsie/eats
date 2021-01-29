@@ -22,8 +22,8 @@ class ListsClass extends React.Component {
     return (
       <ListCards
         lists={this.props.lists}
-        handleClickList={this.handleClickList}
-        handleClickNew={this.handleClickNew}
+        onListItemClick={this.handleClickList}
+        onClickNew={this.handleClickNew}
       />
     );
   }

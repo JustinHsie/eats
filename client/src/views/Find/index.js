@@ -22,8 +22,8 @@ class FindClass extends React.Component {
   render() {
     return (
       <FindComponent
-        state={this.state}
-        handleSetState={this.handleSetState}
+        selectedList={this.state.selectedList}
+        onSelectedListChange={this.handleSetState}
         lists={this.props.lists}
       />
     );

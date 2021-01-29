@@ -28,10 +28,12 @@ class CreateListClass extends React.Component {
   render() {
     return (
       <CreateListForm
-        state={this.state}
-        handleSubmit={this.handleSubmit}
-        handleClickCancel={this.handleClickCancel}
-        handleSetState={this.handleSetState}
+        onSubmit={this.handleSubmit}
+        name={this.state.name}
+        onNameChange={this.handleSetState}
+        description={this.state.description}
+        onDescriptionChange={this.handleSetState}
+        onButtonCancelClick={this.handleClickCancel}
       />
     );
   }

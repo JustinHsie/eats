@@ -49,13 +49,22 @@ class NewPlaceClass extends React.Component {
   render() {
     return (
       <PlaceForm
-        state={this.state}
-        handleSetState={this.handleSetState}
-        handleSubmit={this.handleSubmit}
-        handleClickCancel={this.handleClickCancel}
-        lists={this.props.lists}
+        onSubmit={this.handleSubmit}
         formTitle="Add Place"
+        name={this.state.name}
+        onNameChange={this.handleSetState}
+        location={this.state.location}
+        onLocationChange={this.handleSetState}
+        selectedList={this.state.selectedList}
+        lists={this.props.lists}
+        onSelectedListChange={this.handleSetState}
+        listPlaceholder={this.state.selectedList.name}
+        rating={this.state.rating}
+        onRatingChange={this.handleSetState}
+        description={this.state.description}
+        onDescriptionChange={this.handleSetState}
         buttonSubmitLabel="Add Place"
+        onButtonCancelClick={this.handleClickCancel}
       />
     );
   }
