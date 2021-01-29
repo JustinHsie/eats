@@ -5,7 +5,7 @@ export function InputName(props) {
   return (
     <InputText
       value={props.value}
-      onChange={props.onValueChange('name')}
+      onChange={props.onValueChange}
       id="name"
       className="p-mb-2"
     />

@@ -5,7 +5,7 @@ export function Rating(props) {
   return (
     <RatingPrime
       value={props.rating}
-      onChange={props.onRatingChange('rating')}
+      onChange={props.onRatingChange}
       className="p-mb-2"
     />
   );

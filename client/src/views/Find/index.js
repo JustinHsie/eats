@@ -15,15 +15,15 @@ class FindClass extends React.Component {
     this.props.getLists();
   }
 
-  handleSetState = key => e => {
-    this.setState({ [key]: e.target.value });
+  handleSelectedListChange = e => {
+    this.setState({ selectedList: e.value });
   };
 
   render() {
     return (
       <FindComponent
         selectedList={this.state.selectedList}
-        onSelectedListChange={this.handleSetState}
+        onSelectedListChange={this.handleSelectedListChange}
         lists={this.props.lists}
       />
     );

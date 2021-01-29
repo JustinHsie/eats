@@ -5,7 +5,7 @@ export function InputDescription(props) {
   return (
     <InputTextarea
       value={props.value}
-      onChange={props.onValueChange('description')}
+      onChange={props.onValueChange}
       rows={5}
       cols={30}
       autoResize

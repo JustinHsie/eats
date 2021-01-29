@@ -3,7 +3,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 
-export function ListsTable(props) {
+export function PlacesTable(props) {
   const actionBodyTemplate = placeObject => {
     return (
       <React.Fragment>
@@ -33,7 +33,7 @@ export function ListsTable(props) {
             className="datatable_max_width"
             value={props.currentListPlaces}
             selection={props.selectedPlace}
-            onSelectionChange={props.onSelectionChange('place')}
+            onSelectionChange={props.onSelectionChange}
             selectionMode="single"
             onRowSelect={props.onRowSelect}
           >

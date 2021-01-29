@@ -5,7 +5,7 @@ export function SelectListDropdown(props) {
     <Dropdown
       value={props.selected}
       options={props.lists}
-      onChange={props.onSelectChange('selectedList')}
+      onChange={props.onSelectChange}
       optionLabel="name"
       placeholder={props.placeholder || 'Select a List'}
       className="p-mb-2"

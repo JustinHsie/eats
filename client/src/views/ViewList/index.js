@@ -8,7 +8,7 @@ import {
   removePlaceFromList,
   setMenuTab,
 } from '../../redux/actions';
-import { ListsTable } from '../../components/ListsTable';
+import { PlacesTable } from '../../components/PlacesTable';
 import { Loading } from '../../components/Loading';
 import './index.css';
 
@@ -24,11 +24,16 @@ class ViewListClass extends React.Component {
     this.props.getList(this.listId);
   }
 
-  handleClickDeleteList = () => {
-    this.props.deleteList(this.listId);
+  handleSelectionChange = e => {
+    this.setState({ place: e.value });
+  };
+
+  handleRowSelect = e => {
+    history.push(`/places/${e.data.id}`);
   };
 
   handleClickDeletePlace = placeObject => e => {
+    console.log(e)
     e.stopPropagation();
     this.props.deletePlace(placeObject.id);
     this.props.removePlaceFromList(placeObject.list.id, placeObject.id);
@@ -42,23 +47,19 @@ class ViewListClass extends React.Component {
     history.push('/places/new');
   };
 
-  handleRowSelect = e => {
-    history.push(`/places/${e.data.id}`);
-  };
-
-  handleSetState = key => e => {
-    this.setState({ [key]: e.value });
+  handleClickDeleteList = () => {
+    this.props.deleteList(this.listId);
   };
 
   render() {
     if (this.props.currentList) {
       return (
-        <ListsTable
+        <PlacesTable
           currentListName={this.props.currentList.name}
           currentListDescription={this.props.currentList.description}
           currentListPlaces={this.props.currentList.places}
           selectedPlace={this.state.place}
-          onSelectionChange={this.handleSetState}
+          onSelectionChange={this.handleSelectionChange}
           onRowSelect={this.handleRowSelect}
           onDeletePlaceClick={this.handleClickDeletePlace}
           onEditPlaceClick={this.handleClickEditPlace}

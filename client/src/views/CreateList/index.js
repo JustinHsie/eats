@@ -17,12 +17,16 @@ class CreateListClass extends React.Component {
     this.props.createList(this.state.name, this.state.description);
   };
 
-  handleClickCancel = () => {
-    history.push('/');
+  handleNameChange = e => {
+    this.setState({ name: e.target.value });
   };
 
-  handleSetState = key => e => {
-    this.setState({ [key]: e.target.value });
+  handleDescriptionChange = e => {
+    this.setState({ description: e.target.value });
+  };
+
+  handleClickCancel = () => {
+    history.push('/');
   };
 
   render() {
@@ -30,9 +34,9 @@ class CreateListClass extends React.Component {
       <CreateListForm
         onSubmit={this.handleSubmit}
         name={this.state.name}
-        onNameChange={this.handleSetState}
+        onNameChange={this.handleNameChange}
         description={this.state.description}
-        onDescriptionChange={this.handleSetState}
+        onDescriptionChange={this.handleDescriptionChange}
         onButtonCancelClick={this.handleClickCancel}
       />
     );

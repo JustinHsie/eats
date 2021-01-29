@@ -38,12 +38,28 @@ class NewPlaceClass extends React.Component {
     );
   };
 
-  handleClickCancel = () => {
-    history.push('/');
+  handleNameChange = e => {
+    this.setState({ name: e.target.value });
   };
 
-  handleSetState = key => e => {
-    this.setState({ [key]: e.target.value });
+  handleLocationChange = e => {
+    this.setState({ location: e.target.value });
+  };
+
+  handleSelectedListChange = e => {
+    this.setState({ selectedList: e.target.value });
+  };
+
+  handleRatingChange = e => {
+    this.setState({ rating: e.target.value });
+  };
+
+  handleDescriptionChange = e => {
+    this.setState({ description: e.target.value });
+  };
+
+  handleClickCancel = () => {
+    history.push('/');
   };
 
   render() {
@@ -52,16 +68,16 @@ class NewPlaceClass extends React.Component {
         onSubmit={this.handleSubmit}
         formTitle="Add Place"
         name={this.state.name}
-        onNameChange={this.handleSetState}
+        onNameChange={this.handleNameChange}
         location={this.state.location}
-        onLocationChange={this.handleSetState}
+        onLocationChange={this.handleLocationChange}
         selectedList={this.state.selectedList}
         lists={this.props.lists}
-        onSelectedListChange={this.handleSetState}
+        onSelectedListChange={this.handleSelectedListChange}
         rating={this.state.rating}
-        onRatingChange={this.handleSetState}
+        onRatingChange={this.handleRatingChange}
         description={this.state.description}
-        onDescriptionChange={this.handleSetState}
+        onDescriptionChange={this.handleDescriptionChange}
         buttonSubmitLabel="Add Place"
         onButtonCancelClick={this.handleClickCancel}
       />
