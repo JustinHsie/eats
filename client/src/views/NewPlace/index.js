@@ -58,7 +58,6 @@ class NewPlaceClass extends React.Component {
         selectedList={this.state.selectedList}
         lists={this.props.lists}
         onSelectedListChange={this.handleSetState}
-        listPlaceholder={this.state.selectedList.name}
         rating={this.state.rating}
         onRatingChange={this.handleSetState}
         description={this.state.description}

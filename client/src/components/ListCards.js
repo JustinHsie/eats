@@ -22,9 +22,9 @@ export function ListCards(props) {
     return (
       <div className="p-d-flex p-jc-center p-flex-wrap">
         {cards}
-        <CreateListCard onClickNew={props.onClickNew} />
+        <CreateListCard onClick={props.onClickNew} />
       </div>
     );
   }
-  return <CreateListCard onClickNew={props.onClickNew} />;
+  return <CreateListCard onClick={props.onClickNew} />;
 }
