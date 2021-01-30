@@ -10,6 +10,7 @@ import {
 } from '../../redux/actions';
 import { PlacesTable } from '../../components/PlacesTable';
 import { Loading } from '../../components/Loading';
+import { IconButtonsEditDelete } from '../../components/IconButtonsEditDelete';
 import './index.css';
 
 class ViewListClass extends React.Component {
@@ -33,14 +34,23 @@ class ViewListClass extends React.Component {
   };
 
   handleClickDeletePlace = placeObject => e => {
-    console.log(e)
     e.stopPropagation();
     this.props.deletePlace(placeObject.id);
     this.props.removePlaceFromList(placeObject.list.id, placeObject.id);
   };
 
-  handleClickEditPlace = e => {
-    history.push(`/places/${e.id}`);
+  handleClickEditPlace = placeObject => e => {
+    e.stopPropagation();
+    history.push(`/places/${placeObject.id}`);
+  };
+
+  actionBodyTemplate = placeObject => {
+    return (
+      <IconButtonsEditDelete
+        onClickDelete={this.handleClickDeletePlace(placeObject)}
+        onClickEdit={this.handleClickEditPlace(placeObject)}
+      />
+    );
   };
 
   handleClickNewPlace = () => {
@@ -63,6 +73,7 @@ class ViewListClass extends React.Component {
           onRowSelect={this.handleRowSelect}
           onDeletePlaceClick={this.handleClickDeletePlace}
           onEditPlaceClick={this.handleClickEditPlace}
+          actionBodyTemplate={this.actionBodyTemplate}
           onNewPlaceClick={this.handleClickNewPlace}
           onDeleteListClick={this.handleClickDeleteList}
         />

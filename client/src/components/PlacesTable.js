@@ -4,25 +4,6 @@ import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 
 export function PlacesTable(props) {
-  const actionBodyTemplate = placeObject => {
-    return (
-      <React.Fragment>
-        <Button
-          type="button"
-          onClick={props.onDeletePlaceClick(placeObject)}
-          icon="pi pi-trash"
-          className="p-button-rounded p-button-warning p-ml-2 button_float_right"
-        />
-        <Button
-          type="button"
-          onClick={props.onEditPlaceClick}
-          icon="pi pi-pencil"
-          className="p-button-rounded p-button-success button_float_right"
-        />
-      </React.Fragment>
-    );
-  };
-
   return (
     <div className="p-m-6 p-d-flex p-jc-center">
       <div>
@@ -38,7 +19,7 @@ export function PlacesTable(props) {
             onRowSelect={props.onRowSelect}
           >
             <Column field="name" header="Name"></Column>
-            <Column body={actionBodyTemplate}></Column>
+            <Column body={props.actionBodyTemplate}></Column>
           </DataTable>
         </div>
         <div className="datatable_max_width p-my-6">

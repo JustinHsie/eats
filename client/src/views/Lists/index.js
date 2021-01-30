@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { history } from '../../history';
 import { getLists } from '../../redux/actions';
 import { ListCards } from '../../components/ListCards';
+import { CreateListCard } from '../../components/CreateListCard';
 import './index.css';
 
 class ListsClass extends React.Component {
@@ -19,13 +20,28 @@ class ListsClass extends React.Component {
   };
 
   render() {
-    return (
-      <ListCards
-        lists={this.props.lists}
-        onListItemClick={this.handleClickList}
-        onClickNew={this.handleClickNew}
-      />
-    );
+    if (this.props.lists) {
+      const cards = this.props.lists
+        .slice(0)
+        .reverse()
+        .map(list => {
+          return (
+            <ListCards
+              key={list.id}
+              onClick={this.handleClickList(list.id)}
+              listName={list.name}
+              listDescription={list.description}
+            />
+          );
+        });
+      return (
+        <div className="p-d-flex p-jc-center p-flex-wrap">
+          {cards}
+          <CreateListCard onClick={this.handleClickNew} />
+        </div>
+      );
+    }
+    return <CreateListCard onClick={this.handleClickNew} />;
   }
 }
 
