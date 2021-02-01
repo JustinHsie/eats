@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cd server && npm install && node index.js",
-    "heroku-postbuild" : "cd client && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,7 @@
   "bugs": {
     "url": "https://github.com/JustinHsie/eats/issues"
   },
-  "homepage": "https://github.com/JustinHsie/eats#readme"
+  "homepage": "https://github.com/JustinHsie/eats#readme",
+  "dependencies": {
+  }
 }
