@@ -5,7 +5,7 @@ import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { places as fakePlaces } from '../fakeData/places';
 import { SelectListDropdown } from './SelectListDropdown';
-import { GoogleMaps } from './GoogleMaps';
+import { Map } from './Map';
 
 export function Find(props) {
   return (
@@ -43,13 +43,7 @@ export function Find(props) {
         </div>
       </div>
       <div className="p-my-6">
-        <GoogleMaps
-          isMarkerShown
-          googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
-          loadingElement={<div style={{ height: `100%` }} />}
-          containerElement={<div style={{ height: `400px` }} />}
-          mapElement={<div style={{ height: `100%` }} />}
-        />
+        <Map />
       </div>
     </div>
   );

@@ -42,8 +42,9 @@ class NewPlaceClass extends React.Component {
     this.setState({ name: e.target.value });
   };
 
-  handleLocationChange = e => {
-    this.setState({ location: e.target.value });
+  handlePlaceSelect = e => {
+    console.log(e);
+    //this.setState({ location: e });
   };
 
   handleSelectedListChange = e => {
@@ -69,8 +70,7 @@ class NewPlaceClass extends React.Component {
         formTitle="Add Place"
         name={this.state.name}
         onNameChange={this.handleNameChange}
-        location={this.state.location}
-        onLocationChange={this.handleLocationChange}
+        onPlaceSelected={this.handlePlaceSelect}
         selectedList={this.state.selectedList}
         lists={this.props.lists}
         onSelectedListChange={this.handleSelectedListChange}
