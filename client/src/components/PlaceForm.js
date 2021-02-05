@@ -7,7 +7,6 @@ import { InputDescription } from './InputDescription';
 import { ButtonSubmit } from './ButtonSubmit';
 import { ButtonCancel } from './ButtonCancel';
 import { Map } from '../components/Map';
-import { Autocomplete } from './Autocomplete';
 
 export function PlaceForm(props) {
   return (
@@ -26,10 +25,12 @@ export function PlaceForm(props) {
               </label>
 
               <label>
-                <h3>Location</h3>
-                <div className="form__input_text_max_width">
+                <h3>Google Location</h3>
+                <div>
                   <InputLocation
-                    onPlaceSelected={props.onPlaceSelected}
+                    onPlaceSelect={props.onPlaceSelect}
+                    locationName={props.locationName}
+                    onLocationChange={props.onLocationChange}
                   />
                 </div>
               </label>

@@ -15,7 +15,8 @@ class NewPlaceClass extends React.Component {
     super(props);
     this.state = {
       name: '',
-      location: '',
+      location: {},
+      locationName: '',
       rating: null,
       description: '',
       selectedList: null,
@@ -43,8 +44,15 @@ class NewPlaceClass extends React.Component {
   };
 
   handlePlaceSelect = e => {
-    console.log(e);
-    //this.setState({ location: e });
+    const location = {
+      name: e.name,
+      placeId: e.place_id,
+    };
+    this.setState({ location, locationName: location.name });
+  };
+
+  handleLocationChange = e => {
+    this.setState({ locationName: e.target.value });
   };
 
   handleSelectedListChange = e => {
@@ -70,7 +78,9 @@ class NewPlaceClass extends React.Component {
         formTitle="Add Place"
         name={this.state.name}
         onNameChange={this.handleNameChange}
-        onPlaceSelected={this.handlePlaceSelect}
+        onPlaceSelect={this.handlePlaceSelect}
+        locationName={this.state.locationName}
+        onLocationChange={this.handleLocationChange}
         selectedList={this.state.selectedList}
         lists={this.props.lists}
         onSelectedListChange={this.handleSelectedListChange}

@@ -21,7 +21,8 @@ class EditPlaceClass extends React.Component {
       name: '',
       rating: null,
       description: '',
-      location: '',
+      location: {},
+      locationName: '',
       selectedList: null,
     };
   }
@@ -46,6 +47,7 @@ class EditPlaceClass extends React.Component {
         rating: fetchedPlace.rating,
         description: fetchedPlace.description,
         location: fetchedPlace.location,
+        locationName: fetchedPlace.location.name,
         selectedList: fetchedPlace.list,
       });
     }
@@ -75,8 +77,16 @@ class EditPlaceClass extends React.Component {
     this.setState({ name: e.target.value });
   };
 
+  handlePlaceSelect = e => {
+    const location = {
+      name: e.name,
+      placeId: e.place_id,
+    };
+    this.setState({ location, locationName: location.name });
+  };
+
   handleLocationChange = e => {
-    this.setState({ location: e.target.value });
+    this.setState({ locationName: e.target.value });
   };
 
   handleSelectedListChange = e => {
@@ -103,7 +113,8 @@ class EditPlaceClass extends React.Component {
           formTitle={`Edit ${this.state.fetchedPlace.name}`}
           name={this.state.name}
           onNameChange={this.handleNameChange}
-          location={this.state.location}
+          onPlaceSelect={this.handlePlaceSelect}
+          locationName={this.state.locationName}
           onLocationChange={this.handleLocationChange}
           selectedList={this.state.selectedList}
           lists={this.props.lists}
