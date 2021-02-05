@@ -25,12 +25,12 @@ export function PlaceForm(props) {
               </label>
 
               <label>
-                <h3>Google Location</h3>
+                <h3>Location</h3>
                 <div>
                   <InputLocation
                     onPlaceSelect={props.onPlaceSelect}
-                    locationName={props.locationName}
-                    onLocationChange={props.onLocationChange}
+                    locationSearch={props.locationSearch}
+                    onLocationSearchChange={props.onLocationSearchChange}
                   />
                 </div>
               </label>
@@ -69,7 +69,7 @@ export function PlaceForm(props) {
             </div>
           </div>
         </div>
-        <Map />
+        <Map center={props.mapCenter}/>
       </div>
     </form>
   );

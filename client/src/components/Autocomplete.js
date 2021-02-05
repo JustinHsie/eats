@@ -6,10 +6,10 @@ export function Autocomplete(props) {
       onPlaceSelected={props.onPlaceSelect}
       types={['establishment']}
       componentRestrictions={{ country: 'US' }}
-      fields={['place_id', 'name']}
-      placeholder="Search"
-      value={props.locationName}
-      onChange={props.onLocationChange}
+      fields={['place_id', 'name', 'geometry', 'formatted_address']}
+      placeholder="Google Search"
+      value={props.locationSearch}
+      onChange={props.onLocationSearchChange}
     />
   );
 }

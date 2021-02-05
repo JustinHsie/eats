@@ -19,10 +19,11 @@ class EditPlaceClass extends React.Component {
     this.state = {
       fetchedPlace: null,
       name: '',
+      location: {},
+      locationSearch: '',
+      mapCenter: null,
       rating: null,
       description: '',
-      location: {},
-      locationName: '',
       selectedList: null,
     };
   }
@@ -44,10 +45,11 @@ class EditPlaceClass extends React.Component {
       this.setState({
         fetchedPlace,
         name: fetchedPlace.name,
+        location: fetchedPlace.location,
+        locationSearch: fetchedPlace.location.address,
+        mapCenter: fetchedPlace.location.mapCenter,
         rating: fetchedPlace.rating,
         description: fetchedPlace.description,
-        location: fetchedPlace.location,
-        locationName: fetchedPlace.location.name,
         selectedList: fetchedPlace.list,
       });
     }
@@ -81,12 +83,22 @@ class EditPlaceClass extends React.Component {
     const location = {
       name: e.name,
       placeId: e.place_id,
+      address: e.formatted_address,
+      mapCenter: {
+        lat: e.geometry.location.lat(),
+        lng: e.geometry.location.lng(),
+      },
     };
-    this.setState({ location, locationName: location.name });
+
+    this.setState({
+      location,
+      locationSearch: location.address,
+      mapCenter: location.mapCenter,
+    });
   };
 
-  handleLocationChange = e => {
-    this.setState({ locationName: e.target.value });
+  handleLocationSearchChange = e => {
+    this.setState({ locationSearch: e.target.value });
   };
 
   handleSelectedListChange = e => {
@@ -114,8 +126,8 @@ class EditPlaceClass extends React.Component {
           name={this.state.name}
           onNameChange={this.handleNameChange}
           onPlaceSelect={this.handlePlaceSelect}
-          locationName={this.state.locationName}
-          onLocationChange={this.handleLocationChange}
+          locationSearch={this.state.locationSearch}
+          onLocationSearchChange={this.handleLocationSearchChange}
           selectedList={this.state.selectedList}
           lists={this.props.lists}
           onSelectedListChange={this.handleSelectedListChange}
@@ -126,6 +138,7 @@ class EditPlaceClass extends React.Component {
           onDescriptionChange={this.handleDescriptionChange}
           buttonSubmitLabel="Save Changes"
           onButtonCancelClick={this.handleClickCancel}
+          mapCenter={this.state.mapCenter}
         />
       );
     }

@@ -16,7 +16,8 @@ class NewPlaceClass extends React.Component {
     this.state = {
       name: '',
       location: {},
-      locationName: '',
+      locationSearch: '',
+      mapCenter: null,
       rating: null,
       description: '',
       selectedList: null,
@@ -47,12 +48,22 @@ class NewPlaceClass extends React.Component {
     const location = {
       name: e.name,
       placeId: e.place_id,
+      address: e.formatted_address,
+      mapCenter: {
+        lat: e.geometry.location.lat(),
+        lng: e.geometry.location.lng(),
+      },
     };
-    this.setState({ location, locationName: location.name });
+
+    this.setState({
+      location,
+      locationSearch: location.address,
+      mapCenter: location.mapCenter,
+    });
   };
 
-  handleLocationChange = e => {
-    this.setState({ locationName: e.target.value });
+  handleLocationSearchChange = e => {
+    this.setState({ locationSearch: e.target.value });
   };
 
   handleSelectedListChange = e => {
@@ -79,8 +90,8 @@ class NewPlaceClass extends React.Component {
         name={this.state.name}
         onNameChange={this.handleNameChange}
         onPlaceSelect={this.handlePlaceSelect}
-        locationName={this.state.locationName}
-        onLocationChange={this.handleLocationChange}
+        locationSearch={this.state.locationSearch}
+        onLocationSearchChange={this.handleLocationSearchChange}
         selectedList={this.state.selectedList}
         lists={this.props.lists}
         onSelectedListChange={this.handleSelectedListChange}
@@ -90,6 +101,7 @@ class NewPlaceClass extends React.Component {
         onDescriptionChange={this.handleDescriptionChange}
         buttonSubmitLabel="Add Place"
         onButtonCancelClick={this.handleClickCancel}
+        mapCenter={this.state.mapCenter}
       />
     );
   }
