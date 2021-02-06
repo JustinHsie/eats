@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { history } from '../history';
-import { Menu as MenuComponent } from '../components/Menu';
-import { setMenuTab } from '../redux/actions';
+import { history } from '../../history';
+import { Menu as MenuComponent } from '../../components/Menu';
+import { setMenuTab } from '../../redux/actions';
+import './index.css';
 
 export class MenuClass extends React.Component {
   constructor(props) {
