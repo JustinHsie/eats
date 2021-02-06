@@ -20,7 +20,7 @@ class EditPlaceClass extends React.Component {
       fetchedPlace: null,
       name: '',
       location: {},
-      locationSearch: '',
+      locationInput: '',
       mapCenter: null,
       rating: null,
       description: '',
@@ -46,7 +46,7 @@ class EditPlaceClass extends React.Component {
         fetchedPlace,
         name: fetchedPlace.name,
         location: fetchedPlace.location,
-        locationSearch: fetchedPlace.location.address,
+        locationInput: fetchedPlace.location.address,
         mapCenter: fetchedPlace.location.mapCenter,
         rating: fetchedPlace.rating,
         description: fetchedPlace.description,
@@ -92,13 +92,13 @@ class EditPlaceClass extends React.Component {
 
     this.setState({
       location,
-      locationSearch: location.address,
+      locationInput: location.address,
       mapCenter: location.mapCenter,
     });
   };
 
-  handleLocationSearchChange = e => {
-    this.setState({ locationSearch: e.target.value });
+  handleLocationInputChange = e => {
+    this.setState({ locationInput: e.target.value });
   };
 
   handleSelectedListChange = e => {
@@ -126,8 +126,8 @@ class EditPlaceClass extends React.Component {
           name={this.state.name}
           onNameChange={this.handleNameChange}
           onPlaceSelect={this.handlePlaceSelect}
-          locationSearch={this.state.locationSearch}
-          onLocationSearchChange={this.handleLocationSearchChange}
+          locationInput={this.state.locationInput}
+          onLocationInputChange={this.handleLocationInputChange}
           selectedList={this.state.selectedList}
           lists={this.props.lists}
           onSelectedListChange={this.handleSelectedListChange}

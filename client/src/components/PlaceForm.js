@@ -29,12 +29,14 @@ export function PlaceForm(props) {
                 <div>
                   <InputLocation
                     onPlaceSelect={props.onPlaceSelect}
-                    locationSearch={props.locationSearch}
-                    onLocationSearchChange={props.onLocationSearchChange}
+                    locationInput={props.locationInput}
+                    onLocationInputChange={props.onLocationInputChange}
                   />
                 </div>
               </label>
-
+              <Map center={props.mapCenter} />
+            </div>
+            <div>
               <h3>Select List</h3>
               <div className="card">
                 <SelectListDropdown
@@ -44,8 +46,6 @@ export function PlaceForm(props) {
                   placeholder={props.listPlaceholder}
                 />
               </div>
-            </div>
-            <div>
               <h3>Rating</h3>
               <Rating
                 rating={props.rating}
@@ -69,7 +69,6 @@ export function PlaceForm(props) {
             </div>
           </div>
         </div>
-        <Map center={props.mapCenter}/>
       </div>
     </form>
   );

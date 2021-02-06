@@ -8,8 +8,8 @@ export function Autocomplete(props) {
       componentRestrictions={{ country: 'US' }}
       fields={['place_id', 'name', 'geometry', 'formatted_address']}
       placeholder="Google Search"
-      value={props.locationSearch}
-      onChange={props.onLocationSearchChange}
+      value={props.locationInput}
+      onChange={props.onLocationInputChange}
     />
   );
 }

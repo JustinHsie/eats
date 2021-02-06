@@ -6,8 +6,8 @@ export function InputLocation(props) {
     <div className="p-mb-2">
       <Autocomplete
         onPlaceSelect={props.onPlaceSelect}
-        locationSearch={props.locationSearch}
-        onLocationSearchChange={props.onLocationSearchChange}
+        locationInput={props.locationInput}
+        onLocationInputChange={props.onLocationInputChange}
       />
     </div>
   );

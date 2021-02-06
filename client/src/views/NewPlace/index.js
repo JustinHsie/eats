@@ -16,7 +16,7 @@ class NewPlaceClass extends React.Component {
     this.state = {
       name: '',
       location: {},
-      locationSearch: '',
+      locationInput: '',
       mapCenter: null,
       rating: null,
       description: '',
@@ -57,13 +57,13 @@ class NewPlaceClass extends React.Component {
 
     this.setState({
       location,
-      locationSearch: location.address,
+      locationInput: location.address,
       mapCenter: location.mapCenter,
     });
   };
 
-  handleLocationSearchChange = e => {
-    this.setState({ locationSearch: e.target.value });
+  handleLocationInputChange = e => {
+    this.setState({ locationInput: e.target.value });
   };
 
   handleSelectedListChange = e => {
@@ -90,8 +90,8 @@ class NewPlaceClass extends React.Component {
         name={this.state.name}
         onNameChange={this.handleNameChange}
         onPlaceSelect={this.handlePlaceSelect}
-        locationSearch={this.state.locationSearch}
-        onLocationSearchChange={this.handleLocationSearchChange}
+        locationInput={this.state.locationInput}
+        onLocationInputChange={this.handleLocationInputChange}
         selectedList={this.state.selectedList}
         lists={this.props.lists}
         onSelectedListChange={this.handleSelectedListChange}
