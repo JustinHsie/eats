@@ -10,7 +10,7 @@ import {
   REMOVE_PLACE_FROM_LIST,
   DELETE_PLACE,
   SET_MENU_TAB,
-  GET_DISTANCE
+  GET_DISTANCE,
 } from './actionTypes';
 import { history } from '../history';
 import { db } from '../fakeData/db';
@@ -161,6 +161,7 @@ export function getDistance(userLocation, places) {
       callback
     );
 
+    // Parse response
     function callback(response, status) {
       if (status === 'OK') {
         const origins = response.originAddresses;

@@ -29,9 +29,11 @@ class FindClass extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // Set places state after fetching list
     if (this.props.list !== prevProps.list) {
       this.setState({ places: this.props.list.places });
     }
+    // Enable button if places and userLocation fetched
     if (
       this.state.places !== prevState.places ||
       this.state.userLocation !== prevState.userLocation
@@ -39,6 +41,16 @@ class FindClass extends React.Component {
       if (this.state.places && this.state.userLocation) {
         this.setState({ buttonFindDisabled: false });
       }
+    }
+    // Set mapCenter to first find result
+    if (this.props.findResults !== prevProps.findResults) {
+      let mapCenter = null;
+      for (const place of this.state.places) {
+        if (this.props.findResults[0].name === place.name) {
+          mapCenter = place.location.mapCenter;
+        }
+      }
+      this.setState({ mapCenter });
     }
   }
 
