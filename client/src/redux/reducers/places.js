@@ -27,7 +27,8 @@ export function placeReducer(state = initialState, action) {
     case DELETE_PLACE: {
       return state;
     }
-    default:
+    default: {
       return state;
+    }
   }
 }

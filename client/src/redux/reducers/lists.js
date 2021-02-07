@@ -36,7 +36,8 @@ export function listReducer(state = initialState, action) {
     case DELETE_LIST: {
       return state;
     }
-    default:
+    default: {
       return state;
+    }
   }
 }

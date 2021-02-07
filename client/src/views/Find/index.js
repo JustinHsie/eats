@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getLists, getList, setMenuTab } from '../../redux/actions';
 import { Find as FindComponent } from '../../components/Find';
 import { getUserLocation } from './getUserLocation';
-import { getDistance } from './getDistance';
+import { getDistance } from '../../redux/actions';
 import './index.css';
 
 class FindClass extends React.Component {
@@ -18,6 +18,8 @@ class FindClass extends React.Component {
       buttonTextFind: 'Find Near Me',
       buttonIconFind: 'pi pi-map',
       buttonFindDisabled: true,
+      findResults: null,
+      mapCenter: null,
     };
     this.props.setMenuTab('Find Near Me');
   }
@@ -67,7 +69,17 @@ class FindClass extends React.Component {
   };
 
   handleFind = () => {
-    getDistance(this.state.userLocation, this.state.places);
+    this.props.getDistance(this.state.userLocation, this.state.places);
+  };
+
+  handleSelectedPlaceChange = e => {
+    let mapCenter = null;
+    for (const place of this.state.places) {
+      if (e.value.name === place.name) {
+        mapCenter = place.location.mapCenter;
+      }
+    }
+    this.setState({ mapCenter });
   };
 
   render() {
@@ -83,6 +95,9 @@ class FindClass extends React.Component {
         buttonIconFind={this.state.buttonIconFind}
         onClickFind={this.handleFind}
         buttonFindDisabled={this.state.buttonFindDisabled}
+        findResults={this.props.findResults}
+        onSelectedPlaceChange={this.handleSelectedPlaceChange}
+        mapCenter={this.state.mapCenter}
       />
     );
   }
@@ -90,13 +105,19 @@ class FindClass extends React.Component {
 
 function mapState(state) {
   const { lists } = state;
-  return { lists: lists.allLists, list: lists.list };
+  const { maps } = state;
+  return {
+    lists: lists.allLists,
+    list: lists.list,
+    findResults: maps.placeDistances,
+  };
 }
 
 const mapDispatch = {
   getLists,
   getList,
   setMenuTab,
+  getDistance,
 };
 
 export const Find = connect(mapState, mapDispatch)(FindClass);

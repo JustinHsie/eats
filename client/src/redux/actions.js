@@ -10,6 +10,7 @@ import {
   REMOVE_PLACE_FROM_LIST,
   DELETE_PLACE,
   SET_MENU_TAB,
+  GET_DISTANCE
 } from './actionTypes';
 import { history } from '../history';
 import { db } from '../fakeData/db';
@@ -134,5 +135,56 @@ export function setMenuTab(menuLabel) {
   return {
     type: SET_MENU_TAB,
     payload: { menuLabel },
+  };
+}
+
+export function getDistance(userLocation, places) {
+  return function (dispatch) {
+    const google = window.google;
+    const placeDistances = [];
+
+    const origin = { lat: userLocation.lat, lng: userLocation.lng };
+    const destinations = places.map(place => {
+      const lat = place.location.mapCenter.lat;
+      const lng = place.location.mapCenter.lng;
+      return { lat, lng };
+    });
+
+    const service = new google.maps.DistanceMatrixService();
+    service.getDistanceMatrix(
+      {
+        origins: [origin],
+        destinations: destinations,
+        travelMode: 'DRIVING',
+        unitSystem: google.maps.UnitSystem.IMPERIAL,
+      },
+      callback
+    );
+
+    function callback(response, status) {
+      if (status === 'OK') {
+        const origins = response.originAddresses;
+
+        for (let i = 0; i < origins.length; i++) {
+          let results = response.rows[i].elements;
+          for (let j = 0; j < results.length; j++) {
+            let element = results[j];
+
+            placeDistances.push({
+              name: places[j].name,
+              distanceValue: element.distance.value,
+              distanceText: element.distance.text,
+            });
+          }
+        }
+        placeDistances.sort(function (a, b) {
+          return a.distanceValue - b.distanceValue;
+        });
+      }
+      dispatch({
+        type: GET_DISTANCE,
+        payload: { placeDistances },
+      });
+    }
   };
 }

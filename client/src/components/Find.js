@@ -2,7 +2,6 @@ import React from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
-import { places as fakePlaces } from '../fakeData/places';
 import { SelectListDropdown } from './SelectListDropdown';
 import { Map } from './Map';
 
@@ -41,18 +40,23 @@ export function Find(props) {
             />
           </div>
         </div>
-        
+
         <div className="p-mx-6 p-mb-6">
           <h3>Places Nearest to You</h3>
           <div className="datatable_max_width">
-            <DataTable value={fakePlaces} selectionMode="single">
+            <DataTable
+              value={props.findResults}
+              onSelectionChange={props.onSelectedPlaceChange}
+              selectionMode="single"
+            >
               <Column field="name" header="Name"></Column>
+              <Column field="distanceText" header="Distance"></Column>
             </DataTable>
           </div>
         </div>
       </div>
       <div className="p-my-6">
-        <Map />
+        <Map center={props.mapCenter} />
       </div>
     </div>
   );
