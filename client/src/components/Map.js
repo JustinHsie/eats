@@ -1,6 +1,6 @@
 import React from 'react';
 import GoogleMapReact from 'google-map-react';
-import { API_KEY } from '../apis';
+//import { API_KEY } from '../apis';
 
 const Marker = () => (
   <i className="pi pi-map-marker" style={{ fontSize: '3em', color: '#fc3903' }}></i>
@@ -18,7 +18,6 @@ export function Map(props) {
   return (
     <div style={{ height: '70vh', width: '100%' }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: API_KEY }}
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
         center={props.center}
