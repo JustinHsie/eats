@@ -1,3 +1,27 @@
 .form__input_text_max_width {
   max-width: 250px;
 }
+
+.pac-target-input {
+  font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+  font-size: 1rem;
+  color: rgba(0, 0, 0, 0.87);
+  background: #ffffff;
+  padding: 1rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.38);
+  border-radius: 4px;
+  width: 18rem;
+}
+
+.pac-item, .pac-matched, .pac-item-query {
+  font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+  font-size: 1rem;
+  color: rgba(0, 0, 0, 0.87);
+  background: #ffffff;
+  box-sizing: content-box;
+}
+
+.pac-item {
+  box-sizing: content-box;
+  padding: 1rem 1rem;
+}

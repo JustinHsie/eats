@@ -10,7 +10,8 @@ export function menuReducer(state = initialState, action) {
       const { menuLabel } = action.payload;
       return { ...state, menuLabel };
     }
-    default:
+    default: {
       return state;
+    }
   }
 }
