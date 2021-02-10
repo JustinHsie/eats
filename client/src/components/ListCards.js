@@ -8,7 +8,7 @@ export function ListCards(props) {
         className="p-m-2 card_min_width p-link card_background_light p-d-flex p-jc-center"
         title={props.listName}
       >
-        {props.listDescription}
+        <span className="p-d-flex p-jc-center">{props.listDescription}</span>
       </Card>
     </div>
   );
