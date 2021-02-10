@@ -29,6 +29,12 @@ class NewPlaceClass extends React.Component {
     this.props.getLists();
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.placeId !== prevProps.placeId) {
+      this.props.addPlaceToList(this.state.selectedList.id, this.props.placeId);
+    }
+  }
+
   handleSubmit = event => {
     event.preventDefault();
     this.props.createPlace(
@@ -108,8 +114,8 @@ class NewPlaceClass extends React.Component {
 }
 
 function mapState(state) {
-  const { lists } = state;
-  return { lists: lists.allLists };
+  const { lists, places } = state;
+  return { lists: lists.allLists, placeId: places.placeId };
 }
 
 const mapDispatch = {

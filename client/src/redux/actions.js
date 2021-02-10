@@ -13,11 +13,15 @@ import {
   GET_DISTANCE,
 } from './actionTypes';
 import { history } from '../history';
-import { db } from '../fakeData/db';
+import axios from 'axios';
 
 export function createList(name, description) {
   return async function (dispatch) {
-    const listId = await db.createList(name, description);
+    const response = await axios.post('/api/lists', {
+      name,
+      description,
+    });
+    const listId = response.data;
     dispatch({
       type: CREATE_LIST,
       payload: { listId },
@@ -28,7 +32,8 @@ export function createList(name, description) {
 
 export function getLists() {
   return async function (dispatch) {
-    const lists = await db.getLists();
+    const response = await axios.get('/api/lists');
+    const lists = response.data;
     dispatch({
       type: GET_LISTS,
       payload: { lists },
@@ -38,7 +43,8 @@ export function getLists() {
 
 export function getPlace(placeId) {
   return async function (dispatch) {
-    const place = await db.getPlace(placeId);
+    const response = await axios.get(`/api/places/${placeId}`);
+    const place = response.data;
     dispatch({
       type: GET_PLACE,
       payload: { place },
@@ -55,7 +61,14 @@ export function updatePlace(
   list
 ) {
   return async function (dispatch) {
-    await db.updatePlace(placeId, name, rating, description, location, list);
+    await axios.put(`/api/places/${placeId}`, {
+      placeId,
+      name,
+      rating,
+      description,
+      location,
+      list,
+    });
     dispatch({
       type: UPDATE_PLACE,
     });
@@ -64,7 +77,8 @@ export function updatePlace(
 
 export function addPlaceToList(listId, placeId) {
   return async function (dispatch) {
-    const list = await db.addPlaceToList(listId, placeId);
+    const response = await axios.post(`/api/lists/${listId}/places/${placeId}`);
+    const list = response.data;
     dispatch({
       type: ADD_PLACE_TO_LIST,
       payload: { list },
@@ -75,7 +89,10 @@ export function addPlaceToList(listId, placeId) {
 
 export function removePlaceFromList(listId, placeId) {
   return async function (dispatch) {
-    const list = await db.removePlaceFromList(listId, placeId);
+    const response = await axios.delete(
+      `/api/lists/${listId}/places/${placeId}`
+    );
+    const list = response.data;
     dispatch({
       type: REMOVE_PLACE_FROM_LIST,
       payload: { list },
@@ -86,25 +103,25 @@ export function removePlaceFromList(listId, placeId) {
 
 export function createPlace(name, rating, description, location, list) {
   return async function (dispatch) {
-    const placeId = await db.createPlace(
+    const response = await axios.post('/api/places', {
       name,
       rating,
       description,
       location,
-      list
-    );
-    db.addPlaceToList(list.id, placeId);
+      list,
+    });
+    const placeId = response.data;
     dispatch({
       type: CREATE_PLACE,
       payload: { placeId },
     });
-    history.push(`/lists/${list.id}`);
   };
 }
 
 export function getList(listId) {
   return async function (dispatch) {
-    const list = await db.getList(listId);
+    const response = await axios.get(`/api/lists/${listId}`);
+    const list = response.data;
     dispatch({
       type: GET_LIST,
       payload: { list },
@@ -114,7 +131,7 @@ export function getList(listId) {
 
 export function deleteList(listId) {
   return async function (dispatch) {
-    await db.deleteList(listId);
+    await axios.delete(`/api/lists/${listId}`);
     dispatch({
       type: DELETE_LIST,
     });
@@ -124,7 +141,7 @@ export function deleteList(listId) {
 
 export function deletePlace(placeId) {
   return async function (dispatch) {
-    await db.deletePlace(placeId);
+    await axios.delete(`/api/places/${placeId}`);
     dispatch({
       type: DELETE_PLACE,
     });
