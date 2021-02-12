@@ -30,6 +30,7 @@ class NewPlaceClass extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    // Add place to list after getting placeId from creating a new place
     if (this.props.placeId !== prevProps.placeId) {
       this.props.addPlaceToList(this.state.selectedList.id, this.props.placeId);
     }

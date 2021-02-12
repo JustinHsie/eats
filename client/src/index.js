@@ -19,12 +19,14 @@ import { Find } from './views/Find';
 import { NewPlace } from './views/NewPlace';
 import { Menu } from './views/Menu';
 import { NotFound } from './views/NotFound';
+import { Login} from './views/Login';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router history={history}>
         <Menu />
+        <Login />
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/lists/new" exact component={CreateList} />
