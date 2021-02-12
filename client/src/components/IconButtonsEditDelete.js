@@ -14,7 +14,7 @@ export function IconButtonsEditDelete(props) {
         type="button"
         icon="pi pi-pencil"
         onClick={props.onClickEdit}
-        className="p-button-rounded p-button-success button_float_right"
+        className="p-button-rounded p-button-info button_float_right"
       />
     </React.Fragment>
   );

@@ -36,7 +36,7 @@ app.get('/api/places/:placeId', async function (req, res) {
 });
 
 // Update place
-app.put('/api/places/:id', async function (req, res) {
+app.put('/api/places/:placeId', async function (req, res) {
   const { placeId, name, rating, description, location, list } = req.body;
   await db.updatePlace(placeId, name, rating, description, location, list);
   res.sendStatus(200);
@@ -54,6 +54,13 @@ app.get('/api/lists/:listId', async function (req, res) {
   const { listId } = req.params;
   const list = await db.getList(listId);
   res.json(list);
+});
+
+// Update list
+app.put('/api/lists/:listId', async function (req, res) {
+  const { listId, name, description } = req.body;
+  await db.updateList(listId, name, description);
+  res.sendStatus(200);
 });
 
 // Delete list

@@ -1,6 +1,7 @@
 import {
   CREATE_LIST,
   GET_LIST,
+  UPDATE_LIST,
   GET_LISTS,
   DELETE_LIST,
   CREATE_PLACE,
@@ -125,6 +126,19 @@ export function getList(listId) {
     dispatch({
       type: GET_LIST,
       payload: { list },
+    });
+  };
+}
+
+export function updateList(listId, name, description) {
+  return async function (dispatch) {
+    await axios.put(`/api/lists/${listId}`, {
+      listId,
+      name,
+      description,
+    });
+    dispatch({
+      type: UPDATE_LIST,
     });
   };
 }
