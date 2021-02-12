@@ -42,7 +42,7 @@ export function ViewListHeader(props) {
             type="button"
             icon="pi pi-pencil"
             onClick={props.onClickEditHeader}
-            className="p-button-rounded p-button-info p-ml-4 p-mt-5"
+            className="p-button-rounded p-button-outlined p-button-info p-ml-4 p-mt-5"
           />
         )}
       </div>

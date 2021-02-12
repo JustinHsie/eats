@@ -46,11 +46,18 @@ class ViewListClass extends React.Component {
       this.setState({ listEditMode: true });
     } else {
       this.setState({ listEditMode: false });
-      this.props.updateList(
-        this.listId,
-        this.state.listName,
-        this.state.listDescription
-      );
+
+      // Update if changed
+      if (
+        this.props.currentList.name !== this.state.listName ||
+        this.props.currentList.description !== this.state.listDescription
+      ) {
+        this.props.updateList(
+          this.listId,
+          this.state.listName,
+          this.state.listDescription
+        );
+      }
     }
   };
 
