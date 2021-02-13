@@ -43,7 +43,7 @@ export function RegisterForm(props) {
             <Password
               value={props.passwordRpt}
               onChange={props.onPasswordRptChange}
-              id="password"
+              id="passwordRpt"
               className={`p-mb-2 ${props.isSamePassword ? '' : 'p-invalid'}`}
             />
             {props.isSamePassword ? null : (

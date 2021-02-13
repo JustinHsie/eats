@@ -111,6 +111,40 @@ class PlaceDb {
 }
 
 /**
+ * Mock user database.
+ */
+
+class UserDb {
+  constructor() {
+    this.users = {};
+  }
+
+  createUser(username, password) {
+    const id = v4();
+    this.users[id] = {
+      id,
+      username,
+      password,
+    };
+
+    return id;
+  }
+
+  getUser(id) {
+    return deepCopy(this.users[id]);
+  }
+
+  updateUser(id, username, password) {
+    this.users[id].username = username;
+    this.users[id].password = password;
+  }
+
+  deleteUser(id) {
+    delete this.users[id];
+  }
+}
+
+/**
  * Database
  * Operations are always async to simulate
  * real network call to an external/backend database
@@ -119,6 +153,7 @@ export class Db {
   constructor() {
     this.listDb = new ListDb();
     this.placeDb = new PlaceDb();
+    this.userDb = new UserDb();
   }
 
   async createList(name, description) {
@@ -212,6 +247,30 @@ export class Db {
   async deletePlace(id) {
     return makeAsync(() => {
       return this.placeDb.deletePlace(id);
+    });
+  }
+
+  async createUser(username, password) {
+    return makeAsync(() => {
+      return this.userDb.createUser(username, password);
+    });
+  }
+
+  async getUser(id) {
+    return makeAsync(() => {
+      return this.userDb.getUser(id);
+    });
+  }
+
+  async updateUser(id, username, password) {
+    return makeAsync(() => {
+      return this.userDb.updateUser(id, username, password);
+    });
+  }
+
+  async deleteUser(id) {
+    return makeAsync(() => {
+      return this.userDb.deleteUser(id);
     });
   }
 }
