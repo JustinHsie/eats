@@ -40,6 +40,7 @@ export function PlaceForm(props) {
               <h3>Select List</h3>
               <div className="card">
                 <SelectListDropdown
+                  isListSelected={props.isListSelected}
                   selected={props.selectedList}
                   lists={props.lists}
                   onSelectChange={props.onSelectedListChange}

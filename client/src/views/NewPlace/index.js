@@ -21,6 +21,7 @@ class NewPlaceClass extends React.Component {
       rating: null,
       description: '',
       selectedList: null,
+      isListSelected: true,
     };
     this.props.setMenuTab('New Place');
   }
@@ -38,13 +39,19 @@ class NewPlaceClass extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.createPlace(
-      this.state.name,
-      this.state.rating,
-      this.state.description,
-      this.state.location,
-      this.state.selectedList
-    );
+
+    // Prevent submission if no list selected
+    if (!this.state.selectedList) {
+      this.setState({ isListSelected: false });
+    } else {
+      this.props.createPlace(
+        this.state.name,
+        this.state.rating,
+        this.state.description,
+        this.state.location,
+        this.state.selectedList
+      );
+    }
   };
 
   handleNameChange = e => {
@@ -74,7 +81,7 @@ class NewPlaceClass extends React.Component {
   };
 
   handleSelectedListChange = e => {
-    this.setState({ selectedList: e.target.value });
+    this.setState({ selectedList: e.target.value, isListSelected: true });
   };
 
   handleRatingChange = e => {
@@ -93,6 +100,7 @@ class NewPlaceClass extends React.Component {
     return (
       <PlaceForm
         onSubmit={this.handleSubmit}
+        isListSelected={this.state.isListSelected}
         formTitle="Add Place"
         name={this.state.name}
         onNameChange={this.handleNameChange}

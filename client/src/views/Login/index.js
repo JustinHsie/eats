@@ -15,36 +15,30 @@ export class Login extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    // Check if empty username or password
+    // Prevent submission if empty username or password
     if (this.state.username === '') {
       this.setState({ isEmptyUsername: true });
-    } else if (this.state.password === '') {
+    }
+    if (this.state.password === '') {
       this.setState({ isEmptyPassword: true });
-    } else {
+    }
+    if (this.state.username !== '' && this.state.password !== '') {
       console.log('nice');
     }
   };
 
   handleUsernameChange = e => {
-    this.setState({ username: e.target.value });
-
-    // Warn user if empty username
-    if (e.target.value === '') {
-      this.setState({ isEmptyUsername: true });
-    } else {
-      this.setState({ isEmptyUsername: false });
-    }
+    this.setState({
+      username: e.target.value,
+      isEmptyUsername: false,
+    });
   };
 
   handlePasswordChange = e => {
-    this.setState({ password: e.target.value });
-
-    // Warn user if empty password
-    if (e.target.value === '') {
-      this.setState({ isEmptyPassword: true });
-    } else {
-      this.setState({ isEmptyPassword: false });
-    }
+    this.setState({
+      password: e.target.value,
+      isEmptyPassword: false,
+    });
   };
 
   render() {
