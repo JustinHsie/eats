@@ -4,12 +4,12 @@ import { Password } from 'primereact/password';
 import { ButtonSubmit } from './ButtonSubmit';
 import { Button } from 'primereact/button';
 
-export function LoginForm(props) {
+export function RegisterForm(props) {
   return (
     <form onSubmit={props.onSubmit}>
       <div className="p-m-6 p-d-flex p-jc-center">
         <div className="card">
-          <h2>Login</h2>
+          <h2>Register</h2>
           <label>
             <h3>Username</h3>
             <InputText
@@ -38,16 +38,30 @@ export function LoginForm(props) {
               </small>
             ) : null}
           </label>
+          <label>
+            <h3>Repeat Password</h3>
+            <Password
+              value={props.passwordRpt}
+              onChange={props.onPasswordRptChange}
+              id="password"
+              className={`p-mb-2 ${props.isSamePassword ? '' : 'p-invalid'}`}
+            />
+            {props.isSamePassword ? null : (
+              <small id="passwordRpt-help" className="p-error p-d-block">
+                Passwords must match
+              </small>
+            )}
+          </label>
 
           <div>
             <span className="p-mr-6">
-              <ButtonSubmit label="Login" />
+              <ButtonSubmit label="Register" />
             </span>
             <Button
               type="button"
-              onClick={props.onClickRegister}
+              onClick={props.onClickLogin}
               className="p-my-5 p-button-secondary p-button-rounded"
-              label="Go to Register"
+              label="Go to Login"
             />
           </div>
         </div>

@@ -1,6 +1,5 @@
 import React from 'react';
 import GoogleMapReact from 'google-map-react';
-//import { API_KEY } from '../apis';
 
 const Marker = () => (
   <i className="pi pi-map-marker" style={{ fontSize: '3em', color: '#fc3903' }}></i>
