@@ -2,6 +2,7 @@ import express from 'express';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { db } from './fakeData/db.js';
+import bcrypt from 'bcrypt';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -94,6 +95,28 @@ app.post('/api/places', async function (req, res) {
     list
   );
   res.json(placeId);
+});
+
+// Register User
+app.post('/auth/register', async function (req, res) {
+  const { username, password } = req.body;
+  const users = await db.getUsers();
+
+  // Register if unique username
+  const found = users.find(user => user.username === username);
+  if (found) {
+    res.json('taken');
+  } else {
+    const hash = await bcrypt.hash(password, 12);
+    const userId = await db.createUser(username, hash);
+    res.json(userId);
+  }
+});
+
+// Login
+app.post('/auth/login', async function (req, res) {
+  const { username, password } = req.body;
+  const match = await bcrypt.compare(password, user.passwordHash);
 });
 
 // Catch all requests and return index

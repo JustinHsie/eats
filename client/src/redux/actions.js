@@ -12,9 +12,19 @@ import {
   DELETE_PLACE,
   SET_MENU_TAB,
   GET_DISTANCE,
+  CREATE_USER,
+  GET_USER,
+  UPDATE_USER,
+  DELETE_USER,
+  LOGIN,
+  LOGOUT,
 } from './actionTypes';
 import { history } from '../history';
 import axios from 'axios';
+
+/**
+ * Lists
+ */
 
 export function createList(name, description) {
   return async function (dispatch) {
@@ -42,40 +52,6 @@ export function getLists() {
   };
 }
 
-export function getPlace(placeId) {
-  return async function (dispatch) {
-    const response = await axios.get(`/api/places/${placeId}`);
-    const place = response.data;
-    dispatch({
-      type: GET_PLACE,
-      payload: { place },
-    });
-  };
-}
-
-export function updatePlace(
-  placeId,
-  name,
-  rating,
-  description,
-  location,
-  list
-) {
-  return async function (dispatch) {
-    await axios.put(`/api/places/${placeId}`, {
-      placeId,
-      name,
-      rating,
-      description,
-      location,
-      list,
-    });
-    dispatch({
-      type: UPDATE_PLACE,
-    });
-  };
-}
-
 export function addPlaceToList(listId, placeId) {
   return async function (dispatch) {
     const response = await axios.post(`/api/lists/${listId}/places/${placeId}`);
@@ -99,23 +75,6 @@ export function removePlaceFromList(listId, placeId) {
       payload: { list },
     });
     history.push(`/lists/${listId}`);
-  };
-}
-
-export function createPlace(name, rating, description, location, list) {
-  return async function (dispatch) {
-    const response = await axios.post('/api/places', {
-      name,
-      rating,
-      description,
-      location,
-      list,
-    });
-    const placeId = response.data;
-    dispatch({
-      type: CREATE_PLACE,
-      payload: { placeId },
-    });
   };
 }
 
@@ -153,6 +112,61 @@ export function deleteList(listId) {
   };
 }
 
+/**
+ * Places
+ */
+
+export function getPlace(placeId) {
+  return async function (dispatch) {
+    const response = await axios.get(`/api/places/${placeId}`);
+    const place = response.data;
+    dispatch({
+      type: GET_PLACE,
+      payload: { place },
+    });
+  };
+}
+
+export function updatePlace(
+  placeId,
+  name,
+  rating,
+  description,
+  location,
+  list
+) {
+  return async function (dispatch) {
+    await axios.put(`/api/places/${placeId}`, {
+      placeId,
+      name,
+      rating,
+      description,
+      location,
+      list,
+    });
+    dispatch({
+      type: UPDATE_PLACE,
+    });
+  };
+}
+
+export function createPlace(name, rating, description, location, list) {
+  return async function (dispatch) {
+    const response = await axios.post('/api/places', {
+      name,
+      rating,
+      description,
+      location,
+      list,
+    });
+    const placeId = response.data;
+    dispatch({
+      type: CREATE_PLACE,
+      payload: { placeId },
+    });
+  };
+}
+
 export function deletePlace(placeId) {
   return async function (dispatch) {
     await axios.delete(`/api/places/${placeId}`);
@@ -161,6 +175,46 @@ export function deletePlace(placeId) {
     });
   };
 }
+
+/**
+ * Users
+ */
+
+export function createUser(username, password) {
+  return async function (dispatch) {
+    const response = await axios.post('/auth/register', {
+      username,
+      password,
+    });
+    const userId = response.data;
+    console.log(userId);
+    dispatch({
+      type: CREATE_USER,
+      payload: { userId },
+    });
+    if (userId !== 'taken') {
+      history.push('/');
+    }
+  };
+}
+
+export function login(username, password) {
+  return async function (dispatch) {
+    const response = await axios.post('/auth/login', {
+      username,
+      password,
+    });
+    const userId = response.data;
+    dispatch({
+      type: LOGIN,
+      payload: { userId },
+    });
+  };
+}
+
+/**
+ * Misc
+ */
 
 export function setMenuTab(menuLabel) {
   return {

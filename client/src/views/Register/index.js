@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { RegisterForm } from '../../components/RegisterForm';
 import { history } from '../../history';
+import { createUser } from '../../redux/actions';
 
-export class Register extends React.Component {
+class RegisterClass extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,19 +19,22 @@ export class Register extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    const username = this.state.username;
+    const password = this.state.password;
+    const passwordRpt = this.state.passwordRpt;
 
     // Prevent submission if empty username or password or passwords don't match
-    if (this.state.username === '') {
+    if (username === '') {
       this.setState({ isEmptyUsername: true });
     }
-    if (this.state.password === '') {
+    if (password === '') {
       this.setState({ isEmptyPassword: true });
     }
-    if (this.state.password !== this.state.passwordRpt) {
+    if (password !== passwordRpt) {
       this.setState({ isSamePassword: false });
     }
-    if (this.state.username !== '' && this.state.password !== '') {
-      console.log('nice');
+    if (username !== '' && password !== '') {
+      this.props.createUser(username, password);
     }
   };
 
@@ -76,6 +81,7 @@ export class Register extends React.Component {
       <RegisterForm
         onSubmit={this.handleSubmit}
         username={this.state.username}
+        userId={this.props.userId}
         onUsernameChange={this.handleUsernameChange}
         isEmptyUsername={this.state.isEmptyUsername}
         password={this.state.password}
@@ -89,3 +95,14 @@ export class Register extends React.Component {
     );
   }
 }
+
+function mapState(state) {
+  const { users } = state;
+  return { userId: users.userId };
+}
+
+const mapDispatch = {
+  createUser,
+};
+
+export const Register = connect(mapState, mapDispatch)(RegisterClass);

@@ -23,6 +23,11 @@ export function RegisterForm(props) {
                 Please enter a username
               </small>
             ) : null}
+            {props.userId === 'taken' ? (
+              <small id="username-help" className="p-error p-d-block">
+                Username taken
+              </small>
+            ) : null}
           </label>
           <label>
             <h3>Password</h3>

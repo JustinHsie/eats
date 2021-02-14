@@ -134,6 +134,10 @@ class UserDb {
     return deepCopy(this.users[id]);
   }
 
+  getUsers() {
+    return Object.keys(this.users).map(idx => deepCopy(this.users[idx]));
+  }
+
   updateUser(id, username, password) {
     this.users[id].username = username;
     this.users[id].password = password;
@@ -259,6 +263,12 @@ export class Db {
   async getUser(id) {
     return makeAsync(() => {
       return this.userDb.getUser(id);
+    });
+  }
+
+  async getUsers() {
+    return makeAsync(() => {
+      return this.userDb.getUsers();
     });
   }
 
