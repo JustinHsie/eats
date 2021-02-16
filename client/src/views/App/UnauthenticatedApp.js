@@ -8,9 +8,9 @@ export function UnauthenticatedApp() {
   return (
     <Router history={history}>
       <Switch>
-        <Route path="/" exact component={Login} />
+        <Route path="/login" exact component={Login} />
         <Route path="/register" exact component={Register} />
-        <Redirect to="/" />
+        <Redirect to="/login" />
       </Switch>
     </Router>
   );

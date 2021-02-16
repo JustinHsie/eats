@@ -81,7 +81,7 @@ class RegisterClass extends React.Component {
       <RegisterForm
         onSubmit={this.handleSubmit}
         username={this.state.username}
-        userId={this.props.userId}
+        validRegister={this.props.validRegister}
         onUsernameChange={this.handleUsernameChange}
         isEmptyUsername={this.state.isEmptyUsername}
         password={this.state.password}
@@ -98,7 +98,7 @@ class RegisterClass extends React.Component {
 
 function mapState(state) {
   const { users } = state;
-  return { userId: users.userId };
+  return { validRegister: users.validRegister };
 }
 
 const mapDispatch = {

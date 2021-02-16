@@ -54,6 +54,7 @@ class LoginClass extends React.Component {
     return (
       <LoginForm
         onSubmit={this.handleSubmit}
+        validLogin={this.props.validLogin}
         username={this.state.username}
         onUsernameChange={this.handleUsernameChange}
         isEmptyUsername={this.state.isEmptyUsername}
@@ -66,8 +67,13 @@ class LoginClass extends React.Component {
   }
 }
 
+function mapState(state) {
+  const { users } = state;
+  return { validLogin: users.validLogin };
+}
+
 const mapDispatch = {
   login,
 };
 
-export const Login = connect(null, mapDispatch)(LoginClass);
+export const Login = connect(mapState, mapDispatch)(LoginClass);

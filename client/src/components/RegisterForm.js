@@ -23,7 +23,7 @@ export function RegisterForm(props) {
                 Please enter a username
               </small>
             ) : null}
-            {props.userId === 'taken' ? (
+            {!props.validRegister ? (
               <small id="username-help" className="p-error p-d-block">
                 Username taken
               </small>

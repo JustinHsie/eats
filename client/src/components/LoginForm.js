@@ -23,6 +23,11 @@ export function LoginForm(props) {
                 Please enter a username
               </small>
             ) : null}
+            {!props.validLogin ? (
+              <small id="username-help" className="p-error p-d-block">
+                Incorrect username or password
+              </small>
+            ) : null}
           </label>
           <label>
             <h3>Password</h3>
@@ -35,6 +40,11 @@ export function LoginForm(props) {
             {props.isEmptyPassword ? (
               <small id="password-help" className="p-error p-d-block">
                 Please enter a password
+              </small>
+            ) : null}
+            {!props.validLogin ? (
+              <small id="username-help" className="p-error p-d-block">
+                Incorrect username or password
               </small>
             ) : null}
           </label>

@@ -18,6 +18,7 @@ import {
   DELETE_USER,
   LOGIN,
   LOGOUT,
+  GET_SESSION,
 } from './actionTypes';
 import { history } from '../history';
 import axios from 'axios';
@@ -187,12 +188,11 @@ export function createUser(username, password) {
       password,
     });
     const userId = response.data;
-    console.log(userId);
     dispatch({
       type: CREATE_USER,
       payload: { userId },
     });
-    if (userId !== 'taken') {
+    if (userId) {
       history.push('/');
     }
   };
@@ -209,6 +209,23 @@ export function login(username, password) {
       type: LOGIN,
       payload: { userId },
     });
+    if (userId) {
+      history.push('/');
+    }
+  };
+}
+
+export function getSession() {
+  return async function (dispatch) {
+    const response = await axios.get('/auth/session');
+    const userId = response.data;
+    dispatch({
+      type: GET_SESSION,
+      payload: { userId },
+    });
+    if (userId) {
+      history.push('/');
+    }
   };
 }
 

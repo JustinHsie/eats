@@ -1,4 +1,5 @@
 import express from 'express';
+import session from 'express-session';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { db } from './fakeData/db.js';
@@ -14,6 +15,60 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 // Parse request body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Session
+app.use(
+  session({
+    name: 'session',
+    secret: process.env.SECRET || 'secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 1000 * 60 * 60 * 24 * 2,
+    },
+  })
+);
+
+// Register User
+app.post('/auth/register', async function (req, res) {
+  const { username, password } = req.body;
+  const users = await db.getUsers();
+
+  // Register if unique username
+  const found = users.find(user => user.username === username);
+  if (found) {
+    res.json(null);
+  } else {
+    const hash = await bcrypt.hash(password, 12);
+    const userId = await db.createUser(username, hash);
+    req.session.userId = userId;
+    res.json(userId);
+  }
+});
+
+// Login
+app.post('/auth/login', async function (req, res) {
+  const { username, password } = req.body;
+  const users = await db.getUsers();
+  const user = users.find(user => user.username === username);
+  if (user) {
+    const match = await bcrypt.compare(password, user.password);
+    if (match) {
+      req.session.userId = user.id;
+      res.json(user.id);
+    } else {
+      res.json(null);
+    }
+  } else {
+    res.json(null);
+  }
+});
+
+// Get session
+app.get('/auth/session', function (req, res) {
+  res.json(req.session.userId);
+});
 
 // Add place to list
 app.post('/api/lists/:listId/places/:placeId', async function (req, res) {
@@ -95,28 +150,6 @@ app.post('/api/places', async function (req, res) {
     list
   );
   res.json(placeId);
-});
-
-// Register User
-app.post('/auth/register', async function (req, res) {
-  const { username, password } = req.body;
-  const users = await db.getUsers();
-
-  // Register if unique username
-  const found = users.find(user => user.username === username);
-  if (found) {
-    res.json('taken');
-  } else {
-    const hash = await bcrypt.hash(password, 12);
-    const userId = await db.createUser(username, hash);
-    res.json(userId);
-  }
-});
-
-// Login
-app.post('/auth/login', async function (req, res) {
-  const { username, password } = req.body;
-  const match = await bcrypt.compare(password, user.passwordHash);
 });
 
 // Catch all requests and return index
