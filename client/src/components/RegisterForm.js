@@ -16,7 +16,8 @@ export function RegisterForm(props) {
               value={props.username}
               onChange={props.onUsernameChange}
               id="username"
-              className={`p-mb-2 ${props.isEmptyUsername ? 'p-invalid' : ''}`}
+              className={`p-mb-2 ${props.isEmptyUsername ? 'p-invalid' : ''}
+              ${!props.validRegister ? 'p-invalid' : ''}`}
             />
             {props.isEmptyUsername ? (
               <small id="username-help" className="p-error p-d-block">

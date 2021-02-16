@@ -70,6 +70,12 @@ app.get('/auth/session', function (req, res) {
   res.json(req.session.userId);
 });
 
+// Logout
+app.post('/auth/logout', function (req, res) {
+  req.session.userId = null;
+  res.sendStatus(200);
+});
+
 // Add place to list
 app.post('/api/lists/:listId/places/:placeId', async function (req, res) {
   const { listId, placeId } = req.params;

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { history } from '../../history';
 import { Menu as MenuComponent } from '../../components/Menu';
-import { setMenuTab } from '../../redux/actions';
+import { setMenuTab, logout } from '../../redux/actions';
 import './index.css';
 
 export class MenuClass extends React.Component {
@@ -29,6 +29,11 @@ export class MenuClass extends React.Component {
         label: 'New List',
         icon: 'pi pi-list',
         command: () => history.push('/lists/new'),
+      },
+      {
+        label: 'Logout',
+        icon: 'pi pi-user',
+        command: () => this.props.logout(),
       },
     ];
   }
@@ -72,6 +77,7 @@ function mapState(state) {
 
 const mapDispatch = {
   setMenuTab,
+  logout,
 };
 
 export const Menu = connect(mapState, mapDispatch)(MenuClass);

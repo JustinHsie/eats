@@ -229,6 +229,16 @@ export function getSession() {
   };
 }
 
+export function logout() {
+  return async function (dispatch) {
+    await axios.post('/auth/logout');
+    dispatch({
+      type: LOGOUT,
+    });
+    history.push('/login');
+  };
+}
+
 /**
  * Misc
  */

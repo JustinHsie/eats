@@ -1,4 +1,4 @@
-import { CREATE_USER, GET_SESSION, LOGIN } from '../actionTypes';
+import { CREATE_USER, GET_SESSION, LOGIN, LOGOUT } from '../actionTypes';
 
 const initialState = {
   validRegister: 'initial',
@@ -19,6 +19,14 @@ export function userReducer(state = initialState, action) {
     case GET_SESSION: {
       const { userId } = action.payload;
       return { ...state, sessionUserId: userId };
+    }
+    case LOGOUT: {
+      return {
+        ...state,
+        sessionUserId: null,
+        validRegister: 'initial',
+        validLogin: 'initial',
+      };
     }
     default: {
       return state;

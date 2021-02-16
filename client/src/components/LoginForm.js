@@ -16,7 +16,8 @@ export function LoginForm(props) {
               value={props.username}
               onChange={props.onUsernameChange}
               id="username"
-              className={`p-mb-2 ${props.isEmptyUsername ? 'p-invalid' : ''}`}
+              className={`p-mb-2 ${props.isEmptyUsername ? 'p-invalid' : ''}
+              ${!props.validLogin ? 'p-invalid' : ''}`}
             />
             {props.isEmptyUsername ? (
               <small id="username-help" className="p-error p-d-block">
@@ -35,7 +36,8 @@ export function LoginForm(props) {
               value={props.password}
               onChange={props.onPasswordChange}
               id="password"
-              className={`p-mb-2 ${props.isEmptyPassword ? 'p-invalid' : ''}`}
+              className={`p-mb-2 ${props.isEmptyPassword ? 'p-invalid' : ''} 
+              ${!props.validLogin ? 'p-invalid' : ''}`}
             />
             {props.isEmptyPassword ? (
               <small id="password-help" className="p-error p-d-block">
