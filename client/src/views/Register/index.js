@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { RegisterForm } from '../../components/RegisterForm';
 import { history } from '../../history';
-import { createUser } from '../../redux/actions';
+import { createUser, resetUserForm } from '../../redux/actions';
 
 class RegisterClass extends React.Component {
   constructor(props) {
@@ -73,6 +73,15 @@ class RegisterClass extends React.Component {
   };
 
   handleClickLogin = () => {
+    this.setState({
+      username: '',
+      password: '',
+      passwordRpt: '',
+      isEmptyUsername: false,
+      isEmptyPassword: false,
+      isSamePassword: true,
+    });
+    this.props.resetUserForm();
     history.push('/');
   };
 
@@ -103,6 +112,7 @@ function mapState(state) {
 
 const mapDispatch = {
   createUser,
+  resetUserForm,
 };
 
 export const Register = connect(mapState, mapDispatch)(RegisterClass);

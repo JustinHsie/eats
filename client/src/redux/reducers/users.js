@@ -1,9 +1,19 @@
-import { CREATE_USER, GET_SESSION, LOGIN, LOGOUT } from '../actionTypes';
+import {
+  CREATE_USER,
+  GET_SESSION,
+  GET_USER,
+  LOGIN,
+  LOGOUT,
+  RESET_USER_FORM,
+  UPDATE_USER,
+} from '../actionTypes';
 
 const initialState = {
   validRegister: 'initial',
   validLogin: 'initial',
   sessionUserId: null,
+  user: null,
+  validOldPass: 'initial',
 };
 
 export function userReducer(state = initialState, action) {
@@ -26,6 +36,22 @@ export function userReducer(state = initialState, action) {
         sessionUserId: null,
         validRegister: 'initial',
         validLogin: 'initial',
+      };
+    }
+    case GET_USER: {
+      const { user } = action.payload;
+      return { ...state, user };
+    }
+    case UPDATE_USER: {
+      const { userId } = action.payload;
+      return { ...state, validOldPass: userId };
+    }
+    case RESET_USER_FORM: {
+      return {
+        ...state,
+        validRegister: 'initial',
+        validLogin: 'initial',
+        validOldPass: 'initial',
       };
     }
     default: {

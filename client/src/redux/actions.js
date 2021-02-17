@@ -19,6 +19,7 @@ import {
   LOGIN,
   LOGOUT,
   GET_SESSION,
+  RESET_USER_FORM,
 } from './actionTypes';
 import { history } from '../history';
 import axios from 'axios';
@@ -239,6 +240,32 @@ export function logout() {
   };
 }
 
+export function getUser(id) {
+  return async function (dispatch) {
+    const response = await axios.get(`/auth/users/${id}`);
+    const user = response.data;
+    dispatch({
+      type: GET_USER,
+      payload: { user },
+    });
+  };
+}
+
+export function updateUser(id, oldPass, newPass) {
+  return async function (dispatch) {
+    const response = await axios.put(`/auth/users/${id}`, {
+      id,
+      oldPass,
+      newPass,
+    });
+    const userId = response.data;
+    dispatch({
+      type: UPDATE_USER,
+      payload: { userId },
+    });
+  };
+}
+
 /**
  * Misc
  */
@@ -247,6 +274,12 @@ export function setMenuTab(menuLabel) {
   return {
     type: SET_MENU_TAB,
     payload: { menuLabel },
+  };
+}
+
+export function resetUserForm() {
+  return {
+    type: RESET_USER_FORM,
   };
 }
 

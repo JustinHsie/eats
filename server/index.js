@@ -76,6 +76,27 @@ app.post('/auth/logout', function (req, res) {
   res.sendStatus(200);
 });
 
+// Get user
+app.get('/auth/users/:userId', async function (req, res) {
+  const { userId } = req.params;
+  const user = await db.getUser(userId);
+  res.json(user);
+});
+
+// Update user password
+app.put('/auth/users/:userId', async function (req, res) {
+  const { id, oldPass, newPass } = req.body;
+  const user = await db.getUser(id);
+  const match = await bcrypt.compare(oldPass, user.password);
+  if (match) {
+    const hash = await bcrypt.hash(newPass, 12);
+    await db.updateUser(id, hash);
+    res.json(user.id);
+  } else {
+    res.json(null);
+  }
+});
+
 // Add place to list
 app.post('/api/lists/:listId/places/:placeId', async function (req, res) {
   const { listId, placeId } = req.params;

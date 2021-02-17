@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { AuthenticatedApp } from './AuthenticatedApp';
 import { UnauthenticatedApp } from './UnauthenticatedApp';
 import { getSession } from '../../redux/actions';
+import { UserContext } from './UserContext';
 
 class AppClass extends React.Component {
   constructor(props) {
@@ -12,7 +13,9 @@ class AppClass extends React.Component {
 
   render() {
     return this.props.sessionUserId ? (
-      <AuthenticatedApp />
+      <UserContext.Provider value={this.props.sessionUserId}>
+        <AuthenticatedApp />
+      </UserContext.Provider>
     ) : (
       <UnauthenticatedApp />
     );

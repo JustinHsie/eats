@@ -18,3 +18,4 @@ export const DELETE_USER = 'DELETE_USER';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const GET_SESSION = 'GET_SESSION';
+export const RESET_USER_FORM = 'RESET_USER_FORM';

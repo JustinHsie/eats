@@ -45,7 +45,7 @@ export function RegisterForm(props) {
             ) : null}
           </label>
           <label>
-            <h3>Repeat Password</h3>
+            <h3>Confirm Password</h3>
             <Password
               value={props.passwordRpt}
               onChange={props.onPasswordRptChange}

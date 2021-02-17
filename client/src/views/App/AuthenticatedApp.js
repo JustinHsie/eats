@@ -8,6 +8,7 @@ import { ViewList } from '../ViewList';
 import { Find } from '../Find';
 import { NewPlace } from '../NewPlace';
 import { Menu } from '../Menu';
+import { User } from '../User';
 import { NotFound } from '../NotFound';
 
 export function AuthenticatedApp() {
@@ -21,6 +22,7 @@ export function AuthenticatedApp() {
         <Route path="/find" exact component={Find} />
         <Route path="/places/new" exact component={NewPlace} />
         <Route path="/places/:id" exact component={EditPlace} />
+        <Route path="/user" exact component={User} />
         <Route path="/404" component={NotFound} />
         <Redirect to="/404" />
       </Switch>
