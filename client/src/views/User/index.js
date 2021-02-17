@@ -9,6 +9,7 @@ import {
 import { User as UserComponent } from '../../components/User';
 import { UserContext } from '../App/UserContext';
 import { PasswordForm } from '../../components/PasswordForm';
+import { Toast } from 'primereact/toast';
 
 class UserClass extends React.Component {
   constructor(props, context) {
@@ -22,14 +23,14 @@ class UserClass extends React.Component {
       isEmptyOldPass: false,
       isEmptyNewPass: false,
       isSamePass: true,
-      showPassChangeSuccess: false,
     };
+    this.toast = React.createRef();
   }
 
   componentDidUpdate(prevProps) {
     // Undisplay form on successful password change
     if (this.props.validOldPass !== prevProps.validOldPass) {
-      if (this.props.validOldPass && this.props.validOldPass !== 'initial') {
+      if (this.props.validOldPass) {
         this.setState({
           showPasswordForm: false,
           oldPass: '',
@@ -38,8 +39,12 @@ class UserClass extends React.Component {
           isEmptyOldPass: false,
           isEmptyNewPass: false,
           isSamePass: true,
-          showPassChangeSuccess: true,
         });
+        // Show toast on successful password change
+        if (this.props.validOldPass !== 'initial') {
+          this.showToast();
+        }
+        this.props.resetUserForm();
       }
     }
   }
@@ -49,7 +54,7 @@ class UserClass extends React.Component {
   };
 
   handleChangePassword = () => {
-    this.setState({ showPasswordForm: true, showPassChangeSuccess: false });
+    this.setState({ showPasswordForm: true });
   };
 
   handleSubmit = e => {
@@ -108,9 +113,17 @@ class UserClass extends React.Component {
       isEmptyOldPass: false,
       isEmptyNewPass: false,
       isSamePass: true,
-      showPassChangeSuccess: false,
     });
     this.props.resetUserForm();
+  };
+
+  showToast = () => {
+    this.toast.current.show({
+      severity: 'success',
+      summary: 'Success!',
+      detail: 'Password Changed',
+      life: 3000,
+    });
   };
 
   render() {
@@ -131,15 +144,17 @@ class UserClass extends React.Component {
       />
     );
     return (
-      <UserComponent
-        username={this.props.user ? this.props.user.username : null}
-        showPasswordForm={this.state.showPasswordForm}
-        passwordForm={passwordForm}
-        showPassChangeSuccess={this.state.showPassChangeSuccess}
-        onChangePasswordClick={this.handleChangePassword}
-        onPasswordCancel={this.handlePasswordCancel}
-        onLogoutClick={this.handleLogout}
-      />
+      <div>
+        <Toast ref={this.toast} />
+        <UserComponent
+          username={this.props.user ? this.props.user.username : null}
+          showPasswordForm={this.state.showPasswordForm}
+          passwordForm={passwordForm}
+          onChangePasswordClick={this.handleChangePassword}
+          onPasswordCancel={this.handlePasswordCancel}
+          onLogoutClick={this.handleLogout}
+        />
+      </div>
     );
   }
 }

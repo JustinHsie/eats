@@ -10,11 +10,6 @@ export function User(props) {
         <p>{props.username}</p>
         <div>{props.showPasswordForm ? props.passwordForm : null}</div>
         <div>
-          {props.showPassChangeSuccess ? (
-            <h3>Password successfully changed!</h3>
-          ) : null}
-        </div>
-        <div>
           {!props.showPasswordForm ? (
             <Button
               type="button"
