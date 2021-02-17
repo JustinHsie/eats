@@ -17,18 +17,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Session
-app.use(
-  session({
-    name: 'session',
-    secret: process.env.SECRET || 'secret',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 1000 * 60 * 60 * 24 * 2,
-    },
-  })
-);
+
+const sessionConfig = {
+  name: 'session',
+  secret: process.env.SECRET || 'secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 1000 * 60 * 60 * 24 * 2 },
+};
+
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1); // trust first proxy
+  sessionConfig.cookie.secure = true; // serve secure cookies
+}
+
+app.use(session(sessionConfig));
 
 // Register User
 app.post('/auth/register', async function (req, res) {
