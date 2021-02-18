@@ -1,5 +1,5 @@
 @media (max-width: 600px) {
-  .p-tabmenu .p-tabmenu-nav .p-tabmenu-ink-bar {
+  #root .p-tabmenu .p-tabmenu-nav .p-tabmenu-ink-bar {
     display: none;
   }
 }

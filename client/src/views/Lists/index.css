@@ -2,10 +2,10 @@
   width: 300px;
 }
 
-.card_background_light {
+.p-link.card_background_light, .p-card.card_background_light {
   background-color: rgba(33, 150, 243, 0.6);
 }
 
-.card_background_dark {
+.p-link.card_background_dark, .p-card.card_background_dark {
   background-color: rgba(40, 95, 199, 0.6);
 }

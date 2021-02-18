@@ -30,6 +30,11 @@ export class MenuClass extends React.Component {
         icon: 'pi pi-list',
         command: () => history.push('/lists/new'),
       },
+      {
+        label: 'User',
+        icon: 'pi pi-user',
+        command: () => history.push('/user'),
+      },
     ];
   }
 

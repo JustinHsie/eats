@@ -1,7 +1,9 @@
 import express from 'express';
+import session from 'express-session';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { db } from './fakeData/db.js';
+import bcrypt from 'bcrypt';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -13,6 +15,90 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 // Parse request body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Session
+
+const sessionConfig = {
+  name: 'session',
+  secret: process.env.SECRET || 'secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 1000 * 60 * 60 * 24 * 2 },
+};
+
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1); // trust first proxy
+  sessionConfig.cookie.secure = true; // serve secure cookies
+}
+
+app.use(session(sessionConfig));
+
+// Register User
+app.post('/auth/register', async function (req, res) {
+  const { username, password } = req.body;
+  const users = await db.getUsers();
+
+  // Register if unique username
+  const found = users.find(user => user.username === username);
+  if (found) {
+    res.json(null);
+  } else {
+    const hash = await bcrypt.hash(password, 12);
+    const userId = await db.createUser(username, hash);
+    req.session.userId = userId;
+    res.json(userId);
+  }
+});
+
+// Login
+app.post('/auth/login', async function (req, res) {
+  const { username, password } = req.body;
+  const users = await db.getUsers();
+  const user = users.find(user => user.username === username);
+  if (user) {
+    const match = await bcrypt.compare(password, user.password);
+    if (match) {
+      req.session.userId = user.id;
+      res.json(user.id);
+    } else {
+      res.json(null);
+    }
+  } else {
+    res.json(null);
+  }
+});
+
+// Get session
+app.get('/auth/session', function (req, res) {
+  res.json(req.session.userId);
+});
+
+// Logout
+app.post('/auth/logout', function (req, res) {
+  req.session.userId = null;
+  res.sendStatus(200);
+});
+
+// Get user
+app.get('/auth/users/:userId', async function (req, res) {
+  const { userId } = req.params;
+  const user = await db.getUser(userId);
+  res.json(user);
+});
+
+// Update user password
+app.put('/auth/users/:userId', async function (req, res) {
+  const { id, oldPass, newPass } = req.body;
+  const user = await db.getUser(id);
+  const match = await bcrypt.compare(oldPass, user.password);
+  if (match) {
+    const hash = await bcrypt.hash(newPass, 12);
+    await db.updateUser(id, hash);
+    res.json(user.id);
+  } else {
+    res.json(null);
+  }
+});
 
 // Add place to list
 app.post('/api/lists/:listId/places/:placeId', async function (req, res) {
@@ -36,7 +122,7 @@ app.get('/api/places/:placeId', async function (req, res) {
 });
 
 // Update place
-app.put('/api/places/:id', async function (req, res) {
+app.put('/api/places/:placeId', async function (req, res) {
   const { placeId, name, rating, description, location, list } = req.body;
   await db.updatePlace(placeId, name, rating, description, location, list);
   res.sendStatus(200);
@@ -54,6 +140,13 @@ app.get('/api/lists/:listId', async function (req, res) {
   const { listId } = req.params;
   const list = await db.getList(listId);
   res.json(list);
+});
+
+// Update list
+app.put('/api/lists/:listId', async function (req, res) {
+  const { listId, name, description } = req.body;
+  await db.updateList(listId, name, description);
+  res.sendStatus(200);
 });
 
 // Delete list

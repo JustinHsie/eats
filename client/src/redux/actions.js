@@ -1,6 +1,7 @@
 import {
   CREATE_LIST,
   GET_LIST,
+  UPDATE_LIST,
   GET_LISTS,
   DELETE_LIST,
   CREATE_PLACE,
@@ -11,9 +12,21 @@ import {
   DELETE_PLACE,
   SET_MENU_TAB,
   GET_DISTANCE,
+  CREATE_USER,
+  GET_USER,
+  UPDATE_USER,
+  DELETE_USER,
+  LOGIN,
+  LOGOUT,
+  GET_SESSION,
+  RESET_USER_FORM,
 } from './actionTypes';
 import { history } from '../history';
 import axios from 'axios';
+
+/**
+ * Lists
+ */
 
 export function createList(name, description) {
   return async function (dispatch) {
@@ -40,6 +53,70 @@ export function getLists() {
     });
   };
 }
+
+export function addPlaceToList(listId, placeId) {
+  return async function (dispatch) {
+    const response = await axios.post(`/api/lists/${listId}/places/${placeId}`);
+    const list = response.data;
+    dispatch({
+      type: ADD_PLACE_TO_LIST,
+      payload: { list },
+    });
+    history.push(`/lists/${listId}`);
+  };
+}
+
+export function removePlaceFromList(listId, placeId) {
+  return async function (dispatch) {
+    const response = await axios.delete(
+      `/api/lists/${listId}/places/${placeId}`
+    );
+    const list = response.data;
+    dispatch({
+      type: REMOVE_PLACE_FROM_LIST,
+      payload: { list },
+    });
+    history.push(`/lists/${listId}`);
+  };
+}
+
+export function getList(listId) {
+  return async function (dispatch) {
+    const response = await axios.get(`/api/lists/${listId}`);
+    const list = response.data;
+    dispatch({
+      type: GET_LIST,
+      payload: { list },
+    });
+  };
+}
+
+export function updateList(listId, name, description) {
+  return async function (dispatch) {
+    await axios.put(`/api/lists/${listId}`, {
+      listId,
+      name,
+      description,
+    });
+    dispatch({
+      type: UPDATE_LIST,
+    });
+  };
+}
+
+export function deleteList(listId) {
+  return async function (dispatch) {
+    await axios.delete(`/api/lists/${listId}`);
+    dispatch({
+      type: DELETE_LIST,
+    });
+    history.push('/');
+  };
+}
+
+/**
+ * Places
+ */
 
 export function getPlace(placeId) {
   return async function (dispatch) {
@@ -75,32 +152,6 @@ export function updatePlace(
   };
 }
 
-export function addPlaceToList(listId, placeId) {
-  return async function (dispatch) {
-    const response = await axios.post(`/api/lists/${listId}/places/${placeId}`);
-    const list = response.data;
-    dispatch({
-      type: ADD_PLACE_TO_LIST,
-      payload: { list },
-    });
-    history.push(`/lists/${listId}`);
-  };
-}
-
-export function removePlaceFromList(listId, placeId) {
-  return async function (dispatch) {
-    const response = await axios.delete(
-      `/api/lists/${listId}/places/${placeId}`
-    );
-    const list = response.data;
-    dispatch({
-      type: REMOVE_PLACE_FROM_LIST,
-      payload: { list },
-    });
-    history.push(`/lists/${listId}`);
-  };
-}
-
 export function createPlace(name, rating, description, location, list) {
   return async function (dispatch) {
     const response = await axios.post('/api/places', {
@@ -118,27 +169,6 @@ export function createPlace(name, rating, description, location, list) {
   };
 }
 
-export function getList(listId) {
-  return async function (dispatch) {
-    const response = await axios.get(`/api/lists/${listId}`);
-    const list = response.data;
-    dispatch({
-      type: GET_LIST,
-      payload: { list },
-    });
-  };
-}
-
-export function deleteList(listId) {
-  return async function (dispatch) {
-    await axios.delete(`/api/lists/${listId}`);
-    dispatch({
-      type: DELETE_LIST,
-    });
-    history.push('/');
-  };
-}
-
 export function deletePlace(placeId) {
   return async function (dispatch) {
     await axios.delete(`/api/places/${placeId}`);
@@ -148,10 +178,108 @@ export function deletePlace(placeId) {
   };
 }
 
+/**
+ * Users
+ */
+
+export function createUser(username, password) {
+  return async function (dispatch) {
+    const response = await axios.post('/auth/register', {
+      username,
+      password,
+    });
+    const userId = response.data;
+    dispatch({
+      type: CREATE_USER,
+      payload: { userId },
+    });
+    if (userId) {
+      history.push('/');
+    }
+  };
+}
+
+export function login(username, password) {
+  return async function (dispatch) {
+    const response = await axios.post('/auth/login', {
+      username,
+      password,
+    });
+    const userId = response.data;
+    dispatch({
+      type: LOGIN,
+      payload: { userId },
+    });
+    if (userId) {
+      history.push('/');
+    }
+  };
+}
+
+export function getSession() {
+  return async function (dispatch) {
+    const response = await axios.get('/auth/session');
+    const userId = response.data;
+    dispatch({
+      type: GET_SESSION,
+      payload: { userId },
+    });
+    if (userId) {
+      history.push('/');
+    }
+  };
+}
+
+export function logout() {
+  return async function (dispatch) {
+    await axios.post('/auth/logout');
+    dispatch({
+      type: LOGOUT,
+    });
+    history.push('/login');
+  };
+}
+
+export function getUser(id) {
+  return async function (dispatch) {
+    const response = await axios.get(`/auth/users/${id}`);
+    const user = response.data;
+    dispatch({
+      type: GET_USER,
+      payload: { user },
+    });
+  };
+}
+
+export function updateUser(id, oldPass, newPass) {
+  return async function (dispatch) {
+    const response = await axios.put(`/auth/users/${id}`, {
+      id,
+      oldPass,
+      newPass,
+    });
+    const userId = response.data;
+    dispatch({
+      type: UPDATE_USER,
+      payload: { userId },
+    });
+  };
+}
+
+/**
+ * Misc
+ */
+
 export function setMenuTab(menuLabel) {
   return {
     type: SET_MENU_TAB,
     payload: { menuLabel },
+  };
+}
+
+export function resetUserForm() {
+  return {
+    type: RESET_USER_FORM,
   };
 }
 

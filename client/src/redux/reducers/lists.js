@@ -1,6 +1,7 @@
 import {
   ADD_PLACE_TO_LIST,
   CREATE_LIST,
+  UPDATE_LIST,
   DELETE_LIST,
   GET_LIST,
   GET_LISTS,
@@ -32,6 +33,9 @@ export function listReducer(state = initialState, action) {
     case GET_LIST: {
       const { list } = action.payload;
       return { ...state, list };
+    }
+    case UPDATE_LIST: {
+      return state;
     }
     case DELETE_LIST: {
       return state;

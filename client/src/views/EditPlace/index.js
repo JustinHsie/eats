@@ -122,6 +122,7 @@ class EditPlaceClass extends React.Component {
       return (
         <PlaceForm
           onSubmit={this.handleSubmit}
+          isListSelected={true}
           formTitle={`Edit ${this.state.fetchedPlace.name}`}
           name={this.state.name}
           onNameChange={this.handleNameChange}
