@@ -2,7 +2,9 @@ import Pool from 'pg-pool';
 
 class Database {
   constructor() {
-    this.pool = new Pool();
+    this.pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+    });
   }
 
   async getUserByUsername(username) {
