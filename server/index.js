@@ -2,7 +2,7 @@ import express from 'express';
 import session from 'express-session';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { db } from './fakeData/db.js';
+import { db } from './db/index.js';
 import bcrypt from 'bcrypt';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -35,11 +35,9 @@ app.use(session(sessionConfig));
 
 // Register User
 app.post('/auth/register', async function (req, res) {
-  const { username, password } = req.body;
-  const users = await db.getUsers();
-
   // Register if unique username
-  const found = users.find(user => user.username === username);
+  const { username, password } = req.body;
+  const found = await db.getUserByUsername(username);
   if (found) {
     res.json(null);
   } else {
@@ -53,8 +51,7 @@ app.post('/auth/register', async function (req, res) {
 // Login
 app.post('/auth/login', async function (req, res) {
   const { username, password } = req.body;
-  const users = await db.getUsers();
-  const user = users.find(user => user.username === username);
+  const user = await db.getUserByUsername(username);
   if (user) {
     const match = await bcrypt.compare(password, user.password);
     if (match) {
@@ -82,36 +79,22 @@ app.post('/auth/logout', function (req, res) {
 // Get user
 app.get('/auth/users/:userId', async function (req, res) {
   const { userId } = req.params;
-  const user = await db.getUser(userId);
+  const user = await db.getUserById(userId);
   res.json(user);
 });
 
 // Update user password
 app.put('/auth/users/:userId', async function (req, res) {
   const { id, oldPass, newPass } = req.body;
-  const user = await db.getUser(id);
+  const user = await db.getUserById(id);
   const match = await bcrypt.compare(oldPass, user.password);
   if (match) {
     const hash = await bcrypt.hash(newPass, 12);
-    await db.updateUser(id, hash);
+    await db.updateUserPassword(id, hash);
     res.json(user.id);
   } else {
     res.json(null);
   }
-});
-
-// Add place to list
-app.post('/api/lists/:listId/places/:placeId', async function (req, res) {
-  const { listId, placeId } = req.params;
-  const list = await db.addPlaceToList(listId, placeId);
-  res.json(list);
-});
-
-// Remove place from list
-app.delete('/api/lists/:listId/places/:placeId', async function (req, res) {
-  const { listId, placeId } = req.params;
-  const list = await db.removePlaceFromList(listId, placeId);
-  res.json(list);
 });
 
 // Get place

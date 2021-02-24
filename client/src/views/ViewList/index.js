@@ -6,7 +6,6 @@ import {
   updateList,
   deleteList,
   deletePlace,
-  removePlaceFromList,
   setMenuTab,
 } from '../../redux/actions';
 import { PlacesTable } from '../../components/PlacesTable';
@@ -33,11 +32,16 @@ class ViewListClass extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    // Display list name after fetching list
     if (this.props.currentList !== prevProps.currentList) {
       this.setState({
         listName: this.props.currentList.name,
         listDescription: this.props.currentList.description,
       });
+    }
+    // Refetch list after deleting place
+    if (this.props.deletedPlace !== prevProps.deletedPlace) {
+      this.props.getList(this.listId);
     }
   }
 
@@ -79,8 +83,7 @@ class ViewListClass extends React.Component {
 
   handleClickDeletePlace = placeObject => e => {
     e.stopPropagation();
-    this.props.deletePlace(placeObject.id);
-    this.props.removePlaceFromList(placeObject.list.id, placeObject.id);
+    this.props.deletePlace(placeObject.id, this.listId);
   };
 
   handleClickEditPlace = placeObject => e => {
@@ -138,8 +141,8 @@ class ViewListClass extends React.Component {
 }
 
 function mapState(state) {
-  const { lists } = state;
-  return { currentList: lists.list };
+  const { lists, places } = state;
+  return { currentList: lists.list, deletedPlace: places.deletedPlace };
 }
 
 const mapDispatch = {
@@ -147,7 +150,6 @@ const mapDispatch = {
   updateList,
   deleteList,
   deletePlace,
-  removePlaceFromList,
   setMenuTab,
 };
 

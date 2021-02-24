@@ -1,13 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { history } from '../../history';
-import {
-  getPlace,
-  getLists,
-  updatePlace,
-  addPlaceToList,
-  removePlaceFromList,
-} from '../../redux/actions';
+import { getPlace, getLists, updatePlace } from '../../redux/actions';
 import { PlaceForm } from '../../components/PlaceForm';
 import { Loading } from '../../components/Loading';
 import './index.css';
@@ -25,6 +19,7 @@ class EditPlaceClass extends React.Component {
       rating: null,
       description: '',
       selectedList: null,
+      initialList: null,
     };
   }
 
@@ -51,6 +46,7 @@ class EditPlaceClass extends React.Component {
         rating: fetchedPlace.rating,
         description: fetchedPlace.description,
         selectedList: fetchedPlace.list,
+        initialList: fetchedPlace.list,
       });
     }
   };
@@ -63,15 +59,8 @@ class EditPlaceClass extends React.Component {
       this.state.rating,
       this.state.description,
       this.state.location,
-      this.state.selectedList
-    );
-    this.props.addPlaceToList(
-      this.state.selectedList.id,
-      this.state.fetchedPlace.id
-    );
-    this.props.removePlaceFromList(
-      this.state.fetchedPlace.list.id,
-      this.state.fetchedPlace.id
+      this.state.selectedList,
+      this.state.initialList
     );
   };
 
@@ -156,8 +145,6 @@ const mapDispatch = {
   getPlace,
   getLists,
   updatePlace,
-  addPlaceToList,
-  removePlaceFromList,
 };
 
 export const EditPlace = connect(mapState, mapDispatch)(EditPlaceClass);

@@ -4,7 +4,6 @@ import { history } from '../../history';
 import {
   getLists,
   createPlace,
-  addPlaceToList,
   setMenuTab,
 } from '../../redux/actions';
 import { PlaceForm } from '../../components/PlaceForm';
@@ -28,13 +27,6 @@ class NewPlaceClass extends React.Component {
 
   componentDidMount() {
     this.props.getLists();
-  }
-
-  componentDidUpdate(prevProps) {
-    // Add place to list after getting placeId from creating a new place
-    if (this.props.placeId !== prevProps.placeId) {
-      this.props.addPlaceToList(this.state.selectedList.id, this.props.placeId);
-    }
   }
 
   handleSubmit = event => {
@@ -61,7 +53,6 @@ class NewPlaceClass extends React.Component {
   handlePlaceSelect = e => {
     const location = {
       name: e.name,
-      placeId: e.place_id,
       address: e.formatted_address,
       mapCenter: {
         lat: e.geometry.location.lat(),
@@ -130,7 +121,6 @@ function mapState(state) {
 const mapDispatch = {
   getLists,
   createPlace,
-  addPlaceToList,
   setMenuTab,
 };
 
