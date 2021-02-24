@@ -28,6 +28,7 @@ export function PlaceForm(props) {
                 <h3>Location</h3>
                 <div>
                   <InputLocation
+                    isLocationSelected={props.isLocationSelected}
                     onPlaceSelect={props.onPlaceSelect}
                     locationInput={props.locationInput}
                     onLocationInputChange={props.onLocationInputChange}

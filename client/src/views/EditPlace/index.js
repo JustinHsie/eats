@@ -13,13 +13,14 @@ class EditPlaceClass extends React.Component {
     this.state = {
       fetchedPlace: null,
       name: '',
-      location: {},
+      location: null,
       locationInput: '',
       mapCenter: null,
       rating: null,
       description: '',
       selectedList: null,
       initialList: null,
+      isLocationSelected: true,
     };
   }
 
@@ -53,15 +54,21 @@ class EditPlaceClass extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.updatePlace(
-      this.state.fetchedPlace.id,
-      this.state.name,
-      this.state.rating,
-      this.state.description,
-      this.state.location,
-      this.state.selectedList,
-      this.state.initialList
-    );
+
+    // Prevent submission if no location selected
+    if (!this.state.location) {
+      this.setState({ isLocationSelected: false });
+    } else {
+      this.props.updatePlace(
+        this.state.fetchedPlace.id,
+        this.state.name,
+        this.state.rating,
+        this.state.description,
+        this.state.location,
+        this.state.selectedList,
+        this.state.initialList
+      );
+    }
   };
 
   handleNameChange = e => {
@@ -83,6 +90,7 @@ class EditPlaceClass extends React.Component {
       location,
       locationInput: location.address,
       mapCenter: location.mapCenter,
+      isLocationSelected: true,
     });
   };
 
@@ -112,6 +120,7 @@ class EditPlaceClass extends React.Component {
         <PlaceForm
           onSubmit={this.handleSubmit}
           isListSelected={true}
+          isLocationSelected={this.state.isLocationSelected}
           formTitle={`Edit ${this.state.fetchedPlace.name}`}
           name={this.state.name}
           onNameChange={this.handleNameChange}

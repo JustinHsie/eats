@@ -1,11 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { history } from '../../history';
-import {
-  getLists,
-  createPlace,
-  setMenuTab,
-} from '../../redux/actions';
+import { getLists, createPlace, setMenuTab } from '../../redux/actions';
 import { PlaceForm } from '../../components/PlaceForm';
 import './index.css';
 
@@ -14,13 +10,14 @@ class NewPlaceClass extends React.Component {
     super(props);
     this.state = {
       name: '',
-      location: {},
+      location: null,
       locationInput: '',
       mapCenter: null,
       rating: null,
       description: '',
       selectedList: null,
       isListSelected: true,
+      isLocationSelected: true,
     };
     this.props.setMenuTab('New Place');
   }
@@ -32,7 +29,10 @@ class NewPlaceClass extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    // Prevent submission if no list selected
+    // Prevent submission if no location or list selected
+    if (!this.state.location) {
+      this.setState({ isLocationSelected: false });
+    }
     if (!this.state.selectedList) {
       this.setState({ isListSelected: false });
     } else {
@@ -64,6 +64,7 @@ class NewPlaceClass extends React.Component {
       location,
       locationInput: location.address,
       mapCenter: location.mapCenter,
+      isLocationSelected: true,
     });
   };
 
@@ -92,6 +93,7 @@ class NewPlaceClass extends React.Component {
       <PlaceForm
         onSubmit={this.handleSubmit}
         isListSelected={this.state.isListSelected}
+        isLocationSelected={this.state.isLocationSelected}
         formTitle="Add Place"
         name={this.state.name}
         onNameChange={this.handleNameChange}
