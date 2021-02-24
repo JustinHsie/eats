@@ -1,5 +1,6 @@
 import express from 'express';
 import session from 'express-session';
+import connectPg from 'connect-pg-simple';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { db } from './db/index.js';
@@ -8,6 +9,7 @@ import bcrypt from 'bcrypt';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
+const pgSession = connectPg(session);
 
 // Serve static files from React app
 app.use(express.static(path.join(__dirname, '../client/build')));
@@ -20,6 +22,9 @@ app.use(express.urlencoded({ extended: true }));
 
 const sessionConfig = {
   name: 'session',
+  store: new pgSession({
+    pool: db.pool,
+  }),
   secret: process.env.SECRET || 'secret',
   resave: false,
   saveUninitialized: false,
