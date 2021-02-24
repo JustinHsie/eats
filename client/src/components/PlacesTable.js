@@ -22,7 +22,12 @@ export function PlacesTable(props) {
       </div>
       <div className="datatable_max_width p-my-6">
         <span className="p-mr-6">
-          <ButtonCancel onClick={props.onCancelClick} />
+          <Button
+            type="button"
+            onClick={props.onCancelClick}
+            className="p-my-5 p-button-outlined p-button-secondary p-button-rounded"
+            label="Back"
+          />
         </span>
         <Button
           type="button"

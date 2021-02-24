@@ -142,13 +142,15 @@ app.delete('/api/lists/:listId', async function (req, res) {
 // Create list
 app.post('/api/lists', async function (req, res) {
   const { name, description } = req.body;
-  const listId = await db.createList(name, description);
+  const userId = req.session.userId;
+  const listId = await db.createList(name, description, userId);
   res.json(listId);
 });
 
 // Get all lists
 app.get('/api/lists', async function (req, res) {
-  const lists = await db.getLists();
+  const userId = req.session.userId;
+  const lists = await db.getLists(userId);
   res.json(lists);
 });
 

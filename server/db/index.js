@@ -208,11 +208,11 @@ class Database {
     }
   }
 
-  async createList(name, description) {
+  async createList(name, description, userId) {
     try {
       let res = await this.pool.query(
-        'INSERT INTO lists (name, description) VALUES ($1, $2) RETURNING id',
-        [name, description]
+        'INSERT INTO lists (name, description, userid) VALUES ($1, $2, $3) RETURNING id',
+        [name, description, userId]
       );
       const { id } = res.rows[0];
       return id;
@@ -221,8 +221,10 @@ class Database {
     }
   }
 
-  async getLists() {
-    let res = await this.pool.query('SELECT * FROM lists');
+  async getLists(userId) {
+    let res = await this.pool.query('SELECT * FROM lists WHERE userid = $1', [
+      userId,
+    ]);
     return res.rows;
   }
 }
