@@ -14,7 +14,7 @@ export function User(props) {
             <Button
               type="button"
               onClick={props.onChangePasswordClick}
-              className="p-mt-2 p-mb-2 p-button-info p-button-rounded"
+              className="p-mt-2 p-mb-2 p-button-outlined p-button-info p-button-rounded"
               label="Change Password"
             />
           ) : null}

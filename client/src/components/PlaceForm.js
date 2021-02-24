@@ -63,9 +63,9 @@ export function PlaceForm(props) {
 
               <div>
                 <span className="p-mr-6">
-                  <ButtonSubmit label={props.buttonSubmitLabel} />
+                  <ButtonCancel onClick={props.onButtonCancelClick} />
                 </span>
-                <ButtonCancel onClick={props.onButtonCancelClick} />
+                <ButtonSubmit label={props.buttonSubmitLabel} />
               </div>
             </div>
           </div>

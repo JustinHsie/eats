@@ -52,14 +52,14 @@ export function LoginForm(props) {
           </label>
 
           <div>
-            <span className="p-mr-6">
+            <div className="p-text-right">
               <ButtonSubmit label="Login" />
-            </span>
+            </div>
             <Button
+              label="New User? Register Here"
+              className="p-button-outlined p-button-secondary"
               type="button"
               onClick={props.onClickRegister}
-              className="p-my-5 p-button-secondary p-button-rounded"
-              label="Go to Register"
             />
           </div>
         </div>

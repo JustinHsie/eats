@@ -107,6 +107,9 @@ class ViewListClass extends React.Component {
   handleClickDeleteList = () => {
     this.props.deleteList(this.listId);
   };
+  handleClickCancel = () => {
+    history.push('/');
+  };
 
   render() {
     if (this.props.currentList) {
@@ -118,6 +121,7 @@ class ViewListClass extends React.Component {
               currentListName={this.state.listName}
               currentListDescription={this.state.listDescription}
               onClickEditHeader={this.handleClickEditHeader}
+              onDeleteListClick={this.handleClickDeleteList}
               onNameChange={this.handleNameChange}
               onDescriptionChange={this.handleDescriptionChange}
             />
@@ -130,7 +134,7 @@ class ViewListClass extends React.Component {
               onEditPlaceClick={this.handleClickEditPlace}
               actionBodyTemplate={this.actionBodyTemplate}
               onNewPlaceClick={this.handleClickNewPlace}
-              onDeleteListClick={this.handleClickDeleteList}
+              onCancelClick={this.handleClickCancel}
             />
           </div>
         </div>

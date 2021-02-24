@@ -7,7 +7,7 @@ export function InputDescription(props) {
       value={props.value}
       onChange={props.onValueChange}
       rows={5}
-      cols={30}
+      cols={25}
       autoResize
       className="p-mb-2"
     />
