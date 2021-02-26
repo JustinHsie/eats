@@ -35,7 +35,8 @@ class NewPlaceClass extends React.Component {
     }
     if (!this.state.selectedList) {
       this.setState({ isListSelected: false });
-    } else {
+    }
+    if (this.state.location && this.state.selectedList) {
       this.props.createPlace(
         this.state.name,
         this.state.rating,
