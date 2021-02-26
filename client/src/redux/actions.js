@@ -7,15 +7,12 @@ import {
   CREATE_PLACE,
   GET_PLACE,
   UPDATE_PLACE,
-  ADD_PLACE_TO_LIST,
-  REMOVE_PLACE_FROM_LIST,
   DELETE_PLACE,
   SET_MENU_TAB,
   GET_DISTANCE,
   CREATE_USER,
   GET_USER,
   UPDATE_USER,
-  DELETE_USER,
   LOGIN,
   LOGOUT,
   GET_SESSION,
@@ -51,32 +48,6 @@ export function getLists() {
       type: GET_LISTS,
       payload: { lists },
     });
-  };
-}
-
-export function addPlaceToList(listId, placeId) {
-  return async function (dispatch) {
-    const response = await axios.post(`/api/lists/${listId}/places/${placeId}`);
-    const list = response.data;
-    dispatch({
-      type: ADD_PLACE_TO_LIST,
-      payload: { list },
-    });
-    history.push(`/lists/${listId}`);
-  };
-}
-
-export function removePlaceFromList(listId, placeId) {
-  return async function (dispatch) {
-    const response = await axios.delete(
-      `/api/lists/${listId}/places/${placeId}`
-    );
-    const list = response.data;
-    dispatch({
-      type: REMOVE_PLACE_FROM_LIST,
-      payload: { list },
-    });
-    history.push(`/lists/${listId}`);
   };
 }
 
@@ -135,7 +106,8 @@ export function updatePlace(
   rating,
   description,
   location,
-  list
+  list,
+  initialList
 ) {
   return async function (dispatch) {
     await axios.put(`/api/places/${placeId}`, {
@@ -149,6 +121,7 @@ export function updatePlace(
     dispatch({
       type: UPDATE_PLACE,
     });
+    history.push(`/lists/${initialList.id}`);
   };
 }
 
@@ -166,15 +139,18 @@ export function createPlace(name, rating, description, location, list) {
       type: CREATE_PLACE,
       payload: { placeId },
     });
+    history.push(`/lists/${list.id}`);
   };
 }
 
-export function deletePlace(placeId) {
+export function deletePlace(placeId, listId) {
   return async function (dispatch) {
     await axios.delete(`/api/places/${placeId}`);
     dispatch({
       type: DELETE_PLACE,
+      payload: { placeId },
     });
+    history.push(`/lists/${listId}`);
   };
 }
 

@@ -42,7 +42,7 @@ class FindClass extends React.Component {
         this.setState({ buttonFindDisabled: false });
       }
     }
-    // Set mapCenter to first find result
+    // Set mapCenter to first result
     if (this.props.findResults !== prevProps.findResults) {
       let mapCenter = null;
       for (const place of this.state.places) {

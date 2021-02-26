@@ -20,17 +20,19 @@ export function PlacesTable(props) {
         </DataTable>
       </div>
       <div className="datatable_max_width p-my-6">
+        <span className="p-mr-6">
+          <Button
+            type="button"
+            onClick={props.onCancelClick}
+            className="p-my-5 p-button-outlined p-button-secondary p-button-rounded"
+            label="Back"
+          />
+        </span>
         <Button
           type="button"
-          className="p-button-rounded"
+          className="p-button-info p-button-rounded p-my-5 p-ml-6 button_float_right"
           label="Add New Place"
           onClick={props.onNewPlaceClick}
-        />
-        <Button
-          type="button"
-          onClick={props.onDeleteListClick}
-          className="p-button-danger p-button-rounded button_float_right"
-          label="Delete List"
         />
       </div>
     </div>

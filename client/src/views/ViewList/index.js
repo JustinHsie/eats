@@ -6,7 +6,6 @@ import {
   updateList,
   deleteList,
   deletePlace,
-  removePlaceFromList,
   setMenuTab,
 } from '../../redux/actions';
 import { PlacesTable } from '../../components/PlacesTable';
@@ -33,11 +32,16 @@ class ViewListClass extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    // Display list name after fetching list
     if (this.props.currentList !== prevProps.currentList) {
       this.setState({
         listName: this.props.currentList.name,
         listDescription: this.props.currentList.description,
       });
+    }
+    // Refetch list after deleting place
+    if (this.props.deletedPlace !== prevProps.deletedPlace) {
+      this.props.getList(this.listId);
     }
   }
 
@@ -79,8 +83,7 @@ class ViewListClass extends React.Component {
 
   handleClickDeletePlace = placeObject => e => {
     e.stopPropagation();
-    this.props.deletePlace(placeObject.id);
-    this.props.removePlaceFromList(placeObject.list.id, placeObject.id);
+    this.props.deletePlace(placeObject.id, this.listId);
   };
 
   handleClickEditPlace = placeObject => e => {
@@ -104,6 +107,9 @@ class ViewListClass extends React.Component {
   handleClickDeleteList = () => {
     this.props.deleteList(this.listId);
   };
+  handleClickCancel = () => {
+    history.push('/');
+  };
 
   render() {
     if (this.props.currentList) {
@@ -115,6 +121,7 @@ class ViewListClass extends React.Component {
               currentListName={this.state.listName}
               currentListDescription={this.state.listDescription}
               onClickEditHeader={this.handleClickEditHeader}
+              onDeleteListClick={this.handleClickDeleteList}
               onNameChange={this.handleNameChange}
               onDescriptionChange={this.handleDescriptionChange}
             />
@@ -127,7 +134,7 @@ class ViewListClass extends React.Component {
               onEditPlaceClick={this.handleClickEditPlace}
               actionBodyTemplate={this.actionBodyTemplate}
               onNewPlaceClick={this.handleClickNewPlace}
-              onDeleteListClick={this.handleClickDeleteList}
+              onCancelClick={this.handleClickCancel}
             />
           </div>
         </div>
@@ -138,8 +145,8 @@ class ViewListClass extends React.Component {
 }
 
 function mapState(state) {
-  const { lists } = state;
-  return { currentList: lists.list };
+  const { lists, places } = state;
+  return { currentList: lists.list, deletedPlace: places.deletedPlace };
 }
 
 const mapDispatch = {
@@ -147,7 +154,6 @@ const mapDispatch = {
   updateList,
   deleteList,
   deletePlace,
-  removePlaceFromList,
   setMenuTab,
 };
 

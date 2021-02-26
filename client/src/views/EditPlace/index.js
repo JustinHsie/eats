@@ -1,13 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { history } from '../../history';
-import {
-  getPlace,
-  getLists,
-  updatePlace,
-  addPlaceToList,
-  removePlaceFromList,
-} from '../../redux/actions';
+import { getPlace, getLists, updatePlace } from '../../redux/actions';
 import { PlaceForm } from '../../components/PlaceForm';
 import { Loading } from '../../components/Loading';
 import './index.css';
@@ -19,12 +13,14 @@ class EditPlaceClass extends React.Component {
     this.state = {
       fetchedPlace: null,
       name: '',
-      location: {},
+      location: null,
       locationInput: '',
       mapCenter: null,
       rating: null,
       description: '',
       selectedList: null,
+      initialList: null,
+      isLocationSelected: true,
     };
   }
 
@@ -51,28 +47,28 @@ class EditPlaceClass extends React.Component {
         rating: fetchedPlace.rating,
         description: fetchedPlace.description,
         selectedList: fetchedPlace.list,
+        initialList: fetchedPlace.list,
       });
     }
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.updatePlace(
-      this.state.fetchedPlace.id,
-      this.state.name,
-      this.state.rating,
-      this.state.description,
-      this.state.location,
-      this.state.selectedList
-    );
-    this.props.addPlaceToList(
-      this.state.selectedList.id,
-      this.state.fetchedPlace.id
-    );
-    this.props.removePlaceFromList(
-      this.state.fetchedPlace.list.id,
-      this.state.fetchedPlace.id
-    );
+
+    // Prevent submission if no location selected
+    if (!this.state.location) {
+      this.setState({ isLocationSelected: false });
+    } else {
+      this.props.updatePlace(
+        this.state.fetchedPlace.id,
+        this.state.name,
+        this.state.rating,
+        this.state.description,
+        this.state.location,
+        this.state.selectedList,
+        this.state.initialList
+      );
+    }
   };
 
   handleNameChange = e => {
@@ -94,6 +90,7 @@ class EditPlaceClass extends React.Component {
       location,
       locationInput: location.address,
       mapCenter: location.mapCenter,
+      isLocationSelected: true,
     });
   };
 
@@ -123,6 +120,7 @@ class EditPlaceClass extends React.Component {
         <PlaceForm
           onSubmit={this.handleSubmit}
           isListSelected={true}
+          isLocationSelected={this.state.isLocationSelected}
           formTitle={`Edit ${this.state.fetchedPlace.name}`}
           name={this.state.name}
           onNameChange={this.handleNameChange}
@@ -156,8 +154,6 @@ const mapDispatch = {
   getPlace,
   getLists,
   updatePlace,
-  addPlaceToList,
-  removePlaceFromList,
 };
 
 export const EditPlace = connect(mapState, mapDispatch)(EditPlaceClass);

@@ -1,12 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { history } from '../../history';
-import {
-  getLists,
-  createPlace,
-  addPlaceToList,
-  setMenuTab,
-} from '../../redux/actions';
+import { getLists, createPlace, setMenuTab } from '../../redux/actions';
 import { PlaceForm } from '../../components/PlaceForm';
 import './index.css';
 
@@ -15,13 +10,14 @@ class NewPlaceClass extends React.Component {
     super(props);
     this.state = {
       name: '',
-      location: {},
+      location: null,
       locationInput: '',
       mapCenter: null,
       rating: null,
       description: '',
       selectedList: null,
       isListSelected: true,
+      isLocationSelected: true,
     };
     this.props.setMenuTab('New Place');
   }
@@ -30,20 +26,17 @@ class NewPlaceClass extends React.Component {
     this.props.getLists();
   }
 
-  componentDidUpdate(prevProps) {
-    // Add place to list after getting placeId from creating a new place
-    if (this.props.placeId !== prevProps.placeId) {
-      this.props.addPlaceToList(this.state.selectedList.id, this.props.placeId);
-    }
-  }
-
   handleSubmit = event => {
     event.preventDefault();
 
-    // Prevent submission if no list selected
+    // Prevent submission if no location or list selected
+    if (!this.state.location) {
+      this.setState({ isLocationSelected: false });
+    }
     if (!this.state.selectedList) {
       this.setState({ isListSelected: false });
-    } else {
+    }
+    if (this.state.location && this.state.selectedList) {
       this.props.createPlace(
         this.state.name,
         this.state.rating,
@@ -61,7 +54,6 @@ class NewPlaceClass extends React.Component {
   handlePlaceSelect = e => {
     const location = {
       name: e.name,
-      placeId: e.place_id,
       address: e.formatted_address,
       mapCenter: {
         lat: e.geometry.location.lat(),
@@ -73,6 +65,7 @@ class NewPlaceClass extends React.Component {
       location,
       locationInput: location.address,
       mapCenter: location.mapCenter,
+      isLocationSelected: true,
     });
   };
 
@@ -101,6 +94,7 @@ class NewPlaceClass extends React.Component {
       <PlaceForm
         onSubmit={this.handleSubmit}
         isListSelected={this.state.isListSelected}
+        isLocationSelected={this.state.isLocationSelected}
         formTitle="Add Place"
         name={this.state.name}
         onNameChange={this.handleNameChange}
@@ -130,7 +124,6 @@ function mapState(state) {
 const mapDispatch = {
   getLists,
   createPlace,
-  addPlaceToList,
   setMenuTab,
 };
 

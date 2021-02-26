@@ -6,7 +6,7 @@ export function ButtonCancel(props) {
     <Button
       type="button"
       onClick={props.onClick}
-      className="p-my-5 p-button-secondary p-button-rounded"
+      className="p-my-5 p-button-outlined p-button-secondary p-button-rounded"
       label="Cancel"
     />
   );

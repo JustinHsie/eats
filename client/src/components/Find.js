@@ -14,7 +14,7 @@ export function Find(props) {
             <h2>Find Near Me</h2>
           </div>
           <div className="form__input_text_max_width">
-            <h3>Get My Location</h3>
+            <h3>1. Get My Location</h3>
             <Button
               className="p-mx-2 p-button-raised p-button-text p-button-rounded"
               label={props.buttonTextUserLocation}
@@ -22,7 +22,7 @@ export function Find(props) {
               onClick={props.onClickUserLocation}
             />
           </div>
-          <h3>Select List</h3>
+          <h3>2. Select List</h3>
           <div className="card p-mb-4">
             <SelectListDropdown
               isListSelected={props.isListSelected}
@@ -32,6 +32,7 @@ export function Find(props) {
             />
           </div>
           <div className="form__input_text_max_width">
+            <h3>3. Click to Search</h3>
             <Button
               className="p-mx-2 p-mb-6 p-button-primary p-button-raised p-button-rounded"
               label={props.buttonTextFind}
@@ -43,7 +44,7 @@ export function Find(props) {
         </div>
 
         <div className="p-mx-6 p-mb-6">
-          <h3>Places Nearest to You</h3>
+          <h3>Places Nearest to Me!</h3>
           <div className="datatable_max_width">
             <DataTable
               value={props.findResults}

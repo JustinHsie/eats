@@ -8,6 +8,7 @@ import {
 const initialState = {
   place: null,
   placeId: null,
+  deletedPlace: null,
 };
 
 export function placeReducer(state = initialState, action) {
@@ -27,7 +28,8 @@ export function placeReducer(state = initialState, action) {
       return { ...state, placeId };
     }
     case DELETE_PLACE: {
-      return state;
+      const { placeId } = action.payload;
+      return { ...state, deletedPlace: placeId };
     }
     default: {
       return state;

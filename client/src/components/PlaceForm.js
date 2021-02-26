@@ -28,6 +28,7 @@ export function PlaceForm(props) {
                 <h3>Location</h3>
                 <div>
                   <InputLocation
+                    isLocationSelected={props.isLocationSelected}
                     onPlaceSelect={props.onPlaceSelect}
                     locationInput={props.locationInput}
                     onLocationInputChange={props.onLocationInputChange}
@@ -63,9 +64,9 @@ export function PlaceForm(props) {
 
               <div>
                 <span className="p-mr-6">
-                  <ButtonSubmit label={props.buttonSubmitLabel} />
+                  <ButtonCancel onClick={props.onButtonCancelClick} />
                 </span>
-                <ButtonCancel onClick={props.onButtonCancelClick} />
+                <ButtonSubmit label={props.buttonSubmitLabel} />
               </div>
             </div>
           </div>
