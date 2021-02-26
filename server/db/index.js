@@ -16,7 +16,14 @@ class Database {
         'SELECT * FROM users WHERE username = $1',
         [username]
       );
-      return res.rows[0];
+      const userQuery = res.rows[0];
+
+      const user = {
+        id: userQuery.id,
+        username: userQuery.username,
+        password: userQuery.password,
+      };
+      return user;
     } catch (err) {
       console.log(err.stack);
     }
@@ -40,7 +47,14 @@ class Database {
       const res = await this.pool.query('SELECT * FROM users WHERE id = $1', [
         id,
       ]);
-      return res.rows[0];
+      const userQuery = res.rows[0];
+
+      const user = {
+        id: userQuery.id,
+        username: userQuery.username,
+        password: userQuery.password,
+      };
+      return user;
     } catch (err) {
       console.log(err.stack);
     }
@@ -62,12 +76,11 @@ class Database {
       // Get place
       let res = await this.pool.query(
         `SELECT places.id AS placeid, places.name AS placename, places.rating, 
-                places.description AS placedescription, locations.name AS locationname, 
-                locations.address, mapcenters.lat, mapcenters.lng, 
-                lists.id AS listid, lists.name AS listname, lists.description AS listdescription 
-         FROM places 
-         LEFT JOIN locations ON places.id = locations.placeid 
-         LEFT JOIN mapcenters ON locations.id = mapcenters.locationid 
+                places.description AS placedescription, places.locationname, 
+                places.address, places.lat, places.lng, 
+                lists.id AS listid, lists.name AS listname, lists.description AS listdescription,
+                lists.userid 
+         FROM places
          LEFT JOIN lists ON places.listid = lists.id
          WHERE places.id = $1`,
         [placeId]
@@ -92,6 +105,7 @@ class Database {
           id: placeQuery.listid,
           name: placeQuery.listname,
           description: placeQuery.listdescription,
+          userid: placeQuery.userid,
         },
       };
 
@@ -105,28 +119,17 @@ class Database {
     try {
       // Create place
       const listId = list.id;
-      let res = await this.pool.query(
-        'INSERT INTO places (name, rating, description, listid) VALUES ($1, $2, $3, $4) RETURNING id',
-        [name, rating, description, listId]
-      );
-      const placeId = res.rows[0].id;
-
-      // Create place's location
       const locationName = location.name;
-      const locationAddress = location.address;
-      res = await this.pool.query(
-        'INSERT INTO locations (name, address, placeid) VALUES ($1, $2, $3) RETURNING id',
-        [locationName, locationAddress, placeId]
-      );
-      const locationId = res.rows[0].id;
-
-      // Create locations' map center
+      const address = location.address;
       const lat = location.mapCenter.lat;
       const lng = location.mapCenter.lng;
-      await this.pool.query(
-        'INSERT INTO mapcenters (lat, lng, locationid) VALUES ($1, $2, $3)',
-        [lat, lng, locationId]
+
+      let res = await this.pool.query(
+        `INSERT INTO places (name, rating, description, listid, locationname, address, lat, lng) 
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`,
+        [name, rating, description, listId, locationName, address, lat, lng]
       );
+      const placeId = res.rows[0].id;
 
       return placeId;
     } catch (err) {
@@ -138,26 +141,25 @@ class Database {
     try {
       // Update place
       const listId = list.id;
-      await this.pool.query(
-        'UPDATE places SET name = $1, rating = $2, description = $3, listid = $4 WHERE id = $5',
-        [name, rating, description, listId, placeId]
-      );
-
-      // Update place's location
       const locationName = location.name;
-      const locationAddress = location.address;
-      let res = await this.pool.query(
-        'UPDATE locations SET name = $1, address = $2 WHERE placeid = $3 RETURNING id',
-        [locationName, locationAddress, placeId]
-      );
-      const locationId = res.rows[0].id;
-
-      // Create locations' map center
+      const address = location.address;
       const lat = location.mapCenter.lat;
       const lng = location.mapCenter.lng;
       await this.pool.query(
-        'UPDATE mapcenters SET lat = $1, lng = $2 WHERE locationid = $3',
-        [lat, lng, locationId]
+        `UPDATE places SET name = $1, rating = $2, description = $3, listid = $4, 
+         locationname = $5, address = $6, lat = $7, lng = $8 
+         WHERE id = $9`,
+        [
+          name,
+          rating,
+          description,
+          listId,
+          locationName,
+          address,
+          lat,
+          lng,
+          placeId,
+        ]
       );
 
       return placeId;
@@ -179,13 +181,12 @@ class Database {
       // Get list
       let res = await this.pool.query(
         `SELECT lists.id AS listid, lists.name AS listname, lists.description AS listdescription, 
+                lists.userid,
                 places.id AS placeid, places.name AS placename, places.rating, 
-                places.description AS placedescription, locations.name AS locationname, 
-                locations.address, mapcenters.lat, mapcenters.lng 
+                places.description AS placedescription, places.locationname, 
+                places.address, places.lat, places.lng 
          FROM lists
          LEFT JOIN places ON lists.id = places.listid
-         LEFT JOIN locations ON places.id = locations.placeid 
-         LEFT JOIN mapcenters ON locations.id = mapcenters.locationid 
          WHERE lists.id = $1`,
         [listId]
       );
@@ -218,6 +219,7 @@ class Database {
                 id: listQuery[0].listid,
                 name: listQuery[0].listname,
                 description: listQuery[0].listdescription,
+                userid: listQuery[0].userid,
               },
             };
           }),

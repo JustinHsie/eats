@@ -34,33 +34,11 @@ export function migration(pool) {
           rating INT,
           description TEXT,
           listid INT,
-          FOREIGN KEY (listid) REFERENCES lists(id) ON DELETE CASCADE
-       )`
-    );
-
-    /**
-     * Create locations table
-     */
-    pool.query(
-      `CREATE TABLE IF NOT EXISTS locations (
-          id SERIAL PRIMARY KEY,
-          name TEXT,
+          locationname TEXT,
           address TEXT,
-          placeid INT,
-          FOREIGN KEY (placeid) REFERENCES places(id) ON DELETE CASCADE
-       )`
-    );
-
-    /**
-     * Create map centers table
-     */
-    pool.query(
-      `CREATE TABLE IF NOT EXISTS locations (
-          id SERIAL PRIMARY KEY,
           lat REAL,
           lng REAL,
-          locationid INT,
-          FOREIGN KEY (locationid) REFERENCES locations(id) ON DELETE CASCADE
+          FOREIGN KEY (listid) REFERENCES lists(id) ON DELETE CASCADE
        )`
     );
 
