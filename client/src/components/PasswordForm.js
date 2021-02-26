@@ -2,6 +2,7 @@ import React from 'react';
 import { Password } from 'primereact/password';
 import { ButtonSubmit } from './ButtonSubmit';
 import { Button } from 'primereact/button';
+import { ButtonCancel } from './ButtonCancel';
 
 export function PasswordForm(props) {
   return (
@@ -61,14 +62,14 @@ export function PasswordForm(props) {
 
           <div>
             <span className="p-mr-6">
-              <ButtonSubmit label="Submit" />
+              <ButtonCancel
+                type="button"
+                onClick={props.onCancelClick}
+                className="p-my-5 p-button-help p-button-rounded"
+                label="Cancel"
+              />
             </span>
-            <Button
-              type="button"
-              onClick={props.onCancelClick}
-              className="p-my-5 p-button-help p-button-rounded"
-              label="Cancel"
-            />
+            <ButtonSubmit label="Submit" />
           </div>
         </div>
       </div>
