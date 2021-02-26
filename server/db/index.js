@@ -60,33 +60,40 @@ class Database {
   async getPlace(placeId) {
     try {
       // Get place
-      let res = await this.pool.query('SELECT * FROM places WHERE id = $1', [
-        placeId,
-      ]);
-      const place = res.rows[0];
+      let res = await this.pool.query(
+        `SELECT places.id AS placeid, places.name AS placename, places.rating, 
+                places.description AS placedescription, locations.name AS locationname, 
+                locations.address, mapcenters.lat, mapcenters.lng, 
+                lists.id AS listid, lists.name AS listname, lists.description AS listdescription 
+         FROM places 
+         LEFT JOIN locations ON places.id = locations.placeid 
+         LEFT JOIN mapcenters ON locations.id = mapcenters.locationid 
+         LEFT JOIN lists ON places.listid = lists.id
+         WHERE places.id = $1`,
+        [placeId]
+      );
+      const placeQuery = res.rows[0];
 
-      // Get place's list
-      res = await this.pool.query('SELECT * FROM lists where id = $1', [
-        place.listid,
-      ]);
-      const list = res.rows[0];
-
-      // Get place's location
-      res = await this.pool.query('SELECT * FROM locations WHERE id = $1', [
-        placeId,
-      ]);
-      const location = res.rows[0];
-
-      // Get location's map center
-      res = await this.pool.query('SELECT * FROM mapcenters WHERE id = $1', [
-        location.id,
-      ]);
-      const mapCenter = res.rows[0];
-
-      // Add map center to location obj then add location to place obj
-      location.mapCenter = mapCenter;
-      place.location = location;
-      place.list = list;
+      // Create place object
+      const place = {
+        id: placeQuery.placeid,
+        name: placeQuery.placename,
+        rating: placeQuery.rating,
+        description: placeQuery.placedescription,
+        location: {
+          name: placeQuery.locationname,
+          address: placeQuery.address,
+          mapCenter: {
+            lat: placeQuery.lat,
+            lng: placeQuery.lng,
+          },
+        },
+        list: {
+          id: placeQuery.listid,
+          name: placeQuery.listname,
+          description: placeQuery.listdescription,
+        },
+      };
 
       return place;
     } catch (err) {
@@ -170,24 +177,52 @@ class Database {
   async getList(listId) {
     try {
       // Get list
-      let res = await this.pool.query('SELECT * FROM lists WHERE id = $1', [
-        listId,
-      ]);
-      const list = res.rows[0];
-
-      // Get list's places
-      res = await this.pool.query('SELECT id FROM places WHERE listid = $1', [
-        listId,
-      ]);
-      const results = res.rows;
-      const places = await Promise.all(
-        results.map(async result => {
-          return await this.getPlace(result.id);
-        })
+      let res = await this.pool.query(
+        `SELECT lists.id AS listid, lists.name AS listname, lists.description AS listdescription, 
+                places.id AS placeid, places.name AS placename, places.rating, 
+                places.description AS placedescription, locations.name AS locationname, 
+                locations.address, mapcenters.lat, mapcenters.lng 
+         FROM lists
+         LEFT JOIN places ON lists.id = places.listid
+         LEFT JOIN locations ON places.id = locations.placeid 
+         LEFT JOIN mapcenters ON locations.id = mapcenters.locationid 
+         WHERE lists.id = $1`,
+        [listId]
       );
+      const listQuery = res.rows;
 
-      // Add array of places to list obj
-      list.places = places;
+      // Create list object
+      const list = {
+        id: listQuery[0].listid,
+        name: listQuery[0].listname,
+        description: listQuery[0].listdescription,
+        places: listQuery
+          .filter(row => {
+            return row.placeid;
+          })
+          .map(row => {
+            return {
+              id: row.placeid,
+              name: row.placename,
+              rating: row.rating,
+              description: row.placedescription,
+              location: {
+                name: row.locationname,
+                address: row.address,
+                mapCenter: {
+                  lat: row.lat,
+                  lng: row.lng,
+                },
+              },
+              list: {
+                id: listQuery[0].listid,
+                name: listQuery[0].listname,
+                description: listQuery[0].listdescription,
+              },
+            };
+          }),
+      };
+
       return list;
     } catch (err) {
       console.log(err.stack);
