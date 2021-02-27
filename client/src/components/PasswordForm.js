@@ -1,7 +1,6 @@
 import React from 'react';
 import { Password } from 'primereact/password';
 import { ButtonSubmit } from './ButtonSubmit';
-import { Button } from 'primereact/button';
 import { ButtonCancel } from './ButtonCancel';
 
 export function PasswordForm(props) {

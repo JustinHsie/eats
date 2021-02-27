@@ -62,6 +62,11 @@ export function LoginForm(props) {
               onClick={props.onClickRegister}
             />
           </div>
+          <div className="p-mt-5">
+            <p>Demo:</p>
+            <p>Username: Justin</p>
+            <p>Password: Hsie</p>
+          </div>
         </div>
       </div>
     </form>
