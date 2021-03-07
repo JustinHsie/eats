@@ -72,7 +72,7 @@ app.post('/auth/login', async function (req, res) {
 
 // Get session
 app.get('/auth/session', function (req, res) {
-  res.json(req.session.userId);
+  res.json(req.session.id);
 });
 
 // Logout
