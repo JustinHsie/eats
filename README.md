@@ -1,7 +1,7 @@
 ## Welcome! 
 To check out the app, please visit: https://eats-nearby.herokuapp.com/  
 
-This is an original app (not from a tutorial or class) that lets a user to save their favorite places and then retrieve them in order of proximity to the user's current location.
+This is an original app (not from a tutorial or class) that lets a user save their favorite places and then retrieve them in order of proximity to the user's current location.
 
 ### Usage
 Say I have a number of new restaurants I'd like to visit one day. I can create a new list (eg. "New Eats!") and save the places to that list.  
