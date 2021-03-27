@@ -1,5 +1,6 @@
 ## Welcome! 
 To check out the app, please visit: https://eats-nearby.herokuapp.com/  
+Or watch the demo: https://www.youtube.com/watch?v=_NdjEWO3I8M
 
 This is an original app (not from a tutorial or class) that lets a user save their favorite places and then retrieve them in order of proximity to the user's current location.
 
