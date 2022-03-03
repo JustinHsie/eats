@@ -10,6 +10,8 @@ export function LoginForm(props) {
       <div className="p-m-6 p-d-flex p-jc-center">
         <div className="card">
           <h2>Login</h2>
+
+          {/* Username input form */}
           <label>
             <h3>Username</h3>
             <InputText
@@ -19,17 +21,23 @@ export function LoginForm(props) {
               className={`p-mb-2 ${props.isEmptyUsername ? 'p-invalid' : ''}
               ${!props.validLogin ? 'p-invalid' : ''}`}
             />
+
+            {/* Display error text if empty username */}
             {props.isEmptyUsername ? (
               <small id="username-help" className="p-error p-d-block">
                 Please enter a username
               </small>
             ) : null}
+
+            {/* Display error text if incorrect username */}
             {!props.validLogin ? (
               <small id="username-help" className="p-error p-d-block">
                 Incorrect username or password
               </small>
             ) : null}
           </label>
+
+          {/* Password input form */}
           <label>
             <h3>Password</h3>
             <Password
@@ -39,11 +47,15 @@ export function LoginForm(props) {
               className={`p-mb-2 ${props.isEmptyPassword ? 'p-invalid' : ''} 
               ${!props.validLogin ? 'p-invalid' : ''}`}
             />
+
+            {/* Display error text if empty password */}
             {props.isEmptyPassword ? (
               <small id="password-help" className="p-error p-d-block">
                 Please enter a password
               </small>
             ) : null}
+
+            {/* Display error text if incorrect password */}
             {!props.validLogin ? (
               <small id="username-help" className="p-error p-d-block">
                 Incorrect username or password
@@ -52,9 +64,12 @@ export function LoginForm(props) {
           </label>
 
           <div>
+            {/* Submit form button */}
             <div className="p-text-right">
               <ButtonSubmit label="Login" />
             </div>
+
+            {/* Register button */}
             <Button
               label="New User? Register Here"
               className="p-button-outlined p-button-secondary"
