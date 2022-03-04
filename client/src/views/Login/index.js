@@ -15,7 +15,9 @@ class LoginClass extends React.Component {
     };
   }
 
+  // Handle form submit
   handleSubmit = e => {
+    // Prevent default DOM submit to let React handle it
     e.preventDefault();
 
     const username = this.state.username;
@@ -32,6 +34,7 @@ class LoginClass extends React.Component {
     }
   };
 
+  // Handle username input change
   handleUsernameChange = e => {
     this.setState({
       username: e.target.value,
@@ -39,6 +42,7 @@ class LoginClass extends React.Component {
     });
   };
 
+  // Handle password input change
   handlePasswordChange = e => {
     this.setState({
       password: e.target.value,
@@ -46,6 +50,7 @@ class LoginClass extends React.Component {
     });
   };
 
+  // Handle click register button
   handleClickRegister = () => {
     this.setState({
       username: '',
@@ -74,11 +79,13 @@ class LoginClass extends React.Component {
   }
 }
 
+// Redux: Map state to props, passes object that contains data component needs
 function mapState(state) {
   const { users } = state;
   return { validLogin: users.validLogin };
 }
 
+// Redux: Dispatch actions to store
 const mapDispatch = {
   login,
   resetUserForm,
