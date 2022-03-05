@@ -21,6 +21,8 @@ import {
 import { history } from '../history';
 import axios from 'axios';
 
+// Actions for components to use, dispatches to store
+
 /**
  * Lists
  */
